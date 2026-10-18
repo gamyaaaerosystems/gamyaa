@@ -17,7 +17,7 @@ No routes were added or removed, and the architecture, responsiveness, accessibi
 - **Research:** "Engineering Research & Product Development", with 7 product R&D areas (status, and which product each feeds) and `#workflow-validation`.
 - **Products:** new `#roadmap` section grouping capabilities by status.
 - **Internships:** "Engineering Learning & Research Programs", clearly separate from the commercial business. **Careers:** heading without a full stop.
-- **Leadership:** Purushothama Padmanabha (Co-Founder & CEO) and Manjunath G (Co-Founder, Sales & Marketing) only, with no placeholder avatars. Manjunath G's LinkedIn stays hidden until a URL is provided. Structured data was updated to match.
+- **Leadership:** Purushothama Padmanabha (Co-Founder & CEO), Manjunath G (Co-Founder, Sales & Marketing) and Sudarshana Karkala (Co-Founder, Director), with no placeholder avatars. Manjunath G's LinkedIn stays hidden until a URL is provided. Structured data was updated to match.
 - **Ventures:** four themes (Aerospace & Defence; Space & Autonomous Systems; Advanced Manufacturing & Industrial AI; Engineering Infrastructure & Cybersecurity) and "Venture building · Strategic collaboration · Investment exploration".
 - **Timeline:** concise labels (Idea, POC, Product & Company, Customer Validation, Engineering Assurance Integration, Aerospace Ecosystem, Vision). 2027 onwards is labelled "Roadmap / Vision — not guaranteed".
 - **Contact (launch blocker, Option B):** the online form renders only when Resend is configured at build time. Until then both contact pages show **Email Us** (pre-filled subject and a structured body) and **Call Us**, so a broken form is never shown.
@@ -152,7 +152,7 @@ The site uses the required wording ("assists", "human review", "evidence prepara
 | `internship_view`, `internship_outbound_click` | — | Learning & research programs page / outbound links |
 | `aerospace_cybersecurity_click` | — | Cybersecurity initiative links |
 | `partner_click` | `partner_name` (EV Society, iTelematics), `destination` | Partner links |
-| `leadership_link_click` | `person_name` (allow-listed: Purushothama Padmanabha, Manjunath G) | LinkedIn links |
+| `leadership_link_click` | `person_name` (allow-listed: Purushothama Padmanabha, Manjunath G, Sudarshana Karkala) | LinkedIn links |
 | `ventures_contact`, `ventures_focus_click` | — | Ventures CTAs |
 | `form_start`, `form_submit`, `form_error` | `form_name`, `page_path`, `error_type` | Contact forms |
 | `theme_change` | `theme` (`light` / `dark` / `system`) | Theme toggle |
@@ -222,7 +222,7 @@ CLS is 0 everywhere. Mobile LCP is measured under Lighthouse's simulated slow 4G
 3. **Mobile:** on a phone (or Safari's responsive mode), open the ☰ menu, navigate, and press Esc or ✕. Check that nothing scrolls sideways.
 4. **DAQIP** (`/aerosystems/daqip`): tap the characteristics #14–#19; #19 should show "Rejected · NCR open".
 5. **Timeline** (`/aerosystems`): on desktop, use ← → on the year tabs; 2027 onwards is labelled Roadmap / Vision.
-6. **Links:** LinkedIn (Purushothama Padmanabha), EV Society, iTelematics, aerospace.gamyaa.in pages, and the `mailto:` / `tel:` links all open the right destination.
+6. **Links:** LinkedIn (Purushothama Padmanabha, Sudarshana Karkala), EV Society, iTelematics, aerospace.gamyaa.in pages, and the `mailto:` / `tel:` links all open the right destination.
 7. **Analytics, after deploying to production:** enable GA4 DebugView (Google Analytics Debugger extension, or deploy once with `NEXT_PUBLIC_GA_DEBUG=1`).
    - Load a page: one `page_view`.
    - Navigate to another page: one more `page_view`.

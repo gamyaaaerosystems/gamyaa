@@ -119,7 +119,7 @@ const ALLOWED_PARAMS: ReadonlySet<string> = new Set<AnalyticsParam>([
 const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
   theme: new Set(["light", "dark", "system"]),
   partner_name: new Set(["EV Society", "iTelematics"]),
-  person_name: new Set(["Purushothama Padmanabha", "Manjunath G"]),
+  person_name: new Set(["Purushothama Padmanabha", "Manjunath G", "Sudarshana Karkala"]),
   form_name: new Set(["aerosystems_contact", "gamyaa_contact"]),
   error_type: new Set([
     "validation",

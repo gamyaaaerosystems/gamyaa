@@ -14,7 +14,7 @@ export function LeadershipSection({ id }: { id?: string }) {
     <Section id={id} section="leadership">
       <Container>
         <SectionHeader eyebrow="Leadership" title="The team building Gamyaa AeroSystems" />
-        <ul className="mt-12 grid max-w-4xl gap-px overflow-hidden border border-line bg-line sm:grid-cols-2">
+        <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-3">
           {LEADERSHIP.map((p) => (
             <li key={p.name} className="flex flex-col bg-surface p-6 sm:p-8">
               <h3 className="text-xl font-medium tracking-tight text-ink">{p.name}</h3>

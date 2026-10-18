@@ -18,6 +18,11 @@ export const LEADERSHIP: Leader[] = [
     role: "Co-Founder, Sales & Marketing",
     // LinkedIn: to be provided. Do not guess a URL; the link stays hidden until set.
   },
+  {
+    name: "Sudarshana Karkala",
+    role: "Co-Founder, Director",
+    linkedin: "https://linkedin.com/in/sudarshanakarkala",
+  },
 ];
 
 export const PARTNERS = [
