@@ -30,7 +30,7 @@ const PRINCIPLES = [
 export default function AboutPage() {
   return (
     <>
-      <JsonLd data={personLd(LEADERSHIP.map((p) => ({ name: p.name, role: p.role, linkedin: p.linkedin })))} />
+      <JsonLd data={personLd(LEADERSHIP.map((p) => ({ name: p.name, role: p.role, linkedin: p.linkedinPlaceholder ? undefined : p.linkedin })))} />
       <PageHero
         breadcrumbs={
           <Breadcrumbs

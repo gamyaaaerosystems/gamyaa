@@ -29,7 +29,7 @@ Copy `.env.example` to `.env.local` to change configuration (see below).
 | AirCert AI™ content | `src/content/aircert.ts` |
 | Solutions (8 pages) | `src/content/solutions.ts` |
 | Services, Ventures focus areas | `src/content/services.ts`, `src/content/ventures.ts` |
-| Leadership, partners, careers domains, contact interests | `src/content/company.ts` (add Manjunath G's LinkedIn URL there when available; the link stays hidden until then) |
+| Leadership, partners, careers domains, contact interests | `src/content/company.ts` (Manjunath G's LinkedIn is a placeholder until his own URL is added) |
 | Evolution timeline | `src/content/timeline.ts` |
 | Navigation | `src/content/navigation.ts` |
 | Theme colours and design tokens | `src/app/globals.css` |

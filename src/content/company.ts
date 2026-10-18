@@ -3,8 +3,10 @@ import { EXTERNAL } from "@/lib/site";
 export type Leader = {
   name: string;
   role: string;
-  /** Leave undefined until a verified URL is provided. The LinkedIn link is hidden when absent. */
+  /** LinkedIn profile URL. The LinkedIn link is hidden when absent. */
   linkedin?: string;
+  /** True while `linkedin` is a temporary placeholder (excluded from structured data). */
+  linkedinPlaceholder?: boolean;
 };
 
 export const LEADERSHIP: Leader[] = [
@@ -16,7 +18,9 @@ export const LEADERSHIP: Leader[] = [
   {
     name: "Manjunath G",
     role: "Co-Founder, Sales & Marketing",
-    // LinkedIn: to be provided. Do not guess a URL; the link stays hidden until set.
+    // PLACEHOLDER: replace with Manjunath G's own profile URL, then remove linkedinPlaceholder.
+    linkedin: "https://linkedin.com/in/sudarshanakarkala",
+    linkedinPlaceholder: true,
   },
   {
     name: "Sudarshana Karkala",
