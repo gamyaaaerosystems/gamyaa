@@ -3,7 +3,6 @@ import { EXTERNAL } from "@/lib/site";
 export type Leader = {
   name: string;
   role: string;
-  initials: string;
   /** Leave undefined until a verified URL is provided. The LinkedIn link is hidden when absent. */
   linkedin?: string;
 };
@@ -12,20 +11,12 @@ export const LEADERSHIP: Leader[] = [
   {
     name: "Purushothama Padmanabha",
     role: "Co-Founder & CEO",
-    initials: "PP",
     linkedin: "https://www.linkedin.com/in/purushothama-padmanabha-1a75552/",
   },
   {
-    name: "Manjunatha G",
+    name: "Manjunath G",
     role: "Co-Founder, Sales & Marketing",
-    initials: "MG",
-    // LinkedIn: to be updated. Do not guess a URL.
-  },
-  {
-    name: "Sudarshana Karkala",
-    role: "Co-Founder",
-    initials: "SK",
-    linkedin: "https://linkedin.com/in/sudarshanakarkala",
+    // LinkedIn: to be provided. Do not guess a URL; the link stays hidden until set.
   },
 ];
 
@@ -92,8 +83,9 @@ export const LIFECYCLE = [
 
 export const INTERESTS = [
   { value: "daqip", label: "DAQIP™ — demo or pilot" },
+  { value: "quality-problem", label: "Discuss an aerospace quality problem" },
   { value: "fai", label: "First Article Inspection / AS9102" },
-  { value: "aircert", label: "AirCert AI™ — early access" },
+  { value: "aircert", label: "AirCert AI™ — register interest" },
   { value: "services", label: "Engineering & consulting services" },
   { value: "partnership", label: "Inspection / metrology partnership" },
   { value: "ventures", label: "Gamyaa Ventures — partnership" },

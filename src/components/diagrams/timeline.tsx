@@ -57,7 +57,7 @@ export function Timeline() {
                       key || future ? "text-accent" : "text-subtle",
                     )}
                   >
-                    {future ? "Roadmap / Vision" : KIND_LABEL[m.kind]}
+                    {future ? "Roadmap / Vision — not guaranteed" : KIND_LABEL[m.kind]}
                   </span>
                 </p>
                 <p className="mt-1 text-sm text-muted">{m.phase}</p>

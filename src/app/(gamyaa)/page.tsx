@@ -54,7 +54,7 @@ const DIVISIONS = [
     n: "01",
     title: "Gamyaa AeroSystems",
     subtitle: "Aerospace & Defence Engineering Technology",
-    body: "Engineering intelligence for aerospace and defence manufacturing.",
+    body: "Engineering intelligence for aerospace and defence assurance, manufacturing and inspection.",
     keywords: ["Quality", "Airworthiness", "Inspection", "Manufacturing", "AI"],
     cta: "Explore AeroSystems",
     href: aero("/"),
@@ -65,7 +65,7 @@ const DIVISIONS = [
     n: "02",
     title: "Gamyaa Ventures",
     subtitle: "Strategic Ventures for Aerospace, Defence, Space & Deep Tech",
-    body: "Backing and building technologies that strengthen the aerospace and defence industrial ecosystem.",
+    body: "Building and backing engineering-led technologies across aerospace, defence, space and advanced manufacturing.",
     keywords: ["Aerospace", "Defence", "Space", "Advanced Manufacturing", "Deep Tech"],
     cta: "Explore Ventures",
     href: parent("/ventures"),
@@ -100,7 +100,7 @@ export default function HomePage() {
             className="anim-fade-up lede mt-6 max-w-2xl"
             style={{ animationDelay: "240ms" }}
           >
-            Advanced engineering systems and strategic ventures for aerospace, defence, space and next-generation
+            Engineering intelligence platforms and strategic ventures for aerospace, defence, space and advanced
             manufacturing.
           </p>
         </Container>

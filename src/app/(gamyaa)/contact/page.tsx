@@ -1,8 +1,6 @@
-import { ContactDetails } from "@/components/contact/contact-details";
-import { ContactForm } from "@/components/contact/contact-form";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { Container } from "@/components/ui/primitives";
+import { ContactSection, type ContactIntent } from "@/components/contact/contact-section";
 import { PageHero } from "@/components/sections/shared";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { pageMetadata } from "@/lib/seo";
 import { parent } from "@/lib/site";
 
@@ -12,6 +10,23 @@ export const metadata = pageMetadata({
     "Contact GAMYAA about Gamyaa AeroSystems, Gamyaa Ventures, partnerships and engineering collaboration. Bangalore, India.",
   href: parent("/contact"),
 });
+
+const INTENTS: ContactIntent[] = [
+  {
+    interest: "daqip",
+    title: "Gamyaa AeroSystems",
+    body: "DAQIP™ demos, AirCert AI™, engineering services and aerospace quality problems.",
+    subject: "Gamyaa AeroSystems enquiry",
+    ga: { event: "contact_sales_click" },
+  },
+  {
+    interest: "ventures",
+    title: "Gamyaa Ventures",
+    body: "Venture building, strategic collaboration and technology partnerships.",
+    subject: "Gamyaa Ventures — partnership",
+    ga: { event: "ventures_contact" },
+  },
+];
 
 export default function ContactPage() {
   return (
@@ -27,19 +42,9 @@ export default function ContactPage() {
         }
         eyebrow="Contact"
         title="Talk to GAMYAA"
-        lede="Questions about Gamyaa AeroSystems, Gamyaa Ventures or a partnership. We reply by email."
+        lede="Questions about Gamyaa AeroSystems, Gamyaa Ventures or a partnership."
       />
-      <section className="pb-20" data-ga-section="contact">
-        <Container className="grid gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <ContactDetails />
-          </div>
-          <div className="lg:col-span-8">
-            <h2 className="sr-only">Send a message</h2>
-            <ContactForm formName="gamyaa_contact" />
-          </div>
-        </Container>
-      </section>
+      <ContactSection formName="gamyaa_contact" intents={INTENTS} />
     </>
   );
 }

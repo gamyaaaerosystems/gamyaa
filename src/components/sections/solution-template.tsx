@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { FlowChain } from "@/components/diagrams/flow";
-import { CtaBand, internalContact, PageHero } from "@/components/sections/shared";
+import type { ReactNode } from "react";
+import { FlowChain, IntegrationDiagram } from "@/components/diagrams/flow";
+import { CommercialCtas, CtaBand, PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import {
   ArrowLink,
@@ -20,12 +21,12 @@ export function solutionMetadata(slug: string): Metadata {
   return pageMetadata({ title: s.metaTitle, description: s.metaDescription, href: aero(`/solutions/${s.slug}`) });
 }
 
-const PRODUCT_LINK: Record<Solution["product"], Array<{ label: string; href: string }>> = {
-  daqip: [{ label: "Explore DAQIP™", href: aero("/daqip") }],
-  aircert: [{ label: "Explore AirCert AI™", href: aero("/aircert-ai") }],
+const PRODUCT_LINK: Record<Solution["product"], Array<{ label: string; href: string; note: string }>> = {
+  daqip: [{ label: "DAQIP™", href: aero("/daqip"), note: "Defence Aerospace Quality Intelligence Platform" }],
+  aircert: [{ label: "AirCert AI™", href: aero("/aircert-ai"), note: "Airworthiness Certification Engineering Copilot" }],
   both: [
-    { label: "Explore DAQIP™", href: aero("/daqip") },
-    { label: "Explore AirCert AI™", href: aero("/aircert-ai") },
+    { label: "AirCert AI™", href: aero("/aircert-ai"), note: "Design assurance / certification" },
+    { label: "DAQIP™", href: aero("/daqip"), note: "Manufacturing assurance / quality" },
   ],
 };
 
@@ -63,10 +64,23 @@ export function RelatedSolutions({ current }: { current: string }) {
   );
 }
 
-/** Concise solution page used for every solution except First Article Inspection. */
+function Block({ n, title, children }: { n: string; title: string; children: ReactNode }) {
+  return (
+    <div className="grid gap-4 border-t border-line py-10 lg:grid-cols-12 lg:gap-10">
+      <div className="lg:col-span-4">
+        <p className="font-mono text-xs text-subtle">{n}</p>
+        <h2 className="mt-2 text-2xl font-medium tracking-tight text-ink">{title}</h2>
+      </div>
+      <div className="lg:col-span-8">{children}</div>
+    </div>
+  );
+}
+
+/** Solution page: Problem → Who → What we help with → Flow → Outcome → Product → CTA. */
 export function SolutionTemplate({ slug }: { slug: string }) {
   const s = solutionBySlug(slug)!;
   const href = aero(`/solutions/${s.slug}`);
+  const aircertOnly = s.product === "aircert";
   return (
     <>
       <JsonLd data={techArticleLd({ headline: s.title, description: s.metaDescription, href })} />
@@ -84,57 +98,61 @@ export function SolutionTemplate({ slug }: { slug: string }) {
         {s.note ? <Notice className="mt-8 max-w-3xl">{s.note}</Notice> : null}
       </PageHero>
 
-      <Section labelledBy="flow-title">
-        <Container className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <h2 id="flow-title" className="heading text-2xl text-ink sm:text-3xl">
-              Workflow
-            </h2>
-          </div>
-          <div className="lg:col-span-8">
-            <FlowChain label={`${s.label} workflow`} steps={s.flow} />
-          </div>
-        </Container>
-      </Section>
-
-      <Section labelledBy="covers-title">
-        <Container className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <h2 id="covers-title" className="heading text-2xl text-ink sm:text-3xl">
-              What it covers
-            </h2>
-          </div>
-          <div className="lg:col-span-8">
-            <BulletList items={s.covers} className="text-base" />
-            <dl className="mt-10 grid gap-6 border-t border-line pt-8 sm:grid-cols-2">
-              <div>
-                <dt className="eyebrow">For</dt>
-                <dd className="mt-2 text-[0.9375rem] text-ink-2">{s.forWho}</dd>
+      <section className="pb-6" data-ga-section="solution_detail">
+        <Container>
+          <Block n="01" title="Problem">
+            <p className="lede">{s.problem}</p>
+          </Block>
+          <Block n="02" title="Who experiences it">
+            <ul className="flex flex-wrap gap-2">
+              {s.who.map((w) => (
+                <li key={w} className="border border-line-strong bg-surface px-3 py-1.5 text-[0.9375rem] text-ink-2">
+                  {w}
+                </li>
+              ))}
+            </ul>
+          </Block>
+          <Block n="03" title="What Gamyaa helps with">
+            <BulletList items={s.helps} className="text-base" />
+          </Block>
+          <Block n="04" title="Engineering flow">
+            <FlowChain label={`${s.label} engineering flow`} steps={s.flow} />
+            {s.product === "both" ? (
+              <div className="mt-10">
+                <IntegrationDiagram />
               </div>
-              <div>
-                <dt className="eyebrow">Delivered through</dt>
-                <dd className="mt-1 flex flex-col">
-                  {PRODUCT_LINK[s.product].map((p) => (
-                    <ArrowLink key={p.href} href={p.href}>
-                      {p.label}
-                    </ArrowLink>
-                  ))}
-                </dd>
-              </div>
-            </dl>
-          </div>
+            ) : null}
+          </Block>
+          <Block n="05" title="Evidence & outcome">
+            <BulletList items={s.outcomes} className="text-base" />
+          </Block>
+          <Block n="06" title="Related product">
+            <ul className="grid gap-4 sm:grid-cols-2">
+              {PRODUCT_LINK[s.product].map((p) => (
+                <li key={p.href} className="border border-line bg-surface p-5">
+                  <ArrowLink href={p.href} className="text-lg">
+                    {p.label}
+                  </ArrowLink>
+                  <p className="mt-1 text-sm text-muted">{p.note}</p>
+                </li>
+              ))}
+            </ul>
+          </Block>
         </Container>
-      </Section>
+      </section>
 
       <RelatedSolutions current={s.slug} />
 
       <CtaBand
-        title={`Discuss ${s.label.toLowerCase()} for your team`}
-        primary={{
-          label: "Talk to Gamyaa",
-          href: internalContact(s.product === "aircert" ? "aircert" : "daqip"),
-          ga: { event: s.product === "aircert" ? "aircert_contact_click" : "contact_sales_click" },
-        }}
+        title={aircertOnly ? "Shape AirCert AI around your certification work" : `Discuss ${s.label.toLowerCase()} for your team`}
+        body={
+          aircertOnly
+            ? "AirCert AI is a planned product. Tell us how your team prepares for certification today."
+            : "DAQIP is in development. Talk to us about a demo or about the problem you are solving."
+        }
+        actions={
+          <CommercialCtas location="solution_page" topic={s.topic} product={aircertOnly ? "aircert" : "daqip"} />
+        }
       />
     </>
   );

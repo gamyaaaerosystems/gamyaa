@@ -1,6 +1,27 @@
 # GAMYAA website — implementation report
 
-Status as of 19 October 2026. Covers gamyaa.in, Gamyaa AeroSystems (`/aerosystems`) and Gamyaa Ventures (`/ventures`).
+Status as of 19 October 2026 (V1.1). Covers gamyaa.in, Gamyaa AeroSystems (`/aerosystems`) and Gamyaa Ventures (`/ventures`). Launch tasks are tracked in [`LAUNCH_CHECKLIST.md`](LAUNCH_CHECKLIST.md); planned reference articles are in [`CONTENT_PROGRAM.md`](CONTENT_PROGRAM.md).
+
+## V1.1 changes (optimisation and launch readiness)
+
+No routes were added or removed, and the architecture, responsiveness, accessibility, SEO, analytics and security features are preserved.
+
+- **Parent home:** new supporting line ("Engineering intelligence platforms and strategic ventures…") and updated AeroSystems and Ventures card statements.
+- **AeroSystems home, priority order:** Hero (with "Engineering Assurance Intelligence for Aerospace & Defence") → Engineering Intelligence Platforms → Engineering lifecycle (with the category definition) → Who We Serve → **Engineering Evidence** (new: Interactive FAI Prototype, DAQIP R&D, Engineering Workflow Validation, Product Roadmap). The rest follows: **Problems We Are Solving** (new, three problems), integration, solutions, timeline, initiatives, leadership, partners. The separate DAQIP message band was folded into the DAQIP product card.
+- **Commercial CTAs:** "Request a DAQIP Demo" and "Discuss an Aerospace Quality Problem" on the AeroSystems home, DAQIP, FAI, solution, services, research, products and contact pages. They are tracked as `demo_interest` and `problem_discussion_click`.
+- **DAQIP:** the short explanation sits under the title; an "In one sentence" block, **What You Can Explore Today** (only what exists on the site) and the prototype flow (Drawing → Characteristic → Inspection Method → Measurement → Evidence → Approval) were added.
+- **FAI page:** retitled "First Article Inspection Software for Aerospace & Defence" with "From engineering drawing to reviewed FAIR". Adds a problem section, an `#as9102` anchor and a 4-question FAQ (FAQPage).
+- **AirCert AI:** new statement, Requirement → Compliance → Verification → Evidence → Review flow, an "In one sentence" block, and the explicit boundary. The full integration diagram now lives on Engineering Assurance, the home page and Products only.
+- **Integration lanes:** AirCert AI = Design Assurance / Certification; DAQIP = Manufacturing Assurance / Quality.
+- **Solution pages:** each now follows Problem → Who experiences it → What Gamyaa helps with → Engineering flow → Evidence & outcome → Related product → CTA, with distinct content (measured overlap between bodies: only the product subtitle).
+- **Research:** "Engineering Research & Product Development", with 7 product R&D areas (status, and which product each feeds) and `#workflow-validation`.
+- **Products:** new `#roadmap` section grouping capabilities by status.
+- **Internships:** "Engineering Learning & Research Programs", clearly separate from the commercial business. **Careers:** heading without a full stop.
+- **Leadership:** Purushothama Padmanabha (Co-Founder & CEO) and Manjunath G (Co-Founder, Sales & Marketing) only, with no placeholder avatars. Manjunath G's LinkedIn stays hidden until a URL is provided. Structured data was updated to match.
+- **Ventures:** four themes (Aerospace & Defence; Space & Autonomous Systems; Advanced Manufacturing & Industrial AI; Engineering Infrastructure & Cybersecurity) and "Venture building · Strategic collaboration · Investment exploration".
+- **Timeline:** concise labels (Idea, POC, Product & Company, Customer Validation, Engineering Assurance Integration, Aerospace Ecosystem, Vision). 2027 onwards is labelled "Roadmap / Vision — not guaranteed".
+- **Contact (launch blocker, Option B):** the online form renders only when Resend is configured at build time. Until then both contact pages show **Email Us** (pre-filled subject and a structured body) and **Call Us**, so a broken form is never shown.
+- **Launch hooks:** `GOOGLE_SITE_VERIFICATION`, an optional shared rate limiter (`UPSTASH_REDIS_REST_*`, IP addresses hashed), and a one-line switch to make a corporate email primary (`CORPORATE_EMAILS` in `src/lib/site.ts`).
 
 ## 1. Implemented routes
 
@@ -31,7 +52,7 @@ All pages are statically prerendered (`○` in `next build`). Only `/api/contact
 | `/aerosystems/research` | Research areas with status, links to the DAQIP research programme and cybersecurity initiative |
 | `/aerosystems/about` | Mission, focus, engineering philosophy, timeline, leadership (`#leadership`), partners, contact |
 | `/aerosystems/careers` | Domains; "Current opportunities will be published here." (no invented vacancies) |
-| `/aerosystems/internships` | Bridge page to aerospace.gamyaa.in/internships |
+| `/aerosystems/internships` | "Engineering Learning & Research Programs" — bridge to aerospace.gamyaa.in/internships |
 | `/aerosystems/contact` | Purushothama Padmanabha, Gamyaa AeroSystems, Bangalore; <gamyaa.aerosystems@gmail.com>; +91 98866 43942 (`mailto:` / `tel:`); form |
 
 **Metadata routes:** `/robots.txt`, `/sitemap.xml` (24 URLs), `/manifest.webmanifest`, `/icon.svg` (adapts to dark browser UI), `/favicon.ico`, `/apple-icon.png`, and Open Graph images for GAMYAA, AeroSystems, DAQIP, AirCert AI and Ventures.
@@ -121,15 +142,17 @@ The site uses the required wording ("assists", "human review", "evidence prepara
 | `nav_click` | `nav_label`, `destination`, `page_path` | Header and mobile navigation |
 | `view_aerosystems`, `view_ventures` | `cta_label`, `destination` | Parent division cards / footer |
 | `view_daqip`, `view_aircert_ai`, `view_fai_solution` | `page_path` | Page view of DAQIP, AirCert AI, FAI |
-| `daqip_research_click`, `request_demo_click` | `source_section` | DAQIP research links, demo CTAs |
+| `daqip_research_click` | `source_section` | DAQIP research links |
+| `demo_interest` (V1.1, replaces `request_demo_click`) | `product` (`daqip` / `aircert`), `source_page`, `cta_location` | "Request a DAQIP Demo", "Register interest in AirCert AI" |
+| `problem_discussion_click` (V1.1) | `topic` (`fai`, `inspection`, `supplier_quality`, `airworthiness`, `certification`, `manufacturing_quality`, `general`), `source_page`, `cta_location` | "Discuss an Aerospace Quality Problem", "Discuss this problem" |
 | `aircert_learn_more_click`, `aircert_contact_click` | `source_section` | AirCert cards and CTAs |
 | `contact_sales_click` | `source_section` | "Talk to Gamyaa" CTAs |
 | `email_click`, `phone_click` | `source_section` (never the address or number) | Any `mailto:` / `tel:` link |
 | `career_view`, `career_cta_click` | — | Careers page / CTA |
-| `internship_view`, `internship_outbound_click` | — | Internships page / outbound links |
+| `internship_view`, `internship_outbound_click` | — | Learning & research programs page / outbound links |
 | `aerospace_cybersecurity_click` | — | Cybersecurity initiative links |
 | `partner_click` | `partner_name` (EV Society, iTelematics), `destination` | Partner links |
-| `leadership_link_click` | `person_name` (allow-listed leadership names only) | LinkedIn links |
+| `leadership_link_click` | `person_name` (allow-listed: Purushothama Padmanabha, Manjunath G) | LinkedIn links |
 | `ventures_contact`, `ventures_focus_click` | — | Ventures CTAs |
 | `form_start`, `form_submit`, `form_error` | `form_name`, `page_path`, `error_type` | Contact forms |
 | `theme_change` | `theme` (`light` / `dark` / `system`) | Theme toggle |
@@ -159,29 +182,34 @@ The site uses the required wording ("assists", "human review", "evidence prepara
 - No secrets in frontend code; configuration comes from environment variables (`.env.example`).
 - `npm audit` reports 5 high-severity advisories in ESLint's dependency tree (`eslint-config-next` → `fast-glob` → `micromatch` → `braces`). These are development-only and not shipped to the site; the suggested fix downgrades `eslint-config-next`, so it was not applied.
 
-## 10. Performance (Lighthouse 12, production build, GA blocked)
+## 10. Performance (Lighthouse 12, V1.1 production build, dark default, GA blocked)
 
-| Page | Mobile: Perf / A11y / Best practices / SEO | Desktop: Perf / A11y / Best practices / SEO |
+| Page | Mobile: Perf / A11y / BP / SEO | Desktop: Perf / A11y / BP / SEO |
 | --- | --- | --- |
-| `/` | 90 / 100 / 100 / 100 (LCP 3.5 s) | 100 / 100 / 100 / 100 (LCP 0.6 s) |
-| `/aerosystems` | 94 / 100 / 100 / 100 (LCP 3.0 s) | 100 / 100 / 100 / 100 |
-| `/aerosystems/daqip` | 94 / 100 / 100 / 100 (LCP 3.0 s) | 100 / 100 / 100 / 100 |
-| `/aerosystems/aircert-ai` | 94 / 100 / 100 / 100 (LCP 3.0 s) | 100 / 100 / 100 / 100 |
-| `/ventures` | 95 / 100 / 100 / 100 (LCP 2.8 s) | 100 / 100 / 100 / 100 |
+| `/` | 95 / 100 / 100 / 100 (LCP 2.8 s) | 100 / 100 / 100 / 100 (LCP 0.6 s) |
+| `/aerosystems` | 94 / 100 / 100 / 100 (LCP 2.9 s) | 100 / 100 / 100 / 100 |
+| `/aerosystems/daqip` | 94 / 100 / 100 / 100 (LCP 2.9 s) | 100 / 100 / 100 / 100 |
+| `/aerosystems/aircert-ai` | 94 / 100 / 100 / 100 (LCP 2.9 s) | 100 / 100 / 100 / 100 |
+| `/aerosystems/solutions/first-article-inspection` | 95 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| `/aerosystems/solutions/engineering-assurance` | 95 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| `/aerosystems/products` | 95 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| `/aerosystems/research` | 95 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| `/aerosystems/contact` | 95 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
+| `/ventures` | 95 / 100 / 100 / 100 | 100 / 100 / 100 / 100 |
 
-CLS is 0 and TBT is ≤ 40 ms everywhere. Mobile LCP is measured under Lighthouse's simulated slow 4G and comes from the hero text waiting for web fonts. The pages ship no images, almost all markup is server-rendered HTML, and the logo is one inline SVG sprite. Real-world performance on Vercel's CDN should be checked with field data after launch.
+CLS is 0 everywhere. Mobile LCP is measured under Lighthouse's simulated slow 4G and comes from the hero text waiting for web fonts. The pages ship no images, almost all markup is server-rendered HTML, and the logo is one inline SVG sprite. Check real-world field data after launch.
 
 ## 11. Known limitations
 
-1. **Contact form delivery is not configured.** Set `RESEND_API_KEY` and `CONTACT_FROM_EMAIL` (sender on a verified domain) in Vercel. Until then the form shows the direct email and phone fallback, and the browser logs the 503 response.
-2. **Rate limiting is per server instance** (in memory). For production, add a Vercel Firewall rate-limit rule on `/api/contact` or a shared store.
+1. **Contact form delivery is not configured.** Set `RESEND_API_KEY` and `CONTACT_FROM_EMAIL` (sender on a verified domain) in Vercel and redeploy. The form then appears automatically. Until then the contact pages show Email Us / Call Us, with no form.
+2. **Rate limiting** is per server instance unless `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` are set (shared limiter implemented) or a Vercel Firewall rule is added.
 3. **CSP uses `'unsafe-inline'` for scripts.** Next.js needs it for inline bootstrap scripts on statically prerendered pages; nonces would force every page to render dynamically.
 4. **HSTS omits `includeSubDomains` / `preload`** until every gamyaa.in subdomain is confirmed to serve HTTPS.
 5. **No consent banner yet** (the architecture is ready, see §8). Confirm the legal requirement before launch.
 6. **Legal pages are drafts:** privacy needs counsel review (including the DPDP Act, 2023); terms are placeholders.
 7. **Product statuses** (§2) are inferred and need owner confirmation.
-8. **Manjunatha G's LinkedIn** is hidden until a URL is provided (`src/content/company.ts`).
-9. **Future mailboxes** (`contact@gamyaa.in`, `aerosystems@gamyaa.in`) are prepared but hidden (`CONTACT.futureEmails`).
+8. **Manjunath G's LinkedIn** is hidden until a URL is provided (`src/content/company.ts`).
+9. **Corporate mailboxes** (`contact@gamyaa.in`, `aerosystems@gamyaa.in`) are prepared. Set `active: true` in `CORPORATE_EMAILS` once one is configured, and it becomes primary site-wide.
 10. **Incorporation:** the footer shows "© 2026 Gamyaa AeroSystems". Set `BRAND.aeroIncorporated = true` only after incorporation is confirmed.
 11. **Not tested on physical devices** or in Edge and Samsung Internet. These are Chromium-based and covered by the Chrome engine tests, but should still be spot-checked.
 12. **aerosystems.gamyaa.in** rules were verified locally with a spoofed `Host` header. They need a live check once the domain is added to the Vercel project. The optional `subdomain` canonical mode can only be fully verified then too.
@@ -194,7 +222,7 @@ CLS is 0 and TBT is ≤ 40 ms everywhere. Mobile LCP is measured under Lighthous
 3. **Mobile:** on a phone (or Safari's responsive mode), open the ☰ menu, navigate, and press Esc or ✕. Check that nothing scrolls sideways.
 4. **DAQIP** (`/aerosystems/daqip`): tap the characteristics #14–#19; #19 should show "Rejected · NCR open".
 5. **Timeline** (`/aerosystems`): on desktop, use ← → on the year tabs; 2027 onwards is labelled Roadmap / Vision.
-6. **Links:** LinkedIn (Purushothama, Sudarshana), EV Society, iTelematics, aerospace.gamyaa.in pages, and the `mailto:` / `tel:` links all open the right destination.
+6. **Links:** LinkedIn (Purushothama Padmanabha), EV Society, iTelematics, aerospace.gamyaa.in pages, and the `mailto:` / `tel:` links all open the right destination.
 7. **Analytics, after deploying to production:** enable GA4 DebugView (Google Analytics Debugger extension, or deploy once with `NEXT_PUBLIC_GA_DEBUG=1`).
    - Load a page: one `page_view`.
    - Navigate to another page: one more `page_view`.

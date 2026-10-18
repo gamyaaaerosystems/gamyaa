@@ -1,4 +1,4 @@
-import { CtaBand, internalContact, PageHero } from "@/components/sections/shared";
+import { CommercialCtas, CtaBand, PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ArrowLink, Container, JsonLd, Section } from "@/components/ui/primitives";
 import { SERVICES } from "@/content/services";
@@ -60,7 +60,8 @@ export default function ServicesPage() {
 
       <CtaBand
         title="Scope an engagement"
-        primary={{ label: "Talk to Gamyaa", href: internalContact("services"), ga: { event: "contact_sales_click" } }}
+        body="Start with the quality or certification problem in front of you."
+        actions={<CommercialCtas location="cta_band" />}
       />
     </>
   );

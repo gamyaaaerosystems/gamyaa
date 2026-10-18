@@ -7,6 +7,9 @@ import { interestLabel, validateContact, type ContactPayload } from "@/lib/conta
  * Protections: same-origin check (CSRF), JSON-only, body size limit, per-IP rate
  * limit, honeypot + minimum fill time (spam), shared server-side validation.
  *
+ * Rate limiting: shared across instances when UPSTASH_REDIS_REST_URL and
+ * UPSTASH_REDIS_REST_TOKEN are set (IP addresses are hashed); otherwise per instance.
+ *
  * Delivery: set RESEND_API_KEY, CONTACT_FROM_EMAIL (verified sender) and optionally
  * CONTACT_TO_EMAIL. Without them, production responds 503 and the form shows the
  * direct email / phone fallback.
@@ -41,6 +44,31 @@ function sameOrigin(req: NextRequest): boolean {
   }
 }
 
+/** Shared limiter via Upstash Redis REST. Returns null when not configured or unreachable. */
+async function sharedRateLimited(ip: string): Promise<boolean | null> {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  try {
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`gamyaa-contact:${ip}`));
+    const key = `rl:contact:${Buffer.from(digest).toString("hex").slice(0, 32)}`;
+    const res = await fetch(`${url}/pipeline`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify([
+        ["INCR", key],
+        ["EXPIRE", key, String(WINDOW_MS / 1000), "NX"],
+      ]),
+      cache: "no-store",
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as Array<{ result?: number }>;
+    return (data[0]?.result ?? 0) > MAX_PER_WINDOW;
+  } catch {
+    return null;
+  }
+}
+
 function rateLimited(key: string): boolean {
   const now = Date.now();
   const recent = (hits.get(key) ?? []).filter((t) => now - t < WINDOW_MS);
@@ -62,7 +90,8 @@ export async function POST(req: NextRequest) {
 
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
-  if (rateLimited(ip)) return json({ ok: false, error: "rate_limited" }, 429);
+  const shared = await sharedRateLimited(ip);
+  if (shared ?? rateLimited(ip)) return json({ ok: false, error: "rate_limited" }, 429);
 
   let payload: Partial<ContactPayload>;
   try {

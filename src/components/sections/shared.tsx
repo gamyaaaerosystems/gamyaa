@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import type { CtaLocation, DemoProduct, ProblemTopic } from "@/lib/analytics";
 import { aero, EXTERNAL } from "@/lib/site";
 import { LEADERSHIP, PARTNERS } from "@/content/company";
 import { ArrowLink, ButtonLink, Container, Section, SectionHeader, SmartLink } from "@/components/ui/primitives";
@@ -13,16 +14,10 @@ export function LeadershipSection({ id }: { id?: string }) {
     <Section id={id} section="leadership">
       <Container>
         <SectionHeader eyebrow="Leadership" title="The team building Gamyaa AeroSystems" />
-        <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-3">
+        <ul className="mt-12 grid max-w-4xl gap-px overflow-hidden border border-line bg-line sm:grid-cols-2">
           {LEADERSHIP.map((p) => (
             <li key={p.name} className="flex flex-col bg-surface p-6 sm:p-8">
-              <span
-                aria-hidden
-                className="grid size-14 place-items-center border border-line-strong font-mono text-sm tracking-[0.1em] text-ink-2"
-              >
-                {p.initials}
-              </span>
-              <h3 className="mt-6 text-lg font-medium text-ink">{p.name}</h3>
+              <h3 className="text-xl font-medium tracking-tight text-ink">{p.name}</h3>
               <p className="mt-1 text-sm text-muted">{p.role}</p>
               {p.linkedin ? (
                 <SmartLink
@@ -87,8 +82,8 @@ export function EngineeringInitiatives() {
       event: "aerospace_cybersecurity_click" as const,
     },
     {
-      title: "Engineering Internships",
-      body: "Applied engineering programs across aerospace, defence, quality intelligence, airworthiness, cybersecurity, digital twins and advanced systems.",
+      title: "Engineering Learning & Research Programs",
+      body: "Applied engineering programs across aerospace, defence, quality intelligence, cybersecurity, digital twins and advanced engineering systems.",
       cta: "Explore Internships",
       href: EXTERNAL.internships,
       event: "internship_outbound_click" as const,
@@ -153,11 +148,14 @@ export function CtaBand({
   body,
   primary,
   secondary,
+  actions,
 }: {
   title: string;
   body?: ReactNode;
-  primary: { label: string; href: string; ga?: Parameters<typeof ButtonLink>[0]["ga"] };
+  primary?: { label: string; href: string; ga?: Parameters<typeof ButtonLink>[0]["ga"] };
   secondary?: { label: string; href: string; ga?: Parameters<typeof ButtonLink>[0]["ga"] };
+  /** Custom action row (e.g. <CommercialCtas />) instead of primary/secondary. */
+  actions?: ReactNode;
 }) {
   return (
     <Section section="cta">
@@ -169,10 +167,13 @@ export function CtaBand({
               {title}
             </h2>
             {body ? <div className="lede mt-4">{body}</div> : null}
-            <div className="mt-8 flex flex-col gap-3 xs:flex-row">
-              <ButtonLink href={primary.href} ga={primary.ga} label={primary.label}>
-                {primary.label}
-              </ButtonLink>
+            <div className="mt-8 flex flex-col gap-3 xs:flex-row xs:flex-wrap">
+              {actions}
+              {primary ? (
+                <ButtonLink href={primary.href} ga={primary.ga} label={primary.label}>
+                  {primary.label}
+                </ButtonLink>
+              ) : null}
               {secondary ? (
                 <ButtonLink href={secondary.href} variant="secondary" ga={secondary.ga} label={secondary.label}>
                   {secondary.label}
@@ -221,3 +222,48 @@ export function PageHero({
 
 export const internalContact = (interest?: string) =>
   interest ? `${aero("/contact")}?interest=${interest}` : aero("/contact");
+
+/* ------------------------------------------------------ Commercial CTAs */
+
+export const DEMO_HREF = internalContact("daqip");
+export const PROBLEM_HREF = internalContact("quality-problem");
+
+/** GA config for "Request a DAQIP Demo" (or AirCert AI interest). */
+export const demoGa = (location: CtaLocation, product: DemoProduct = "daqip") => ({
+  event: "demo_interest" as const,
+  params: { product, cta_location: location },
+});
+
+/** GA config for "Discuss an Aerospace Quality Problem". */
+export const problemGa = (location: CtaLocation, topic: ProblemTopic = "general") => ({
+  event: "problem_discussion_click" as const,
+  params: { topic, cta_location: location },
+});
+
+/** The two commercial actions used across AeroSystems. */
+export function CommercialCtas({
+  location,
+  topic = "general",
+  product = "daqip",
+  className,
+}: {
+  location: CtaLocation;
+  topic?: ProblemTopic;
+  product?: DemoProduct;
+  className?: string;
+}) {
+  const demo =
+    product === "aircert"
+      ? { label: "Register interest in AirCert AI", href: internalContact("aircert") }
+      : { label: "Request a DAQIP Demo", href: DEMO_HREF };
+  return (
+    <div className={cn("flex flex-col gap-3 xs:flex-row xs:flex-wrap", className)}>
+      <ButtonLink href={demo.href} ga={demoGa(location, product)} label={demo.label}>
+        {demo.label}
+      </ButtonLink>
+      <ButtonLink href={PROBLEM_HREF} variant="secondary" ga={problemGa(location, topic)} label="Discuss an Aerospace Quality Problem">
+        Discuss an Aerospace Quality Problem
+      </ButtonLink>
+    </div>
+  );
+}

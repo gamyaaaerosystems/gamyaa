@@ -1,7 +1,7 @@
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { ButtonLink, Container, Notice, Section, SectionHeader } from "@/components/ui/primitives";
+import { BulletList, ButtonLink, Container, KeywordLine, Notice, Section, SectionHeader } from "@/components/ui/primitives";
 import { CtaBand, PageHero } from "@/components/sections/shared";
-import { VENTURE_FOCUS, VENTURE_MODES } from "@/content/ventures";
+import { VENTURE_MODES, VENTURE_POSITIONING, VENTURE_THEMES } from "@/content/ventures";
 import { pageMetadata } from "@/lib/seo";
 import { parent } from "@/lib/site";
 
@@ -38,6 +38,7 @@ export default function VenturesPage() {
           We explore, build and support engineering-led ventures strengthening aerospace, defence, space and advanced
           manufacturing.
         </p>
+        <KeywordLine className="mt-8" items={VENTURE_POSITIONING} />
         <div className="mt-10 flex flex-col gap-3 xs:flex-row">
           <ButtonLink href={contactHref} ga={{ event: "ventures_contact" }} label="Partner With Gamyaa">
             Partner With Gamyaa
@@ -60,15 +61,14 @@ export default function VenturesPage() {
             title="Where we look for engineering-led ventures"
             id="focus-title"
           />
-          <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {VENTURE_FOCUS.map((f, i) => (
-              <li key={f.title} className="bg-surface p-6">
+          <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {VENTURE_THEMES.map((t, i) => (
+              <li key={t.title} className="bg-surface p-6 sm:p-7">
                 <p className="font-mono text-xs text-subtle">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="mt-3 text-lg font-medium text-ink">{f.title}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted">{f.body}</p>
+                <h3 className="mt-4 text-lg font-medium leading-snug text-ink">{t.title}</h3>
+                <BulletList items={t.items} className="mt-5" />
               </li>
             ))}
-            <li className="hidden bg-surface p-6 sm:block" aria-hidden />
           </ul>
         </Container>
       </Section>

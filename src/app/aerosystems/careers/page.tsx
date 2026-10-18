@@ -29,7 +29,7 @@ export default function CareersPage() {
           />
         }
         eyebrow="Careers"
-        title="Build Engineering Systems That Matter."
+        title="Build Engineering Systems That Matter"
         lede="We are building engineering intelligence for aerospace and defence quality and certification. The work is precise, evidence-driven and close to real manufacturing."
       />
 

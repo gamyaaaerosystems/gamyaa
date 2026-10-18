@@ -57,6 +57,10 @@ export function pageMetadata({
 
 /* ------------------------------------------------------------ JSON-LD */
 
+/** Company-level category (positioning, not a product name). Use sparingly. */
+export const ENGINEERING_ASSURANCE_DEFINITION =
+  "Gamyaa AeroSystems builds engineering assurance intelligence platforms for aerospace and defence — connecting airworthiness, manufacturing quality, inspection, evidence and approval.";
+
 export const ORG_ID = `${PRIMARY_ORIGIN}/#organization`;
 export const AERO_ORG_ID = `${absoluteUrl(aero())}#organization`;
 export const WEBSITE_ID = `${PRIMARY_ORIGIN}/#website`;
@@ -98,8 +102,8 @@ export function aeroOrganizationLd() {
     legalName: BRAND.aeroIncorporated ? aeroLegalName : undefined,
     url: absoluteUrl(aero()),
     logo: LOGO,
-    description:
-      "Gamyaa AeroSystems builds engineering intelligence platforms for aerospace and defence quality, airworthiness, inspection, manufacturing and engineering evidence.",
+    description: ENGINEERING_ASSURANCE_DEFINITION,
+    slogan: "Intelligence for Aerospace & Defence Manufacturing",
     parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
@@ -125,8 +129,7 @@ export function aeroOrganizationLd() {
     ],
     founder: [
       { "@type": "Person", name: "Purushothama Padmanabha" },
-      { "@type": "Person", name: "Manjunatha G" },
-      { "@type": "Person", name: "Sudarshana Karkala" },
+      { "@type": "Person", name: "Manjunath G" },
     ],
   };
 }

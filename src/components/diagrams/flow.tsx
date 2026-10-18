@@ -122,8 +122,8 @@ export function LifecycleDiagram() {
       </div>
 
       <div aria-hidden className="mt-10 hidden grid-cols-6 gap-x-4 lg:grid">
-        <Bracket className="col-span-2" title="AirCert AI™" sub="Airworthiness · Certification · Design assurance" />
-        <Bracket className="col-span-3" title="DAQIP™" sub="Manufacturing · Inspection · FAI · Quality evidence" />
+        <Bracket className="col-span-2" title="AirCert AI™" sub="Design assurance · Certification" />
+        <Bracket className="col-span-3" title="DAQIP™" sub="Manufacturing assurance · Quality" />
         <Bracket className="col-span-1" title="Human authority" sub="Review · Approval" accent />
       </div>
       <p className="sr-only">
@@ -168,14 +168,14 @@ export function IntegrationDiagram() {
         <div className="pr-6 text-right">
           <p className="text-sm font-medium text-ink">AirCert AI™</p>
           <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">
-            Airworthiness · Certification · Design Assurance
+            Design Assurance / Certification
           </p>
         </div>
         <div />
         <div className="pl-6">
           <p className="text-sm font-medium text-ink">DAQIP™</p>
           <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">
-            Manufacturing · Inspection · FAI · Quality Evidence
+            Manufacturing Assurance / Quality
           </p>
         </div>
       </div>

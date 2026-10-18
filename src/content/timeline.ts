@@ -18,15 +18,17 @@ export const TIMELINE: Milestone[] = [
     phase: "Idea",
     title: "December 2024",
     kind: "history",
-    summary:
-      "Initial idea to solve real-world aerospace and defence manufacturing, inspection, quality and engineering workflow challenges.",
-    points: [],
+    summary: "Initial aerospace and defence quality intelligence concept.",
+    points: [
+      "Idea to solve real-world aerospace and defence manufacturing, inspection, quality and engineering workflow challenges",
+    ],
   },
   {
     year: "2025",
-    phase: "Proof of Concept",
+    phase: "POC",
     title: "POC & Customer Problem Validation",
     kind: "history",
+    summary: "Problem validation and early engineering workflows.",
     points: [
       "Study aerospace / defence MSME quality challenges",
       "Validate FAI, inspection and documentation pain points",
@@ -38,7 +40,7 @@ export const TIMELINE: Milestone[] = [
     phase: "Product & Company",
     title: "DAQIP™ + Gamyaa AeroSystems",
     kind: "current",
-    summary: "The transition from research and proof of concept to product and company.",
+    summary: "DAQIP™, the AirCert AI™ concept and the formation of Gamyaa AeroSystems.",
     points: [
       "Build DAQIP™ — Defence Aerospace Quality Intelligence Platform",
       "First Article Inspection / AS9102 intelligence",
@@ -50,9 +52,10 @@ export const TIMELINE: Milestone[] = [
   },
   {
     year: "2027",
-    phase: "Customer Validation & Deployment",
+    phase: "Customer Validation",
     title: "From Product to Industry Adoption",
     kind: "roadmap",
+    summary: "DAQIP pilots and industry feedback.",
     points: [
       "DAQIP customer pilots",
       "Aerospace & defence MSME deployments",
@@ -64,9 +67,10 @@ export const TIMELINE: Milestone[] = [
   },
   {
     year: "2028",
-    phase: "Integrated Engineering Assurance",
+    phase: "Engineering Assurance Integration",
     title: "Quality + Airworthiness + Certification Intelligence",
     kind: "roadmap",
+    summary: "DAQIP + AirCert AI integration.",
     flow: "Design → Certification → Manufacturing → Inspection → Evidence → Approval",
     points: [
       "Integrate DAQIP™ and AirCert AI™ intelligence layers",
@@ -78,15 +82,12 @@ export const TIMELINE: Milestone[] = [
   },
   {
     year: "2029",
-    phase: "Global Aerospace Engineering Intelligence",
+    phase: "Aerospace Ecosystem",
     title: "Scale Beyond Individual Workflows",
     kind: "roadmap",
-    summary: "Target a unified engineering intelligence platform for:",
+    summary: "Expand engineering intelligence across the aerospace supply chain.",
     points: [
-      "Aerospace",
-      "Defence",
-      "Space",
-      "Advanced manufacturing",
+      "Unified engineering intelligence for aerospace, defence, space and advanced manufacturing",
       "Global aerospace supply chains",
     ],
   },

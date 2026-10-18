@@ -7,6 +7,10 @@ export const DAQIP = {
   tagline: "From Engineering Intent to Manufacturing Evidence.",
   coreMessage: "Every requirement. Every measurement. Every approval. Traceable.",
   philosophy: "AI assists. Engineers verify. Quality approves. DAQIP preserves the evidence.",
+  shortExplanation:
+    "A digital quality intelligence platform connecting engineering drawings, First Article Inspection, inspection, manufacturing evidence and approval.",
+  oneSentence:
+    "DAQIP is Gamyaa AeroSystems' defence and aerospace manufacturing quality intelligence platform for FAI, inspection, quality evidence and engineering traceability.",
   summary:
     "DAQIP connects engineering drawings, manufacturing requirements, inspection planning, First Article Inspection, measurement evidence, supplier quality and approval through a trusted digital thread.",
   definition:

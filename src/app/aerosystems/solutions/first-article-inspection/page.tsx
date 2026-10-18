@@ -1,12 +1,11 @@
 import { TrackView } from "@/components/analytics/track-view";
 import { BalloonDrawing } from "@/components/diagrams/balloon-drawing";
 import { FlowChain } from "@/components/diagrams/flow";
-import { CtaBand, internalContact, PageHero } from "@/components/sections/shared";
+import { CommercialCtas, CtaBand, FaqSection, PageHero } from "@/components/sections/shared";
 import { RelatedSolutions, solutionMetadata, SolutionBreadcrumbs } from "@/components/sections/solution-template";
 import {
   ArrowLink,
   BulletList,
-  ButtonLink,
   Container,
   JsonLd,
   Notice,
@@ -15,7 +14,7 @@ import {
   StatusBadge,
 } from "@/components/ui/primitives";
 import { solutionBySlug } from "@/content/solutions";
-import { techArticleLd } from "@/lib/seo";
+import { faqLd, techArticleLd } from "@/lib/seo";
 import { aero } from "@/lib/site";
 
 export const metadata = solutionMetadata("first-article-inspection");
@@ -53,6 +52,25 @@ const FAI_TYPES = [
   },
 ];
 
+const FAI_FAQ = [
+  {
+    q: "What is First Article Inspection software?",
+    a: "First Article Inspection (FAI) software helps a manufacturer verify that the first part from a production process meets every requirement on the drawing, and records the evidence in a First Article Inspection Report (FAIR). DAQIP structures this work: ballooning the drawing, building the characteristic list, recording measurements and reviewing the FAIR.",
+  },
+  {
+    q: "What is a FAIR in AS9102?",
+    a: "A FAIR is the First Article Inspection Report defined by AS9102. It is organised as Form 1 (Part Number Accountability), Form 2 (Product Accountability: raw material, specifications, special processes and functional testing) and Form 3 (Characteristic Accountability, Verification and Compatibility Evaluation).",
+  },
+  {
+    q: "What is balloon drawing software?",
+    a: "Balloon drawing software numbers every characteristic on an engineering drawing so each one can be measured and reported. In DAQIP, balloon numbers stay linked to the drawing revision, the requirement, the inspection method, the measurement and the approval.",
+  },
+  {
+    q: "Is DAQIP available as AS9102 FAI software today?",
+    a: "DAQIP is in development. The interactive prototype on this site shows the intended FAI workflow with illustrative data. DAQIP supports AS9102-aligned workflows but does not by itself make an organisation compliant with AS9102.",
+  },
+];
+
 export default function FaiPage() {
   const s = solutionBySlug("first-article-inspection")!;
   const href = aero(`/solutions/${s.slug}`);
@@ -60,6 +78,7 @@ export default function FaiPage() {
     <>
       <TrackView event="view_fai_solution" />
       <JsonLd data={techArticleLd({ headline: s.title, description: s.metaDescription, href })} />
+      <JsonLd data={faqLd(FAI_FAQ)} />
 
       <PageHero
         breadcrumbs={<SolutionBreadcrumbs s={s} />}
@@ -75,22 +94,37 @@ export default function FaiPage() {
         <div className="mt-10">
           <FlowChain label="First Article Inspection workflow" steps={s.flow} />
         </div>
-        <div className="mt-10 flex flex-col gap-3 xs:flex-row">
-          <ButtonLink href={internalContact("fai")} ga={{ event: "request_demo_click" }} label="Request an FAI demo">
-            Request an FAI demo
-          </ButtonLink>
-          <ButtonLink href={aero("/daqip")} variant="secondary" label="Explore DAQIP">
-            Explore DAQIP™
-          </ButtonLink>
-        </div>
+        <CommercialCtas location="hero" topic="fai" className="mt-10" />
+        <ArrowLink href={aero("/daqip")} label="Explore DAQIP" className="mt-4">
+          Explore DAQIP™
+        </ArrowLink>
       </PageHero>
+
+      <Section labelledBy="problem-title" section="fai_problem">
+        <Container className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="Problem" id="problem-title" title="Why FAI takes so long" />
+          </div>
+          <div className="lg:col-span-8">
+            <p className="lede">{s.problem}</p>
+            <p className="eyebrow mb-3 mt-8">Who experiences it</p>
+            <ul className="flex flex-wrap gap-2">
+              {s.who.map((w) => (
+                <li key={w} className="border border-line-strong bg-surface px-3 py-1.5 text-sm text-ink-2">
+                  {w}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </Section>
 
       <Section labelledBy="balloon-title" section="balloon_drawing">
         <Container>
           <SectionHeader
             eyebrow="Drawing → Balloon → Characteristics"
             id="balloon-title"
-            title="Ballooning that stays connected to the evidence"
+            title="Balloon drawing that stays connected to the evidence"
             lede="Each balloon is a characteristic with a requirement, an inspection method, a measured result, evidence and an approval decision."
           />
           <div className="mt-12">
@@ -99,7 +133,7 @@ export default function FaiPage() {
         </Container>
       </Section>
 
-      <Section labelledBy="forms-title" section="as9102">
+      <Section id="as9102" labelledBy="forms-title" section="as9102">
         <Container>
           <SectionHeader
             eyebrow="AS9102"
@@ -158,12 +192,14 @@ export default function FaiPage() {
         </Container>
       </Section>
 
+      <FaqSection title="FAI software questions" items={FAI_FAQ} />
+
       <RelatedSolutions current={s.slug} />
 
       <CtaBand
         title="Run your next First Article Inspection with traceable evidence"
         body="Tell us about your parts, your current FAI process and your customers' requirements."
-        primary={{ label: "Request an FAI demo", href: internalContact("fai"), ga: { event: "request_demo_click" } }}
+        actions={<CommercialCtas location="cta_band" topic="fai" />}
       />
     </>
   );

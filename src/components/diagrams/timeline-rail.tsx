@@ -46,7 +46,7 @@ export function TimelineRail({ items, initial = "2026" }: { items: Milestone[]; 
           className="ml-3 border-t border-dashed border-line-strong pt-2"
           style={{ gridColumn: `${firstFuture + 1} / ${items.length + 1}` }}
         >
-          <span className="eyebrow">Roadmap / Vision · not guaranteed</span>
+          <span className="eyebrow">Roadmap / Vision — not guaranteed</span>
         </div>
       </div>
 

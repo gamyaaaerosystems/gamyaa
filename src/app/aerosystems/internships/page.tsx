@@ -6,9 +6,9 @@ import { pageMetadata } from "@/lib/seo";
 import { aero, EXTERNAL } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: "Engineering Internships | Gamyaa AeroSystems",
+  title: "Engineering Learning & Research Programs | Gamyaa AeroSystems",
   description:
-    "Applied engineering internships across aerospace, defence, quality intelligence, airworthiness, cybersecurity, digital twins and advanced systems.",
+    "Applied engineering programs across aerospace, defence, quality intelligence, cybersecurity, digital twins and advanced engineering systems.",
   href: aero("/internships"),
 });
 
@@ -25,14 +25,18 @@ export default function InternshipsPage() {
             ]}
           />
         }
-        eyebrow="Internships"
-        title="Engineering Internships"
-        lede="Applied engineering programs across aerospace, defence, quality intelligence, airworthiness, cybersecurity, digital twins and advanced systems. Programmes, eligibility and applications are managed on our aerospace programmes site."
+        eyebrow="Learning & research"
+        title="Engineering Learning & Research Programs"
+        lede="Applied engineering programs across aerospace, defence, quality intelligence, cybersecurity, digital twins and advanced engineering systems."
       >
         <KeywordLine
           className="mt-8"
-          items={["Aerospace", "Defence", "Quality intelligence", "Airworthiness", "Cybersecurity", "Digital twins"]}
+          items={["Aerospace", "Defence", "Quality intelligence", "Cybersecurity", "Digital twins", "Advanced systems"]}
         />
+        <p className="mt-6 max-w-3xl text-[0.9375rem] leading-relaxed text-muted">
+          These programs are separate from Gamyaa AeroSystems&apos; commercial products and services. Programs,
+          eligibility and applications are managed on our aerospace programs site.
+        </p>
         <div className="mt-10 flex flex-col gap-3 xs:flex-row">
           <ButtonLink
             href={EXTERNAL.internships}

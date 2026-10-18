@@ -1,13 +1,9 @@
 import { TrackView } from "@/components/analytics/track-view";
-import {
-  ComplianceMatrixExample,
-  FlowChain,
-  IntegrationDiagram,
-  ReadinessPanel,
-} from "@/components/diagrams/flow";
-import { CtaBand, FaqSection, internalContact, PageHero } from "@/components/sections/shared";
+import { ComplianceMatrixExample, FlowChain, ReadinessPanel } from "@/components/diagrams/flow";
+import { CommercialCtas, CtaBand, FaqSection, internalContact, PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import {
+  ArrowLink,
   BulletList,
   ButtonLink,
   Container,
@@ -80,6 +76,11 @@ export default function AircertPage() {
       >
         <p className="heading mt-8 text-xl text-ink sm:text-2xl">{AIRCERT.line}</p>
         <p className="lede mt-4 max-w-3xl">{AIRCERT.statement}</p>
+        <FlowChain
+          className="mt-8"
+          label="AirCert AI workflow"
+          steps={["Requirement", "Compliance", "Verification", "Evidence", "Review"]}
+        />
         <Notice className="mt-8 max-w-3xl">
           <strong className="text-ink">Planned product.</strong> {AIRCERT.boundary}
         </Notice>
@@ -104,6 +105,10 @@ export default function AircertPage() {
           <div className="lg:col-span-8">
             <p className="text-xl leading-relaxed tracking-tight text-ink sm:text-2xl">{AIRCERT.definition}</p>
             <p className="mt-4 text-[0.9375rem] text-ink-2">{AIRCERT.positioning}</p>
+            <div className="mt-8 border-l-2 border-accent pl-5">
+              <p className="eyebrow">AirCert AI — in one sentence</p>
+              <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">{AIRCERT.oneSentence}</p>
+            </div>
             <dl className="mt-10 grid gap-6 border-t border-line pt-8 text-[0.9375rem] sm:grid-cols-3">
               <div>
                 <dt className="eyebrow">Made by</dt>
@@ -279,19 +284,21 @@ export default function AircertPage() {
         </Container>
       </Section>
 
-      {/* Integration */}
+      {/* Relationship to DAQIP (full diagram lives on Engineering Assurance) */}
       <Section labelledBy="int-title" section="integration">
-        <Container className="grid gap-12 lg:grid-cols-12">
+        <Container className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <SectionHeader
-              eyebrow="AirCert AI™ + DAQIP™"
-              id="int-title"
-              title="Certification evidence that reaches the shop floor"
-              lede="AirCert AI is designed to connect certification and design requirements to DAQIP manufacturing characteristics, inspection methods and FAI evidence, with human and authority review at the end of the thread."
-            />
+            <SectionHeader eyebrow="AirCert AI™ + DAQIP™" id="int-title" title="Design assurance meets manufacturing assurance" />
           </div>
           <div className="lg:col-span-7">
-            <IntegrationDiagram />
+            <p className="lede">
+              AirCert AI covers design assurance and certification. DAQIP covers manufacturing assurance and quality.
+              Connected, a certification requirement can be followed to the manufacturing characteristic, the
+              inspection method and the FAI evidence that supports it, with human and authority review at the end.
+            </p>
+            <ArrowLink href={aero("/solutions/engineering-assurance")} className="mt-6">
+              See the engineering assurance thread
+            </ArrowLink>
           </div>
         </Container>
       </Section>
@@ -301,7 +308,7 @@ export default function AircertPage() {
       <CtaBand
         title="Shaping AirCert AI with certification engineers"
         body="If your team prepares products for military airworthiness or civil certification, we would like to understand your process."
-        primary={{ label: "Discuss AirCert AI", href: internalContact("aircert"), ga: { event: "aircert_contact_click" } }}
+        actions={<CommercialCtas location="cta_band" product="aircert" topic="certification" />}
       />
     </>
   );

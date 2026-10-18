@@ -65,21 +65,24 @@ export const aeroLegalName = BRAND.aeroIncorporated
   ? BRAND.aeroLegalNameAfterIncorporation
   : BRAND.aero;
 
+/**
+ * Corporate-domain mailboxes, prepared for launch. Set `active: true` on one once it
+ * is configured and monitored; it then becomes the primary email across the site.
+ */
+const CORPORATE_EMAILS = [
+  { address: "contact@gamyaa.in", active: false },
+  { address: "aerosystems@gamyaa.in", active: false },
+] as const;
+
+const CURRENT_EMAIL = "gamyaa.aerosystems@gmail.com";
+
 export const CONTACT = {
   person: "Purushothama Padmanabha",
   organisation: "Gamyaa AeroSystems",
   location: "Bangalore, India",
-  email: "gamyaa.aerosystems@gmail.com",
+  email: (CORPORATE_EMAILS.find((e) => e.active)?.address ?? CURRENT_EMAIL) as string,
   phoneDisplay: "+91 98866 43942",
   phoneE164: "+919886643942",
-  /**
-   * Prepared for future domain mailboxes. Keep `display: false` until the
-   * mailbox is configured and monitored.
-   */
-  futureEmails: [
-    { address: "contact@gamyaa.in", display: false },
-    { address: "aerosystems@gamyaa.in", display: false },
-  ],
 } as const;
 
 export const EXTERNAL = {

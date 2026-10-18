@@ -4,7 +4,11 @@ export const AIRCERT = {
   subtitle: "Airworthiness Certification Engineering Copilot",
   line: "Requirements. Compliance. Verification. Evidence. Traceability.",
   statement:
-    "Turn certification requirements into structured plans, engineering documents, verification activities and traceable compliance evidence.",
+    "Turn certification requirements into structured plans, engineering artefacts, verification activities and traceable evidence.",
+  shortExplanation:
+    "AI-assisted certification engineering for requirements, planning, verification and traceable certification evidence.",
+  oneSentence:
+    "AirCert AI is Gamyaa AeroSystems' AI-assisted engineering copilot for airworthiness certification planning, compliance evidence and verification traceability.",
   positioning: "An AI-assisted certification engineering platform.",
   problem:
     "Aerospace and defence MSMEs often have strong design and manufacturing capability but face delays in certification because the airworthiness process is documentation-heavy, standards-intensive and difficult to trace across requirements, verification and evidence.",
@@ -13,7 +17,7 @@ export const AIRCERT = {
   definition:
     "AirCert AI is an Airworthiness Certification Engineering Copilot by Gamyaa AeroSystems that assists aerospace and defence teams with certification requirements, planning, compliance matrices, engineering documentation, verification activities and traceable certification evidence.",
   boundary:
-    "AirCert AI assists certification work. It does not independently certify aerospace products, and it does not replace certification authorities or their decisions.",
+    "AirCert AI assists certification engineering. It does not independently certify aerospace products, and it does not replace certification authorities or their decisions.",
 } as const;
 
 export const AIRCERT_AUDIENCE = [

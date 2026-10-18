@@ -1,8 +1,6 @@
-import { ContactDetails } from "@/components/contact/contact-details";
-import { ContactForm } from "@/components/contact/contact-form";
+import { ContactSection, type ContactIntent } from "@/components/contact/contact-section";
 import { PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { Container } from "@/components/ui/primitives";
 import { pageMetadata } from "@/lib/seo";
 import { aero } from "@/lib/site";
 
@@ -12,6 +10,23 @@ export const metadata = pageMetadata({
     "Contact Gamyaa AeroSystems about DAQIP™, First Article Inspection, AirCert AI™, engineering services or partnerships. Purushothama Padmanabha, Bangalore, India.",
   href: aero("/contact"),
 });
+
+const INTENTS: ContactIntent[] = [
+  {
+    interest: "daqip",
+    title: "Request a DAQIP Demo",
+    body: "See the First Article Inspection and traceability workflow, and discuss a pilot on one of your parts.",
+    subject: "DAQIP demo request",
+    ga: { event: "demo_interest", params: { product: "daqip", cta_location: "contact_page" } },
+  },
+  {
+    interest: "quality-problem",
+    title: "Discuss an Aerospace Quality Problem",
+    body: "FAI, inspection, supplier quality, manufacturing quality, airworthiness or certification evidence.",
+    subject: "Aerospace quality problem — discussion",
+    ga: { event: "problem_discussion_click", params: { topic: "general", cta_location: "contact_page" } },
+  },
+];
 
 export default function AeroContactPage() {
   return (
@@ -27,19 +42,9 @@ export default function AeroContactPage() {
         }
         eyebrow="Contact"
         title="Talk to Gamyaa AeroSystems"
-        lede="Demos, pilots, partnerships and engineering questions. Write to us, or call during Indian business hours."
+        lede="Demos, pilots, partnerships and engineering questions. Email us, or call during Indian business hours."
       />
-      <section className="pb-20" data-ga-section="contact">
-        <Container className="grid gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <ContactDetails />
-          </div>
-          <div className="lg:col-span-8">
-            <h2 className="sr-only">Send a message</h2>
-            <ContactForm formName="aerosystems_contact" />
-          </div>
-        </Container>
-      </section>
+      <ContactSection formName="aerosystems_contact" intents={INTENTS} />
     </>
   );
 }

@@ -1,17 +1,18 @@
 import { TrackView } from "@/components/analytics/track-view";
 import { BalloonDrawing } from "@/components/diagrams/balloon-drawing";
 import { FlowChain } from "@/components/diagrams/flow";
-import { CtaBand, FaqSection, internalContact, PageHero } from "@/components/sections/shared";
+import { CommercialCtas, CtaBand, FaqSection, PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { ArrowRight } from "@/components/ui/icons";
 import {
   ArrowLink,
   BulletList,
-  ButtonLink,
   Container,
   JsonLd,
   Notice,
   Section,
   SectionHeader,
+  SmartLink,
   StatusBadge,
 } from "@/components/ui/primitives";
 import { DAQIP, DAQIP_CAPABILITIES, DAQIP_FAQ } from "@/content/daqip";
@@ -26,6 +27,47 @@ export const metadata = pageMetadata({
   href: aero("/daqip"),
   hasOwnOgImage: true,
 });
+
+const FAI = aero("/solutions/first-article-inspection");
+
+/** Only things a visitor can genuinely use on this site today. No planned features. */
+const EXPLORE_TODAY: Array<{ title: string; body: string; href: string }> = [
+  {
+    title: "Interactive balloon drawing",
+    body: "Select ballooned characteristics on an original, fictitious aerospace drawing.",
+    href: "#fai-prototype",
+  },
+  {
+    title: "Characteristic traceability",
+    body: "Follow one characteristic to its requirement, process, inspection method, measurement, evidence and approval.",
+    href: "#fai-prototype",
+  },
+  {
+    title: "Engineering requirement mapping",
+    body: "How dimensions, GD&T, datums and notes become reviewable requirements.",
+    href: aero("/solutions/drawing-intelligence"),
+  },
+  {
+    title: "FAI workflow model",
+    body: "Drawing → Balloon → Characteristics → Measurements → AS9102 → Review.",
+    href: FAI,
+  },
+  {
+    title: "AS9102 structure",
+    body: "How First Article Inspection data is organised across Forms 1, 2 and 3.",
+    href: `${FAI}#as9102`,
+  },
+  {
+    title: "Quality evidence graph",
+    body: "Requirement → Method → Measurement → Evidence → Approval.",
+    href: "#capabilities",
+  },
+  {
+    title: "Product architecture",
+    body: "The eleven intelligence layers, each with its current status.",
+    href: "#capabilities",
+  },
+];
 
 export default function DaqipPage() {
   return (
@@ -67,25 +109,21 @@ export default function DaqipPage() {
             </span>
           </>
         }
+        lede={DAQIP.shortExplanation}
       >
-        <p className="heading mt-8 text-xl text-ink sm:text-2xl">{DAQIP.tagline}</p>
-        <p className="lede mt-4 max-w-3xl">{DAQIP.summary}</p>
-        <div className="mt-10 flex flex-col gap-3 xs:flex-row">
-          <ButtonLink href={internalContact("daqip")} ga={{ event: "request_demo_click" }} label="Request a demo">
-            Request a demo
-          </ButtonLink>
-          <ButtonLink
-            href={EXTERNAL.daqipResearch}
-            variant="secondary"
-            ga={{ event: "daqip_research_click" }}
-            label="Research & Product Development"
-          >
-            Research &amp; Product Development →
-          </ButtonLink>
-        </div>
+        <p className="heading mt-8 text-xl text-ink sm:text-2xl">{DAQIP.coreMessage}</p>
+        <CommercialCtas location="hero" className="mt-10" />
+        <ArrowLink
+          href={EXTERNAL.daqipResearch}
+          ga={{ event: "daqip_research_click" }}
+          label="Research & Product Development"
+          className="mt-4"
+        >
+          Research &amp; Product Development
+        </ArrowLink>
       </PageHero>
 
-      {/* Canonical definition */}
+      {/* Canonical definition + one-sentence answer */}
       <Section labelledBy="what-is-daqip" section="daqip_definition">
         <Container className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -95,6 +133,10 @@ export default function DaqipPage() {
           </div>
           <div className="lg:col-span-8">
             <p className="text-xl leading-relaxed tracking-tight text-ink sm:text-2xl">{DAQIP.definition}</p>
+            <div className="mt-8 border-l-2 border-accent pl-5">
+              <p className="eyebrow">DAQIP — in one sentence</p>
+              <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">{DAQIP.oneSentence}</p>
+            </div>
             <dl className="mt-10 grid gap-6 border-t border-line pt-8 text-[0.9375rem] sm:grid-cols-3">
               <div>
                 <dt className="eyebrow">Made by</dt>
@@ -113,40 +155,73 @@ export default function DaqipPage() {
         </Container>
       </Section>
 
-      {/* Core message */}
-      <Section labelledBy="daqip-core" className="bg-surface-accent">
+      {/* What you can explore today */}
+      <Section labelledBy="explore-title" section="explore_today">
         <Container>
-          <h2 id="daqip-core" className="display max-w-4xl text-3xl text-ink sm:text-5xl">
-            {DAQIP.coreMessage}
-          </h2>
-          <p className="mt-8 max-w-3xl font-mono text-sm leading-relaxed text-ink-2">{DAQIP.philosophy}</p>
-          <div className="mt-12">
+          <SectionHeader
+            eyebrow="Available on this site now"
+            id="explore-title"
+            title="What You Can Explore Today"
+            lede="DAQIP is in development. These interactive demonstrations and models use illustrative data. They show how DAQIP is designed to work; they are not the released product."
+          />
+          <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {EXPLORE_TODAY.map((x) => (
+              <li key={x.title} className="bg-surface">
+                <SmartLink href={x.href} className="group flex h-full flex-col p-6 transition-colors hover:bg-surface-2">
+                  <span className="text-[1.0625rem] font-medium leading-snug text-ink">{x.title}</span>
+                  <span className="mt-2 flex-1 text-sm leading-relaxed text-muted">{x.body}</span>
+                  <ArrowRight className="mt-5 text-subtle transition-transform group-hover:translate-x-1" />
+                </SmartLink>
+              </li>
+            ))}
+            <li className="hidden bg-surface sm:block lg:hidden" aria-hidden />
+            <li className="hidden bg-surface lg:block" aria-hidden />
+          </ul>
+        </Container>
+      </Section>
+
+      {/* Interactive prototype */}
+      <Section id="fai-prototype" labelledBy="trace-title" section="balloon_drawing">
+        <Container>
+          <SectionHeader
+            eyebrow="Interactive FAI prototype"
+            id="trace-title"
+            title="Follow one characteristic from drawing to approval"
+            lede="Select a balloon. Each characteristic carries its requirement, manufacturing operation, inspection method, measurement, evidence, reviewer and approval decision."
+          />
+          <FlowChain
+            className="mt-8"
+            label="Characteristic traceability"
+            steps={["Drawing", "Characteristic", "Inspection Method", "Measurement", "Evidence", "Approval"]}
+          />
+          <div className="mt-10">
+            <BalloonDrawing />
+          </div>
+        </Container>
+      </Section>
+
+      {/* Workflow */}
+      <Section labelledBy="daqip-core" className="bg-surface-accent">
+        <Container className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <h2 id="daqip-core" className="display text-3xl text-ink sm:text-5xl">
+              {DAQIP.tagline}
+            </h2>
+            <p className="mt-8 max-w-3xl font-mono text-sm leading-relaxed text-ink-2">{DAQIP.philosophy}</p>
+          </div>
+          <div className="lg:col-span-5">
             <p className="eyebrow mb-4">Workflow</p>
             <FlowChain
               label="DAQIP workflow"
+              orientation="vertical"
               steps={["Engineering", "Manufacturing", "Inspection", "Evidence", "Approval"]}
             />
           </div>
         </Container>
       </Section>
 
-      {/* Balloon drawing */}
-      <Section labelledBy="trace-title" section="balloon_drawing">
-        <Container>
-          <SectionHeader
-            eyebrow="Characteristic accountability"
-            id="trace-title"
-            title="Follow one characteristic from drawing to approval"
-            lede="Select a balloon. Each characteristic carries its requirement, manufacturing operation, inspection method, measurement, evidence, reviewer and approval decision."
-          />
-          <div className="mt-12">
-            <BalloonDrawing />
-          </div>
-        </Container>
-      </Section>
-
       {/* Capabilities */}
-      <Section labelledBy="capabilities-title" section="capabilities">
+      <Section id="capabilities" labelledBy="capabilities-title" section="capabilities">
         <Container>
           <SectionHeader
             eyebrow="Intelligence layers"
@@ -170,6 +245,8 @@ export default function DaqipPage() {
                 <BulletList items={c.items} className="mt-5" />
               </li>
             ))}
+            <li className="hidden bg-surface md:block lg:hidden" aria-hidden />
+            <li className="hidden bg-surface lg:block" aria-hidden />
           </ul>
         </Container>
       </Section>
@@ -206,7 +283,7 @@ export default function DaqipPage() {
               DAQIP supports AS9102-aligned First Article Inspection workflows. It does not by itself make an
               organisation compliant with AS9102 or AS9100, and it holds no formal compliance certification.
             </Notice>
-            <ArrowLink href={aero("/solutions/first-article-inspection")} className="mt-6">
+            <ArrowLink href={FAI} className="mt-6">
               First Article Inspection with DAQIP
             </ArrowLink>
           </div>
@@ -218,12 +295,7 @@ export default function DaqipPage() {
       <CtaBand
         title="See DAQIP on a First Article Inspection workflow"
         body="We are looking for aerospace and defence manufacturers to pilot DAQIP on real FAI and inspection work."
-        primary={{ label: "Request a demo", href: internalContact("daqip"), ga: { event: "request_demo_click" } }}
-        secondary={{
-          label: "Research & Product Development",
-          href: EXTERNAL.daqipResearch,
-          ga: { event: "daqip_research_click" },
-        }}
+        actions={<CommercialCtas location="cta_band" topic="fai" />}
       />
     </>
   );

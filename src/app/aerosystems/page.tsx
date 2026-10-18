@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { FlowChain, IntegrationDiagram, LifecycleDiagram } from "@/components/diagrams/flow";
+import { IntegrationDiagram, LifecycleDiagram } from "@/components/diagrams/flow";
 import { Timeline } from "@/components/diagrams/timeline";
-import { EvidenceRecordCard, ProductCards } from "@/components/sections/aero";
+import { EngineeringEvidence, EvidenceRecordCard, ProblemsList, ProductCards } from "@/components/sections/aero";
 import {
+  CommercialCtas,
   CtaBand,
   EngineeringInitiatives,
   internalContact,
@@ -12,9 +13,8 @@ import {
 import { ArrowRight } from "@/components/ui/icons";
 import { ButtonLink, Container, KeywordLine, Section, SectionHeader, StatusBadge } from "@/components/ui/primitives";
 import { AUDIENCES } from "@/content/company";
-import { DAQIP } from "@/content/daqip";
 import { SOLUTIONS } from "@/content/solutions";
-import { pageMetadata } from "@/lib/seo";
+import { ENGINEERING_ASSURANCE_DEFINITION, pageMetadata } from "@/lib/seo";
 import { aero } from "@/lib/site";
 
 export const metadata = pageMetadata({
@@ -27,13 +27,16 @@ export const metadata = pageMetadata({
 export default function AeroSystemsPage() {
   return (
     <>
-      {/* Hero */}
+      {/* 1 · Hero */}
       <section className="relative overflow-hidden" data-ga-section="hero">
         <div aria-hidden className="tech-grid tech-grid-fade absolute inset-0" />
         <Container className="relative grid items-center gap-12 pb-16 pt-12 sm:pt-16 lg:grid-cols-12 lg:pb-24 lg:pt-24">
           <div className="lg:col-span-7">
-            <p className="eyebrow anim-fade-up">Aerospace &amp; Defence Engineering Technology</p>
-            <h1 className="display anim-fade-up mt-6 text-[2.5rem] text-ink sm:text-6xl lg:text-[4.25rem]" style={{ animationDelay: "60ms" }}>
+            <p className="eyebrow anim-fade-up">Engineering Assurance Intelligence for Aerospace &amp; Defence</p>
+            <h1
+              className="display anim-fade-up mt-6 text-[2.5rem] text-ink sm:text-6xl lg:text-[4.25rem]"
+              style={{ animationDelay: "60ms" }}
+            >
               Gamyaa AeroSystems
             </h1>
             <p
@@ -72,22 +75,7 @@ export default function AeroSystemsPage() {
         </Container>
       </section>
 
-      {/* Lifecycle */}
-      <Section labelledBy="lifecycle-title" section="lifecycle">
-        <Container>
-          <SectionHeader
-            eyebrow="Engineering assurance"
-            id="lifecycle-title"
-            title="One lifecycle, from design intent to approval"
-            lede="Gamyaa AeroSystems is an engineering assurance intelligence company. Our platforms keep every stage connected, so evidence created in manufacturing can be traced back to the requirement that asked for it."
-          />
-          <div className="reveal mt-12">
-            <LifecycleDiagram />
-          </div>
-        </Container>
-      </Section>
-
-      {/* Products */}
+      {/* 2 · Engineering Intelligence Platforms */}
       <Section id="products" labelledBy="products-title" section="products">
         <Container>
           <SectionHeader eyebrow="Products" id="products-title" title="Engineering Intelligence Platforms" />
@@ -97,35 +85,64 @@ export default function AeroSystemsPage() {
         </Container>
       </Section>
 
-      {/* DAQIP core message */}
-      <Section labelledBy="daqip-message" section="daqip_message" className="bg-surface-accent">
-        <Container className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <p className="eyebrow mb-5">DAQIP™ · Quality evidence</p>
-            <h2 id="daqip-message" className="display text-3xl text-ink sm:text-5xl">
-              {DAQIP.coreMessage}
-            </h2>
-            <p className="mt-8 font-mono text-sm leading-relaxed text-ink-2">{DAQIP.philosophy}</p>
-          </div>
-          <div className="lg:col-span-5 lg:pt-2">
-            <p className="eyebrow mb-4">Workflow</p>
-            <FlowChain
-              label="DAQIP workflow"
-              orientation="vertical"
-              steps={["Engineering", "Manufacturing", "Inspection", "Evidence", "Approval"]}
-            />
-            <Link
-              href={aero("/daqip")}
-              className="link-arrow mt-8"
-            >
-              <span>See how DAQIP traces a characteristic</span>
-              <ArrowRight className="arrow" />
-            </Link>
+      {/* 3 · Engineering lifecycle */}
+      <Section labelledBy="lifecycle-title" section="lifecycle">
+        <Container>
+          <SectionHeader
+            eyebrow="Engineering Assurance Intelligence"
+            id="lifecycle-title"
+            title="One lifecycle, from design intent to approval"
+            lede={ENGINEERING_ASSURANCE_DEFINITION}
+          />
+          <div className="reveal mt-12">
+            <LifecycleDiagram />
           </div>
         </Container>
       </Section>
 
-      {/* Integration */}
+      {/* 4 · Who we serve */}
+      <Section labelledBy="audience-title" section="audiences">
+        <Container>
+          <SectionHeader eyebrow="Who we serve" id="audience-title" title="Built for the people who sign off the evidence" />
+          <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+            {AUDIENCES.map((a, i) => (
+              <li key={a.title} className="bg-surface p-6 sm:p-8">
+                <p className="font-mono text-xs text-subtle">{String(i + 1).padStart(2, "0")}</p>
+                <h3 className="mt-6 text-lg font-medium leading-snug text-ink">{a.title}</h3>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">{a.body}</p>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
+      {/* 5 · Engineering evidence */}
+      <Section labelledBy="evidence-title" section="engineering_evidence">
+        <Container>
+          <SectionHeader
+            eyebrow="What exists today"
+            id="evidence-title"
+            title="Engineering Evidence"
+            lede="DAQIP is in development. Here is what you can examine now: an interactive prototype, the research behind it, the problem analysis that shaped it and an honest roadmap."
+          />
+          <div className="mt-12">
+            <EngineeringEvidence />
+          </div>
+          <CommercialCtas location="engineering_evidence" className="mt-10" />
+        </Container>
+      </Section>
+
+      {/* Lower priority ------------------------------------------------ */}
+
+      <Section labelledBy="problems-title" section="problems">
+        <Container>
+          <SectionHeader eyebrow="Customer problems" id="problems-title" title="Problems We Are Solving" />
+          <div className="mt-12">
+            <ProblemsList />
+          </div>
+        </Container>
+      </Section>
+
       <Section labelledBy="integration-title" section="integration">
         <Container className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">
@@ -136,8 +153,8 @@ export default function AeroSystemsPage() {
               lede={
                 <>
                   <p>
-                    AirCert AI handles airworthiness, certification and design assurance. DAQIP handles
-                    manufacturing, inspection, FAI and quality evidence.
+                    AirCert AI covers design assurance and certification. DAQIP covers manufacturing assurance and
+                    quality.
                   </p>
                   <p className="mt-4">
                     Connected, a certification requirement can be followed to the manufactured characteristic, the
@@ -157,23 +174,6 @@ export default function AeroSystemsPage() {
         </Container>
       </Section>
 
-      {/* Who we serve */}
-      <Section labelledBy="audience-title" section="audiences">
-        <Container>
-          <SectionHeader eyebrow="Who we serve" id="audience-title" title="Built for the people who sign off the evidence" />
-          <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {AUDIENCES.map((a, i) => (
-              <li key={a.title} className="bg-surface p-6 sm:p-8">
-                <p className="font-mono text-xs text-subtle">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="mt-6 text-lg font-medium leading-snug text-ink">{a.title}</h3>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">{a.body}</p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-
-      {/* Solutions */}
       <Section labelledBy="solutions-title" section="solutions">
         <Container className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -203,7 +203,6 @@ export default function AeroSystemsPage() {
         </Container>
       </Section>
 
-      {/* Timeline */}
       <Section labelledBy="timeline-title" section="timeline">
         <Container>
           <SectionHeader
@@ -225,12 +224,7 @@ export default function AeroSystemsPage() {
       <CtaBand
         title="Start with one part and one inspection workflow."
         body="DAQIP is in development. Talk to us about piloting it on a real First Article Inspection or inspection workflow in your organisation."
-        primary={{ label: "Talk to Gamyaa", href: internalContact(), ga: { event: "contact_sales_click" } }}
-        secondary={{
-          label: "Request a DAQIP demo",
-          href: internalContact("daqip"),
-          ga: { event: "request_demo_click" },
-        }}
+        actions={<CommercialCtas location="cta_band" />}
       />
     </>
   );

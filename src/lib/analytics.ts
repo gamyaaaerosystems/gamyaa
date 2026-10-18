@@ -17,7 +17,8 @@ export type AnalyticsEventName =
   | "view_ventures"
   | "view_daqip"
   | "daqip_research_click"
-  | "request_demo_click"
+  | "demo_interest"
+  | "problem_discussion_click"
   | "view_fai_solution"
   | "view_aircert_ai"
   | "aircert_learn_more_click"
@@ -46,7 +47,8 @@ export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>
   "view_ventures",
   "view_daqip",
   "daqip_research_click",
-  "request_demo_click",
+  "demo_interest",
+  "problem_discussion_click",
   "view_fai_solution",
   "view_aircert_ai",
   "aircert_learn_more_click",
@@ -83,7 +85,11 @@ export type AnalyticsParam =
   | "link_label"
   | "source_section"
   | "error_type"
-  | "cta_label";
+  | "cta_label"
+  | "product"
+  | "topic"
+  | "source_page"
+  | "cta_location";
 
 export type AnalyticsParams = Partial<Record<AnalyticsParam, string>>;
 
@@ -100,6 +106,10 @@ const ALLOWED_PARAMS: ReadonlySet<string> = new Set<AnalyticsParam>([
   "source_section",
   "error_type",
   "cta_label",
+  "product",
+  "topic",
+  "source_page",
+  "cta_location",
 ]);
 
 /**
@@ -109,7 +119,7 @@ const ALLOWED_PARAMS: ReadonlySet<string> = new Set<AnalyticsParam>([
 const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
   theme: new Set(["light", "dark", "system"]),
   partner_name: new Set(["EV Society", "iTelematics"]),
-  person_name: new Set(["Purushothama Padmanabha", "Manjunatha G", "Sudarshana Karkala"]),
+  person_name: new Set(["Purushothama Padmanabha", "Manjunath G"]),
   form_name: new Set(["aerosystems_contact", "gamyaa_contact"]),
   error_type: new Set([
     "validation",
@@ -119,7 +129,49 @@ const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
     "delivery_unavailable",
     "rejected",
   ]),
+  product: new Set(["daqip", "aircert"]),
+  topic: new Set([
+    "fai",
+    "inspection",
+    "supplier_quality",
+    "airworthiness",
+    "certification",
+    "manufacturing_quality",
+    "general",
+  ]),
+  cta_location: new Set([
+    "hero",
+    "product_card",
+    "engineering_evidence",
+    "problems",
+    "cta_band",
+    "contact_page",
+    "solution_page",
+    "page_body",
+  ]),
 };
+
+export type DemoProduct = "daqip" | "aircert";
+export type ProblemTopic =
+  | "fai"
+  | "inspection"
+  | "supplier_quality"
+  | "airworthiness"
+  | "certification"
+  | "manufacturing_quality"
+  | "general";
+export type CtaLocation =
+  | "hero"
+  | "product_card"
+  | "engineering_evidence"
+  | "problems"
+  | "cta_band"
+  | "contact_page"
+  | "solution_page"
+  | "page_body";
+
+/** Commercial CTA events also carry the page they were clicked on. */
+const WITH_SOURCE_PAGE: ReadonlySet<string> = new Set(["demo_interest", "problem_discussion_click"]);
 
 const EMAIL_RE = /[^\s@]+@[^\s@]+\.[^\s@]+/;
 const PHONE_RE = /\+?\d[\d\s().-]{6,}\d/;
@@ -161,7 +213,7 @@ export function sanitizeParams(params: Record<string, unknown>): AnalyticsParams
       if (allowed.has(raw)) out[k] = raw;
       continue;
     }
-    if (k === "destination" || k === "page_path") {
+    if (k === "destination" || k === "page_path" || k === "source_page") {
       const d = cleanDestination(raw);
       if (d) out[k] = d;
       continue;
@@ -194,6 +246,7 @@ export function track(name: AnalyticsEventName, params: AnalyticsParams = {}): v
   if (!ANALYTICS_EVENTS.has(name)) return;
   const clean: Record<string, unknown> = sanitizeParams({
     page_path: window.location.pathname,
+    ...(WITH_SOURCE_PAGE.has(name) ? { source_page: window.location.pathname } : {}),
     ...params,
   });
   if (DEBUG) clean.debug_mode = true;

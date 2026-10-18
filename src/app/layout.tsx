@@ -35,6 +35,10 @@ export const metadata: Metadata = {
   publisher: "GAMYAA",
   formatDetection: { telephone: false, email: false, address: false },
   referrer: "strict-origin-when-cross-origin",
+  // Google Search Console HTML-tag verification (optional; DNS verification also works).
+  verification: process.env.GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 export const viewport: Viewport = {
