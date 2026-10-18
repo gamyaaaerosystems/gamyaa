@@ -11,7 +11,7 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ArrowLink, Container, JsonLd, Section, SectionHeader } from "@/components/ui/primitives";
 import { LEADERSHIP } from "@/content/company";
 import { pageMetadata, personLd } from "@/lib/seo";
-import { aero, parent } from "@/lib/site";
+import { aero, PARENT_HOME } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "About Gamyaa AeroSystems | Engineering Assurance for Aerospace & Defence",
@@ -63,7 +63,7 @@ export default function AboutPage() {
               <h3 className="eyebrow">Company</h3>
               <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">
                 Gamyaa AeroSystems is part of{" "}
-                <a href={parent("/")} className="text-accent underline">
+                <a href={PARENT_HOME} className="text-accent underline">
                   GAMYAA
                 </a>{" "}
                 and is based in Bangalore, India. Registration as Gamyaa AeroSystems Private Limited is planned and not

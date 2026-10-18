@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { LogoMark, LogoWord } from "@/components/brand/logo";
 import { SmartLink } from "@/components/ui/primitives";
 import { PARTNERS } from "@/content/company";
-import { aero, aeroLegalName, BRAND, CONTACT, EXTERNAL, parent } from "@/lib/site";
+import { aero, aeroLegalName, BRAND, CONTACT, EXTERNAL, parent, PARENT_HOME } from "@/lib/site";
 
 function Col({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -144,7 +144,7 @@ export function AeroFooter() {
             <Item href={aero("/contact")}>Contact</Item>
             <Item href={parent("/privacy")}>Privacy</Item>
             <Item href={parent("/terms")}>Terms</Item>
-            <Item href={parent("/")}>GAMYAA</Item>
+            <Item href={PARENT_HOME}>GAMYAA</Item>
           </Col>
         </div>
       </div>

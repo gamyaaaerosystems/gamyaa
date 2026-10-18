@@ -40,13 +40,13 @@ Copy `.env.example` to `.env.local` to change configuration (see below).
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_AEROSYSTEMS_CANONICAL` | `path` (default): `gamyaa.in/aerosystems` is canonical and `aerosystems.gamyaa.in` redirects to it. `subdomain`: the reverse, and the subdomain is served from the `/aerosystems` routes. |
+| `NEXT_PUBLIC_AEROSYSTEMS_CANONICAL` | `path` (default): `gamyaa.in/aerosystems` is canonical. `aerosystems.gamyaa.in` serves the same deployment: the bare domain opens `aerosystems.gamyaa.in/aerosystems`, parent pages (`/ventures`, `/contact`, `/privacy`, `/terms`) go to gamyaa.in, and canonical tags point to gamyaa.in. `subdomain`: clean subdomain URLs become canonical and `gamyaa.in/aerosystems/*` redirects there. |
 | `NEXT_PUBLIC_GA_DISABLED` | `1` disables GA4 (use on preview/staging). GA4 loads only in production builds. |
 | `NEXT_PUBLIC_GA_DEBUG` | `1` adds `debug_mode` to custom events for GA4 DebugView. |
 | `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL` | Contact form delivery. Without them, production shows a direct email/phone fallback. |
 
 ## Deploying
 
-The project deploys to Vercel with no extra configuration. Add `gamyaa.in` (and `www.gamyaa.in` redirecting to it) as domains. To move AeroSystems to its own subdomain later, add `aerosystems.gamyaa.in` to the same project and set `NEXT_PUBLIC_AEROSYSTEMS_CANONICAL=subdomain`.
+The project deploys to Vercel with no extra configuration. Add `gamyaa.in` (and `www.gamyaa.in` redirecting to it) and `aerosystems.gamyaa.in` as domains of the same project. With the default settings, typing `aerosystems.gamyaa.in` opens `aerosystems.gamyaa.in/aerosystems`. To make clean subdomain URLs canonical later, set `NEXT_PUBLIC_AEROSYSTEMS_CANONICAL=subdomain`.
 
 See [`docs/IMPLEMENTATION_REPORT.md`](docs/IMPLEMENTATION_REPORT.md) for routes, analytics events, SEO, security, QA results and known limitations.

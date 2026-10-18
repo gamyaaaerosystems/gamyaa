@@ -6,7 +6,9 @@ const isProd = process.env.NODE_ENV === "production";
  * AeroSystems canonical host.
  *
  * "path"      (default) → https://gamyaa.in/aerosystems is canonical.
- *                         Requests to aerosystems.gamyaa.in are redirected to it.
+ *                         aerosystems.gamyaa.in serves the same pages: the bare domain
+ *                         opens aerosystems.gamyaa.in/aerosystems, parent-site pages go
+ *                         to gamyaa.in, and canonical tags keep gamyaa.in indexed.
  * "subdomain"           → https://aerosystems.gamyaa.in is canonical.
  *                         gamyaa.in/aerosystems/* is redirected to the subdomain and
  *                         the subdomain is served from the /aerosystems route tree.
@@ -89,16 +91,18 @@ const nextConfig: NextConfig = {
     const hostRules =
       aeroCanonical === "path"
         ? [
+            // aerosystems.gamyaa.in → aerosystems.gamyaa.in/aerosystems (same host).
             {
               source: "/",
               has: [{ type: "host" as const, value: AERO_HOST }],
-              destination: "https://gamyaa.in/aerosystems",
+              destination: "/aerosystems",
               permanent: false,
             },
+            // Parent-site pages live on gamyaa.in.
             {
-              source: "/:path((?!_next/).+)",
+              source: "/:path(ventures|contact|privacy|terms)",
               has: [{ type: "host" as const, value: AERO_HOST }],
-              destination: "https://gamyaa.in/aerosystems/:path",
+              destination: "https://gamyaa.in/:path",
               permanent: false,
             },
           ]

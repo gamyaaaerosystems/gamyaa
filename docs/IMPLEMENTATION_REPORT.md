@@ -89,7 +89,16 @@ Automated with Playwright against the production build. Checks: no horizontal ov
 - Unique `<title>` and meta description on every page (verified automatically), canonical URL, Open Graph and Twitter cards with a 1200×630 image on every page.
 - `robots.txt` allows everything except `/api/`; `sitemap.xml` lists canonical URLs only.
 - Structured data (JSON-LD): `Organization` (GAMYAA, with Gamyaa AeroSystems as sub-organisation), `WebSite`, `SoftwareApplication` (DAQIP, AirCert AI, including status), `FAQPage` (visible FAQs on DAQIP and AirCert AI only), `BreadcrumbList` (all inner pages), `TechArticle` (solutions), `Service` (services) and `Person` (leadership). `legalName` appears only once incorporation is confirmed.
-- **Canonical host strategy:** `src/lib/site.ts` (`aero()`, `parent()`, `absoluteUrl()`) and `next.config.ts` host rules. In the default `path` mode, `aerosystems.gamyaa.in/*` responds with a temporary redirect to `gamyaa.in/aerosystems/*`. Switching to `subdomain` reverses the redirect (308) and rewrites the subdomain onto the same pages, so no duplicate URLs are ever indexed.
+- **Canonical host strategy:** `src/lib/site.ts` (`aero()`, `parent()`, `absoluteUrl()`) and `next.config.ts` host rules. In the default `path` mode, `aerosystems.gamyaa.in` serves the same deployment:
+
+| Request on aerosystems.gamyaa.in | Result |
+| --- | --- |
+| `/` | 307 → `aerosystems.gamyaa.in/aerosystems` (same host) |
+| `/aerosystems/*` | 200, served directly; canonical tag points to `https://gamyaa.in/aerosystems/*` |
+| `/ventures`, `/contact`, `/privacy`, `/terms` | 307 → the same page on gamyaa.in |
+| Short SEO paths (e.g. `/daqip`) | 308 → `/aerosystems/…` on the same host |
+
+  Links from AeroSystems to the GAMYAA home page are absolute (`https://gamyaa.in`), so they never land on the subdomain's `/`. Switching to `subdomain` mode makes clean subdomain URLs canonical: `gamyaa.in/aerosystems/*` redirects there (308) and the subdomain is rewritten onto the same pages. Either way, only one URL per page is canonical.
 - **Lighthouse SEO:** 100 on all audited pages.
 
 ## 7. AI search / answer-engine readiness
@@ -175,7 +184,7 @@ CLS is 0 and TBT is ≤ 40 ms everywhere. Mobile LCP is measured under Lighthous
 9. **Future mailboxes** (`contact@gamyaa.in`, `aerosystems@gamyaa.in`) are prepared but hidden (`CONTACT.futureEmails`).
 10. **Incorporation:** the footer shows "© 2026 Gamyaa AeroSystems". Set `BRAND.aeroIncorporated = true` only after incorporation is confirmed.
 11. **Not tested on physical devices** or in Edge and Samsung Internet. These are Chromium-based and covered by the Chrome engine tests, but should still be spot-checked.
-12. **The subdomain mode** (`NEXT_PUBLIC_AEROSYSTEMS_CANONICAL=subdomain`) is implemented but can only be fully verified once `aerosystems.gamyaa.in` points at the deployment.
+12. **aerosystems.gamyaa.in** rules were verified locally with a spoofed `Host` header. They need a live check once the domain is added to the Vercel project. The optional `subdomain` canonical mode can only be fully verified then too.
 13. **GA4 DebugView** validation needs the live property (see §12). Local QA intercepted all GA traffic, so no test hits reached `G-VRS5BMWG9R`.
 
 ## 12. Manual verification steps for the owner

@@ -35,6 +35,12 @@ export function parent(path = "/"): string {
   return p;
 }
 
+/**
+ * Link to the GAMYAA home page from inside AeroSystems. Absolute, because on
+ * aerosystems.gamyaa.in a relative "/" opens AeroSystems instead.
+ */
+export const PARENT_HOME = PRIMARY_ORIGIN;
+
 /** Absolute canonical URL for an href produced by aero() or parent(). */
 export function absoluteUrl(href: string): string {
   const url = href.startsWith("http") ? href : `${PRIMARY_ORIGIN}${href === "/" ? "" : href}`;
