@@ -17,7 +17,7 @@ No routes were added or removed, and the architecture, responsiveness, accessibi
 - **Research:** "Engineering Research & Product Development", with 7 product R&D areas (status, and which product each feeds) and `#workflow-validation`.
 - **Products:** new `#roadmap` section grouping capabilities by status.
 - **Internships:** "Engineering Learning & Research Programs", clearly separate from the commercial business. **Careers:** heading without a full stop.
-- **Leadership:** Purushothama Padmanabha (Founder & CEO), Manjunatha G (Co-Founder, Sales & Marketing) and Sudarshana Karkala (Co-Founder, Director), with no placeholder avatars. Manjunatha G's LinkedIn link currently points to a placeholder URL (see Known limitations). Structured data was updated to match.
+- **Leadership:** Purushothama Padmanabha (Founder & CEO), Manjunatha G (Co-Founder, Sales & Marketing) and Sudarshana Karkala (Co-Founder), with no placeholder avatars. Manjunatha G's LinkedIn link currently points to a placeholder URL (see Known limitations). Structured data was updated to match.
 - **Ventures:** four themes (Aerospace & Defence; Space & Autonomous Systems; Advanced Manufacturing & Industrial AI; Engineering Infrastructure & Cybersecurity) and "Venture building · Strategic collaboration · Investment exploration".
 - **Timeline:** concise labels (Idea, POC, Product & Company, Customer Validation, Engineering Assurance Integration, Aerospace Ecosystem, Vision). 2027 onwards is labelled "Roadmap / Vision — not guaranteed".
 - **Contact (launch blocker, Option B):** the online form renders only when Resend is configured at build time. Until then both contact pages show **Email Us** (pre-filled subject and a structured body) and **Call Us**, so a broken form is never shown.

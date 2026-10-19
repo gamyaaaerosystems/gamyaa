@@ -24,7 +24,7 @@ export const LEADERSHIP: Leader[] = [
   },
   {
     name: "Sudarshana Karkala",
-    role: "Co-Founder, Director",
+    role: "Co-Founder",
     linkedin: "https://linkedin.com/in/sudarshanakarkala",
   },
 ];
