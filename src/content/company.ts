@@ -12,13 +12,13 @@ export type Leader = {
 export const LEADERSHIP: Leader[] = [
   {
     name: "Purushothama Padmanabha",
-    role: "Co-Founder & CEO",
+    role: "Founder & CEO",
     linkedin: "https://www.linkedin.com/in/purushothama-padmanabha-1a75552/",
   },
   {
-    name: "Manjunath G",
+    name: "Manjunatha G",
     role: "Co-Founder, Sales & Marketing",
-    // PLACEHOLDER: replace with Manjunath G's own profile URL, then remove linkedinPlaceholder.
+    // PLACEHOLDER: replace with Manjunatha G's own profile URL, then remove linkedinPlaceholder.
     linkedin: "https://linkedin.com/in/sudarshanakarkala",
     linkedinPlaceholder: true,
   },

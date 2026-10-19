@@ -17,7 +17,7 @@ No routes were added or removed, and the architecture, responsiveness, accessibi
 - **Research:** "Engineering Research & Product Development", with 7 product R&D areas (status, and which product each feeds) and `#workflow-validation`.
 - **Products:** new `#roadmap` section grouping capabilities by status.
 - **Internships:** "Engineering Learning & Research Programs", clearly separate from the commercial business. **Careers:** heading without a full stop.
-- **Leadership:** Purushothama Padmanabha (Co-Founder & CEO), Manjunath G (Co-Founder, Sales & Marketing) and Sudarshana Karkala (Co-Founder, Director), with no placeholder avatars. Manjunath G's LinkedIn link currently points to a placeholder URL (see Known limitations). Structured data was updated to match.
+- **Leadership:** Purushothama Padmanabha (Founder & CEO), Manjunatha G (Co-Founder, Sales & Marketing) and Sudarshana Karkala (Co-Founder, Director), with no placeholder avatars. Manjunatha G's LinkedIn link currently points to a placeholder URL (see Known limitations). Structured data was updated to match.
 - **Ventures:** four themes (Aerospace & Defence; Space & Autonomous Systems; Advanced Manufacturing & Industrial AI; Engineering Infrastructure & Cybersecurity) and "Venture building · Strategic collaboration · Investment exploration".
 - **Timeline:** concise labels (Idea, POC, Product & Company, Customer Validation, Engineering Assurance Integration, Aerospace Ecosystem, Vision). 2027 onwards is labelled "Roadmap / Vision — not guaranteed".
 - **Contact (launch blocker, Option B):** the online form renders only when Resend is configured at build time. Until then both contact pages show **Email Us** (pre-filled subject and a structured body) and **Call Us**, so a broken form is never shown.
@@ -152,7 +152,7 @@ The site uses the required wording ("assists", "human review", "evidence prepara
 | `internship_view`, `internship_outbound_click` | — | Learning & research programs page / outbound links |
 | `aerospace_cybersecurity_click` | — | Cybersecurity initiative links |
 | `partner_click` | `partner_name` (EV Society, iTelematics), `destination` | Partner links |
-| `leadership_link_click` | `person_name` (allow-listed: Purushothama Padmanabha, Manjunath G, Sudarshana Karkala) | LinkedIn links |
+| `leadership_link_click` | `person_name` (allow-listed: Purushothama Padmanabha, Manjunatha G, Sudarshana Karkala) | LinkedIn links |
 | `ventures_contact`, `ventures_focus_click` | — | Ventures CTAs |
 | `form_start`, `form_submit`, `form_error` | `form_name`, `page_path`, `error_type` | Contact forms |
 | `theme_change` | `theme` (`light` / `dark` / `system`) | Theme toggle |
@@ -208,7 +208,7 @@ CLS is 0 everywhere. Mobile LCP is measured under Lighthouse's simulated slow 4G
 5. **No consent banner yet** (the architecture is ready, see §8). Confirm the legal requirement before launch.
 6. **Legal pages are drafts:** privacy needs counsel review (including the DPDP Act, 2023); terms are placeholders.
 7. **Product statuses** (§2) are inferred and need owner confirmation.
-8. **Manjunath G's LinkedIn** link is a placeholder: it currently opens `https://linkedin.com/in/sudarshanakarkala`. Replace it with his own profile and remove `linkedinPlaceholder` in `src/content/company.ts`. It is kept out of structured data until then.
+8. **Manjunatha G's LinkedIn** link is a placeholder: it currently opens `https://linkedin.com/in/sudarshanakarkala`. Replace it with his own profile and remove `linkedinPlaceholder` in `src/content/company.ts`. It is kept out of structured data until then.
 9. **Corporate mailboxes** (`contact@gamyaa.in`, `aerosystems@gamyaa.in`) are prepared. Set `active: true` in `CORPORATE_EMAILS` once one is configured, and it becomes primary site-wide.
 10. **Incorporation:** the footer shows "© 2026 Gamyaa AeroSystems". Set `BRAND.aeroIncorporated = true` only after incorporation is confirmed.
 11. **Not tested on physical devices** or in Edge and Samsung Internet. These are Chromium-based and covered by the Chrome engine tests, but should still be spot-checked.

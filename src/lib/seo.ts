@@ -129,7 +129,7 @@ export function aeroOrganizationLd() {
     ],
     founder: [
       { "@type": "Person", name: "Purushothama Padmanabha" },
-      { "@type": "Person", name: "Manjunath G" },
+      { "@type": "Person", name: "Manjunatha G" },
       { "@type": "Person", name: "Sudarshana Karkala" },
     ],
   };

@@ -13,7 +13,7 @@ export function LeadershipSection({ id }: { id?: string }) {
   return (
     <Section id={id} section="leadership">
       <Container>
-        <SectionHeader eyebrow="Leadership" title="The team building Gamyaa AeroSystems" />
+        <SectionHeader eyebrow="Gamyaa AeroSystems" title="Leadership Team" />
         <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-3">
           {LEADERSHIP.map((p) => (
             <li key={p.name} className="flex flex-col bg-surface p-6 sm:p-8">
