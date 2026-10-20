@@ -43,25 +43,52 @@ export function LeadershipSection({ id }: { id?: string }) {
 
 export function PartnersSection() {
   return (
-    <Section section="partners">
+    <Section id="partners" section="partners">
       <Container>
         <SectionHeader eyebrow="Ecosystem" title="Partners & Ecosystem" />
         <ul className="mt-10 grid gap-4 md:grid-cols-2">
           {PARTNERS.map((p) => (
             <li key={p.href}>
-              <SmartLink
-                href={p.href}
-                label={p.analyticsName}
-                ga={{ event: "partner_click", params: { partner_name: p.analyticsName, destination: p.href } }}
-                className="card group flex h-full flex-col p-6 transition-colors hover:border-line-strong sm:p-8"
-              >
-                <span className="flex items-start justify-between gap-4">
-                  <span className="text-lg font-medium text-ink">{p.name}</span>
-                  <ArrowUpRight className="mt-1 shrink-0 text-subtle transition-colors group-hover:text-ink" />
-                </span>
-                <span className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{p.description}</span>
-                <span className="mt-6 font-mono text-xs text-subtle">{p.domain}</span>
-              </SmartLink>
+              {p.actions ? (
+                // Several destinations: the card itself is not a link (anchors can't nest).
+                <div className="card group flex h-full flex-col p-6 transition-colors hover:border-line-strong sm:p-8">
+                  <span className="flex items-start justify-between gap-4">
+                    <span className="text-lg font-medium text-ink">{p.name}</span>
+                    <ArrowUpRight className="mt-1 shrink-0 text-subtle transition-colors group-hover:text-ink" />
+                  </span>
+                  <span className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{p.description}</span>
+                  <span className="mt-auto flex flex-col gap-x-10 gap-y-3 pt-6 xs:flex-row xs:flex-wrap">
+                    {p.actions.map((a) => (
+                      <span key={a.href} className="flex flex-col">
+                        <ArrowLink
+                          href={a.href}
+                          arrow={a.arrow}
+                          label={`${p.analyticsName}: ${a.label}`}
+                          ga={{ event: "partner_click", params: { partner_name: p.analyticsName, destination: a.href } }}
+                          className="self-start"
+                        >
+                          {a.label}
+                        </ArrowLink>
+                        <span className="font-mono text-xs text-subtle">{a.caption}</span>
+                      </span>
+                    ))}
+                  </span>
+                </div>
+              ) : (
+                <SmartLink
+                  href={p.href}
+                  label={p.analyticsName}
+                  ga={{ event: "partner_click", params: { partner_name: p.analyticsName, destination: p.href } }}
+                  className="card group flex h-full flex-col p-6 transition-colors hover:border-line-strong sm:p-8"
+                >
+                  <span className="flex items-start justify-between gap-4">
+                    <span className="text-lg font-medium text-ink">{p.name}</span>
+                    <ArrowUpRight className="mt-1 shrink-0 text-subtle transition-colors group-hover:text-ink" />
+                  </span>
+                  <span className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{p.description}</span>
+                  <span className="mt-auto pt-6 font-mono text-xs text-subtle">{p.domain}</span>
+                </SmartLink>
+              )}
             </li>
           ))}
         </ul>

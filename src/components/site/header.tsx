@@ -77,12 +77,13 @@ export function AeroHeader() {
       >
         <div className="container-x flex h-16 items-center justify-between gap-4">
           <AeroBrand />
-          <nav aria-label="Primary" className="hidden items-center gap-3 lg:flex">
+          {/* xl, not lg: the full AeroSystems nav needs ~1120px on one line. */}
+          <nav aria-label="Primary" className="hidden items-center gap-3 xl:flex">
             <NavLinks items={AERO_NAV} ctaLast />
             <ThemeToggle />
           </nav>
           <MobileMenu
-            className="lg:hidden"
+            className="xl:hidden"
             primary={AERO_NAV}
             groups={AERO_MENU_GROUPS}
             brand={<AeroBrand />}

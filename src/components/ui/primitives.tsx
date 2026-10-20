@@ -169,18 +169,21 @@ export function ArrowLink({
   className,
   ga,
   label,
+  arrow,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
   ga?: GA;
   label?: string;
+  /** Override the arrow; defaults to ↗ for external URLs, → otherwise. */
+  arrow?: "right" | "external";
 }) {
   const external = /^https?:\/\//.test(href) && !href.startsWith("https://gamyaa.in");
   return (
     <SmartLink href={href} className={cn("link-arrow", className)} ga={ga} label={label}>
       <span>{children}</span>
-      {external ? (
+      {(arrow ?? (external ? "external" : "right")) === "external" ? (
         <ArrowUpRight className="arrow shrink-0" />
       ) : (
         <ArrowRight className="arrow shrink-0" />

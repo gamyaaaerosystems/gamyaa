@@ -29,14 +29,48 @@ export const LEADERSHIP: Leader[] = [
   },
 ];
 
-export const PARTNERS = [
+export type PartnerAction = {
+  label: string;
+  href: string;
+  /** Short qualifier shown under the link. */
+  caption: string;
+  /** "right" (→) or "external" (↗). */
+  arrow: "right" | "external";
+};
+
+export type Partner = {
+  name: string;
+  analyticsName: string;
+  description: string;
+  /** Primary destination (whole-card link, footer link). */
+  href: string;
+  domain: string;
+  /** When present, the card shows these links instead of being a single link. */
+  actions?: readonly PartnerAction[];
+};
+
+export const PARTNERS: readonly Partner[] = [
   {
-    name: "EV Society™",
-    analyticsName: "EV Society",
+    name: "APEX Rocket Systems Private Limited",
+    analyticsName: "APEX Rocket Systems",
     description:
-      "Engineering education, research, industry collaboration and technology ecosystem initiatives.",
-    href: EXTERNAL.evSociety,
-    domain: "evsociety.org",
+      "Rocket propulsion and launch-system engineering collaboration focused on advancing hardware development, system validation and integrated aerospace engineering capability.",
+    href: EXTERNAL.apexRocketSystems,
+    domain: "apexrocketsystems.com",
+    actions: [
+      {
+        label: "Engineering Partnership",
+        href: EXTERNAL.apexEngineeringPartnership,
+        caption: "Engineering collaboration concept",
+        arrow: "right",
+      },
+      {
+        label: "Official Website",
+        href: EXTERNAL.apexRocketSystems,
+        caption: "apexrocketsystems.com",
+        arrow: "external",
+      },
+    ],
   },
   {
     name: "iTelematics Software Private Limited",
@@ -45,7 +79,15 @@ export const PARTNERS = [
     href: EXTERNAL.iTelematics,
     domain: "itelematics.com",
   },
-] as const;
+  {
+    name: "EV Society™",
+    analyticsName: "EV Society",
+    description:
+      "Engineering education, research, industry collaboration and technology ecosystem initiatives.",
+    href: EXTERNAL.evSociety,
+    domain: "evsociety.org",
+  },
+];
 
 export const CAREER_DOMAINS = [
   "Aerospace quality",

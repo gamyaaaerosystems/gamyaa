@@ -88,6 +88,8 @@ export const CONTACT = {
 export const EXTERNAL = {
   evSociety: "https://www.evsociety.org/",
   iTelematics: "https://itelematics.com/",
+  apexRocketSystems: "https://www.apexrocketsystems.com/",
+  apexEngineeringPartnership: "https://aerospace.ev.engineer/space/partners/apexrocketsystems",
   aerospaceCybersecurity: "https://aerospace.gamyaa.in/aerospace",
   internships: "https://aerospace.gamyaa.in/internships",
   daqipResearch:

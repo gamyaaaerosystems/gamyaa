@@ -151,7 +151,7 @@ The site uses the required wording ("assists", "human review", "evidence prepara
 | `career_view`, `career_cta_click` | — | Careers page / CTA |
 | `internship_view`, `internship_outbound_click` | — | Learning & research programs page / outbound links |
 | `aerospace_cybersecurity_click` | — | Cybersecurity initiative links |
-| `partner_click` | `partner_name` (EV Society, iTelematics), `destination` | Partner links |
+| `partner_click` | `partner_name` (EV Society, iTelematics, APEX Rocket Systems), `destination` | Partner links (APEX card: one event per link — Engineering Partnership, Official Website) |
 | `leadership_link_click` | `person_name` (allow-listed: Purushothama Padmanabha, Manjunatha G, Sudarshana Karkala) | LinkedIn links |
 | `ventures_contact`, `ventures_focus_click` | — | Ventures CTAs |
 | `form_start`, `form_submit`, `form_error` | `form_name`, `page_path`, `error_type` | Contact forms |
