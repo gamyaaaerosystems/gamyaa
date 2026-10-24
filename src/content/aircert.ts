@@ -264,7 +264,11 @@ export const AIRCERT_FAQ = [
     a: "No. AirCert AI is a planned product. The capabilities described on this page are the intended scope and are not yet released.",
   },
   {
+    q: "How does AirCert AI relate to AEAIP?",
+    a: "AirCert AI is Platform 03 and the Certification Assurance Intelligence specialization within the AEAIP (Aerospace Engineering Assurance Intelligence Platform) architecture. AEAIP connects requirements, configuration, evidence, verification and readiness at system level; AirCert AI provides depth for certification basis, compliance planning and certification evidence.",
+  },
+  {
     q: "How does AirCert AI relate to DAQIP?",
-    a: "AirCert AI covers airworthiness, certification and design assurance. DAQIP covers manufacturing, inspection, First Article Inspection and quality evidence. Together they are intended to connect a certification requirement to the manufacturing and inspection evidence that supports it.",
+    a: "AirCert AI covers airworthiness, certification and design assurance. DAQIP covers manufacturing, inspection, First Article Inspection and quality evidence. Within the AEAIP architecture they are intended to connect a certification requirement to the manufacturing and inspection evidence that supports it.",
   },
 ];

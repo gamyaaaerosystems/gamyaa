@@ -21,6 +21,7 @@ import {
   AIRCERT_FAQ,
   AIRCERT_GROUPS,
 } from "@/content/aircert";
+import { SPECIALISED_PLATFORMS } from "@/content/aeaip";
 import { PRODUCT_STATUS, STATUS_AS_OF, STATUS_LABEL } from "@/content/status";
 import { faqLd, pageMetadata, softwareLd } from "@/lib/seo";
 import { aero } from "@/lib/site";
@@ -61,7 +62,7 @@ export default function AircertPage() {
         }
         eyebrow={
           <span className="flex flex-wrap items-center gap-3">
-            <span>Gamyaa AeroSystems · Platform 02</span>
+            <span>Platform 03 · Certification Assurance Intelligence</span>
             <StatusBadge status={PRODUCT_STATUS.aircert} />
           </span>
         }
@@ -93,6 +94,25 @@ export default function AircertPage() {
           </ButtonLink>
         </div>
       </PageHero>
+
+      {/* Parent relationship: AirCert AI within the AEAIP architecture */}
+      <section aria-label="AirCert AI within AEAIP" className="border-t border-line py-8" data-ga-section="aircert_parent">
+        <Container className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <p className="max-w-3xl text-[0.9375rem] leading-relaxed text-ink-2">
+            <span className="font-medium text-ink">{SPECIALISED_PLATFORMS[1].relation}</span> AEAIP™ connects
+            requirements, configuration, evidence, verification and readiness at system level; AirCert AI™ provides the
+            certification depth: certification basis, compliance planning and certification evidence.
+          </p>
+          <ArrowLink
+            href={aero("/aeaip")}
+            ga={{ event: "aeaip_explore", params: { source_location: "aircert_page" } }}
+            label="Explore AEAIP"
+            className="shrink-0"
+          >
+            Explore AEAIP™
+          </ArrowLink>
+        </Container>
+      </section>
 
       {/* Definition + problem */}
       <Section labelledBy="what-is-aircert" section="aircert_definition">
@@ -284,17 +304,18 @@ export default function AircertPage() {
         </Container>
       </Section>
 
-      {/* Relationship to DAQIP (full diagram lives on Engineering Assurance) */}
+      {/* Relationship to DAQIP and AEAIP (full diagram lives on Engineering Assurance) */}
       <Section labelledBy="int-title" section="integration">
         <Container className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <SectionHeader eyebrow="AirCert AI™ + DAQIP™" id="int-title" title="Design assurance meets manufacturing assurance" />
+            <SectionHeader eyebrow="Within AEAIP™" id="int-title" title="Certification assurance meets manufacturing assurance" />
           </div>
           <div className="lg:col-span-7">
             <p className="lede">
               AirCert AI covers design assurance and certification. DAQIP covers manufacturing assurance and quality.
-              Connected, a certification requirement can be followed to the manufacturing characteristic, the
-              inspection method and the FAI evidence that supports it, with human and authority review at the end.
+              Within the AEAIP architecture, a certification requirement can be followed to the manufacturing
+              characteristic, the inspection method and the FAI evidence that supports it, with human and authority
+              review at the end.
             </p>
             <ArrowLink href={aero("/solutions/engineering-assurance")} className="mt-6">
               See the engineering assurance thread

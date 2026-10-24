@@ -1,5 +1,4 @@
 import { cn } from "@/lib/cn";
-import { LIFECYCLE } from "@/content/company";
 import { ArrowRight } from "@/components/ui/icons";
 
 /* ---------------------------------------------------------------- Flow chain */
@@ -62,85 +61,6 @@ export function FlowChain({
         );
       })}
     </ol>
-  );
-}
-
-/* -------------------------------------------------------- Lifecycle diagram */
-
-const COVERAGE: Record<string, string> = {
-  Design: "AirCert AI™",
-  Airworthiness: "AirCert AI™",
-  Manufacturing: "DAQIP™",
-  Inspection: "DAQIP™",
-  Evidence: "DAQIP™ + AirCert AI™",
-  Approval: "Human authority",
-};
-
-/** DESIGN → AIRWORTHINESS → MANUFACTURING → INSPECTION → EVIDENCE → APPROVAL */
-export function LifecycleDiagram() {
-  return (
-    <figure className="ticks border border-line bg-surface p-6 sm:p-8 lg:p-10">
-      <figcaption className="mb-8 flex flex-wrap items-baseline justify-between gap-2">
-        <span className="eyebrow">Connected engineering lifecycle</span>
-        <span className="font-mono text-xs text-subtle">FIG. 01</span>
-      </figcaption>
-      <div className="relative">
-        <div
-          aria-hidden
-          className="anim-scale-x pointer-events-none absolute left-[11px] right-0 top-[11px] hidden h-px bg-line-strong lg:block"
-        />
-        <ol className="grid grid-cols-1 lg:grid-cols-6">
-          {LIFECYCLE.map((s, i) => {
-            const last = i === LIFECYCLE.length - 1;
-            return (
-              <li key={s.title} className="relative flex gap-5 pb-8 last:pb-0 lg:flex-col lg:gap-0 lg:pb-0 lg:pr-5">
-                <div className="relative flex shrink-0 flex-col items-center lg:items-start">
-                  <span
-                    className={cn(
-                      "z-10 grid size-[23px] place-items-center rounded-full border bg-surface",
-                      last ? "border-accent" : "border-line-strong",
-                    )}
-                  >
-                    <span className={cn("size-[7px] rounded-full", last ? "bg-accent" : "bg-ink")} />
-                  </span>
-                  {!last ? (
-                    <span aria-hidden className="absolute bottom-[-0.5rem] top-[23px] w-px bg-line-strong lg:hidden" />
-                  ) : null}
-                </div>
-                <div className="lg:mt-6">
-                  <p className="font-mono text-xs text-subtle">{s.n}</p>
-                  <h3 className="mt-1 font-mono text-sm uppercase tracking-[0.12em] text-ink">{s.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
-                  <p className="mt-3 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-accent lg:hidden">
-                    {COVERAGE[s.title]}
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
-
-      <div aria-hidden className="mt-10 hidden grid-cols-6 gap-x-4 lg:grid">
-        <Bracket className="col-span-2" title="AirCert AI™" sub="Design assurance · Certification" />
-        <Bracket className="col-span-3" title="DAQIP™" sub="Manufacturing assurance · Quality" />
-        <Bracket className="col-span-1" title="Human authority" sub="Review · Approval" accent />
-      </div>
-      <p className="sr-only">
-        AirCert AI covers design and airworthiness. DAQIP covers manufacturing, inspection and quality evidence.
-        Approval always remains a human decision.
-      </p>
-    </figure>
-  );
-}
-
-function Bracket({ className, title, sub, accent }: { className?: string; title: string; sub: string; accent?: boolean }) {
-  return (
-    <div className={className}>
-      <div className={cn("h-2 border-x border-b", accent ? "border-accent" : "border-line-strong")} />
-      <p className={cn("mt-3 text-sm font-medium", accent ? "text-accent" : "text-ink")}>{title}</p>
-      <p className="mt-0.5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">{sub}</p>
-    </div>
   );
 }
 

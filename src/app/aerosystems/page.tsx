@@ -1,26 +1,17 @@
-import Link from "next/link";
-import { IntegrationDiagram, LifecycleDiagram } from "@/components/diagrams/flow";
-import { Timeline } from "@/components/diagrams/timeline";
-import { EngineeringEvidence, EvidenceRecordCard, ProblemsList, ProductCards } from "@/components/sections/aero";
-import {
-  CommercialCtas,
-  CtaBand,
-  EngineeringInitiatives,
-  internalContact,
-  LeadershipSection,
-  PartnersSection,
-} from "@/components/sections/shared";
+import { CoreModel, PlatformHierarchy } from "@/components/aeaip/diagrams";
+import { GoDeeper, ReadinessRecordCard, WhatExistsToday } from "@/components/sections/aero";
+import { CtaBand, internalContact, PartnersSection } from "@/components/sections/shared";
 import { ArrowRight } from "@/components/ui/icons";
-import { ButtonLink, Container, KeywordLine, Section, SectionHeader, StatusBadge } from "@/components/ui/primitives";
-import { AUDIENCES } from "@/content/company";
-import { SOLUTIONS } from "@/content/solutions";
-import { ENGINEERING_ASSURANCE_DEFINITION, pageMetadata } from "@/lib/seo";
+import { ArrowLink, ButtonLink, Container, Section, SectionHeader, SmartLink } from "@/components/ui/primitives";
+import { AEAIP, AEAIP_HREF, AUDIENCES, TRUST_PRINCIPLES } from "@/content/aeaip";
+import { STATUS_AS_OF } from "@/content/status";
+import { pageMetadata } from "@/lib/seo";
 import { aero } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: "Gamyaa AeroSystems | Aerospace & Defence Engineering Technology",
+  title: "Gamyaa AeroSystems | Engineering Assurance Intelligence — Defence · Aerospace · Space",
   description:
-    "Gamyaa AeroSystems builds engineering intelligence platforms for aerospace and defence quality, airworthiness, inspection, manufacturing and engineering evidence.",
+    "Gamyaa AeroSystems builds Engineering Assurance Intelligence: AEAIP™ connects requirement, configuration, evidence, verification and readiness, with DAQIP™ for manufacturing and AirCert AI™ for certification assurance.",
   href: aero("/"),
 });
 
@@ -32,199 +23,188 @@ export default function AeroSystemsPage() {
         <div aria-hidden className="tech-grid tech-grid-fade absolute inset-0" />
         <Container className="relative grid items-center gap-12 pb-16 pt-12 sm:pt-16 lg:grid-cols-12 lg:pb-24 lg:pt-24">
           <div className="lg:col-span-7">
-            <p className="eyebrow anim-fade-up">Engineering Assurance Intelligence for Aerospace &amp; Defence</p>
-            <h1
-              className="display anim-fade-up mt-6 text-[2.5rem] text-ink sm:text-6xl lg:text-[4.25rem]"
-              style={{ animationDelay: "60ms" }}
-            >
-              Gamyaa AeroSystems
+            <h1 className="anim-fade-up">
+              {/* Brand line: larger than the market line below so the hierarchy reads brand → category → market. */}
+              <span className="block text-xl font-medium tracking-tight text-ink-2 sm:text-2xl">Gamyaa AeroSystems</span>
+              {/* One line on laptop and desktop screens; wraps naturally on phones. */}
+              <span
+                className="display anim-fade-up mt-4 block text-[2.5rem] text-ink sm:text-6xl lg:whitespace-nowrap lg:text-[3.4rem] xl:text-[4.25rem]"
+                style={{ animationDelay: "60ms" }}
+              >
+                Engineering Intelligence
+              </span>
             </h1>
             <p
-              className="heading anim-fade-up mt-5 text-2xl text-ink-2 sm:text-3xl lg:text-[2.125rem]"
+              className="anim-fade-up mt-6 font-mono text-sm uppercase tracking-[0.2em] text-ink-2 sm:text-base"
               style={{ animationDelay: "120ms" }}
             >
-              Intelligence for Aerospace &amp; Defence Manufacturing
+              Defence <span aria-hidden className="text-steel">·</span> Aerospace{" "}
+              <span aria-hidden className="text-steel">·</span> Space
             </p>
             <p className="lede anim-fade-up mt-6 max-w-2xl" style={{ animationDelay: "180ms" }}>
-              Engineering technology connecting design intent, airworthiness, manufacturing, inspection, quality
-              evidence and approval.
+              {AEAIP.statement}
             </p>
             <div className="anim-fade-up mt-9 flex flex-col gap-3 xs:flex-row" style={{ animationDelay: "240ms" }}>
-              <ButtonLink href="#products" label="Explore Products">
-                Explore Products
+              <ButtonLink
+                href={AEAIP_HREF}
+                ga={{ event: "aeaip_explore", params: { source_location: "aero_hero" } }}
+                label="Explore AEAIP"
+              >
+                Explore AEAIP™
               </ButtonLink>
               <ButtonLink
                 href={internalContact()}
                 variant="secondary"
-                ga={{ event: "contact_sales_click" }}
-                label="Talk to Gamyaa"
+                ga={{ event: "contact_sales_click", params: { source_location: "aero_hero" } }}
+                label="Talk to GAMYAA"
               >
-                Talk to Gamyaa
+                Talk to GAMYAA
               </ButtonLink>
             </div>
-            <KeywordLine
-              className="mt-10"
-              items={["Aerospace", "Defence", "Quality", "Airworthiness", "Inspection", "Manufacturing Intelligence"]}
-            />
           </div>
           <div className="anim-fade-up lg:col-span-5" style={{ animationDelay: "200ms" }}>
             <div className="mx-auto max-w-md lg:ml-auto">
-              <EvidenceRecordCard />
+              <ReadinessRecordCard />
             </div>
           </div>
         </Container>
       </section>
 
-      {/* 2 · Engineering Intelligence Platforms */}
-      <Section id="products" labelledBy="products-title" section="products">
+      {/* 2 · Platforms */}
+      <Section id="products" labelledBy="products-title" section="platforms">
         <Container>
-          <SectionHeader eyebrow="Products" id="products-title" title="Engineering Intelligence Platforms" />
+          <SectionHeader
+            eyebrow="Platforms"
+            id="products-title"
+            title="One assurance architecture, three platforms"
+            lede="AEAIP™ is the flagship. DAQIP™ and AirCert AI™ provide manufacturing and certification depth inside it."
+          />
           <div className="mt-12">
-            <ProductCards />
+            <PlatformHierarchy location="platform_card" />
           </div>
         </Container>
       </Section>
 
-      {/* 3 · Engineering lifecycle */}
-      <Section labelledBy="lifecycle-title" section="lifecycle">
+      {/* 3 · Core engineering model */}
+      <Section labelledBy="model-title" section="core_model">
         <Container>
           <SectionHeader
-            eyebrow="Engineering Assurance Intelligence"
-            id="lifecycle-title"
-            title="One lifecycle, from design intent to approval"
-            lede={ENGINEERING_ASSURANCE_DEFINITION}
+            eyebrow="Core engineering model"
+            id="model-title"
+            title="From engineering requirement to readiness decision"
+            lede="Engineering Assurance Intelligence means knowing, at any moment, what is verified, on which configuration, by which evidence, and what still stands between the system and its next gate."
           />
-          <div className="reveal mt-12">
-            <LifecycleDiagram />
+          <div className="mt-10">
+            <CoreModel />
           </div>
+          <ArrowLink
+            href={AEAIP_HREF}
+            className="mt-6"
+            ga={{ event: "aeaip_explore", params: { source_location: "core_model" } }}
+            label="Understand the AEAIP architecture"
+          >
+            Understand the AEAIP architecture
+          </ArrowLink>
         </Container>
       </Section>
 
       {/* 4 · Who we serve */}
       <Section labelledBy="audience-title" section="audiences">
         <Container>
-          <SectionHeader eyebrow="Who we serve" id="audience-title" title="Built for the people who sign off the evidence" />
-          <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <SectionHeader eyebrow="Who we serve" id="audience-title" title="For the people accountable for readiness" />
+          <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
             {AUDIENCES.map((a, i) => (
               <li key={a.title} className="bg-surface p-6 sm:p-8">
                 <p className="font-mono text-xs text-subtle">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="mt-6 text-lg font-medium leading-snug text-ink">{a.title}</h3>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">{a.body}</p>
+                <h3 className="mt-5 text-lg font-medium leading-snug text-ink">{a.title}</h3>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{a.body}</p>
               </li>
             ))}
           </ul>
         </Container>
       </Section>
 
-      {/* 5 · Engineering evidence */}
-      <Section labelledBy="evidence-title" section="engineering_evidence">
-        <Container>
-          <SectionHeader
-            eyebrow="What exists today"
-            id="evidence-title"
-            title="Engineering Evidence"
-            lede="DAQIP is in development. Here is what you can examine now: an interactive prototype, the research behind it, the problem analysis that shaped it and an honest roadmap."
-          />
-          <div className="mt-12">
-            <EngineeringEvidence />
+      {/* 5 · Trust principles */}
+      <Section labelledBy="trust-title" section="trust_principles" className="bg-surface-accent">
+        <Container className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader eyebrow="Trust principles" id="trust-title" title={AEAIP.governance} />
           </div>
-          <CommercialCtas location="engineering_evidence" className="mt-10" />
+          <ul className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:col-span-8">
+            {TRUST_PRINCIPLES.map((p) => (
+              <li key={p.title} className="bg-surface p-5 sm:p-6">
+                <h3 className="font-medium text-ink">{p.title}</h3>
+                <p className="mt-1 text-sm text-muted">{p.body}</p>
+              </li>
+            ))}
+          </ul>
         </Container>
       </Section>
 
-      {/* Lower priority ------------------------------------------------ */}
-
-      <Section labelledBy="problems-title" section="problems">
-        <Container>
-          <SectionHeader eyebrow="Customer problems" id="problems-title" title="Problems We Are Solving" />
-          <div className="mt-12">
-            <ProblemsList />
-          </div>
-        </Container>
-      </Section>
-
-      <Section labelledBy="integration-title" section="integration">
-        <Container className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <SectionHeader
-              eyebrow="DAQIP™ + AirCert AI™"
-              id="integration-title"
-              title="Design → Certification → Manufacturing → Inspection → Evidence → Approval"
-              lede={
-                <>
-                  <p>
-                    AirCert AI covers design assurance and certification. DAQIP covers manufacturing assurance and
-                    quality.
-                  </p>
-                  <p className="mt-4">
-                    Connected, a certification requirement can be followed to the manufactured characteristic, the
-                    measurement that verified it and the human review that accepted it.
-                  </p>
-                </>
-              }
-            />
-            <p className="mt-6">
-              <StatusBadge status="research" />{" "}
-              <span className="ml-2 text-sm text-muted">Integration is on the roadmap.</span>
-            </p>
-          </div>
-          <div className="reveal lg:col-span-7">
-            <IntegrationDiagram />
-          </div>
-        </Container>
-      </Section>
-
-      <Section labelledBy="solutions-title" section="solutions">
-        <Container className="grid gap-12 lg:grid-cols-12">
+      {/* 6 · What exists today */}
+      <Section id="today" labelledBy="today-title" section="what_exists_today">
+        <Container className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <SectionHeader
-              eyebrow="Solutions"
-              id="solutions-title"
-              title="Solutions by workflow"
-              lede="Start from the problem you have today."
+              eyebrow={`What exists today · ${STATUS_AS_OF}`}
+              id="today-title"
+              title="Honest status, platform by platform"
+              lede="No platform is generally available yet. The interactive demonstrations use fictitious data, and every capability carries its real status."
             />
           </div>
-          <ul className="divide-y divide-line border-y border-line lg:col-span-8">
-            {SOLUTIONS.map((s) => (
-              <li key={s.slug}>
-                <Link
-                  href={aero(`/solutions/${s.slug}`)}
-                  className="group flex min-h-16 flex-wrap items-center justify-between gap-x-6 gap-y-2 py-4"
-                >
-                  <span className="text-lg text-ink transition-colors group-hover:text-accent">{s.label}</span>
-                  <span className="flex items-center gap-4">
-                    <StatusBadge status={s.status} />
-                    <ArrowRight className="text-subtle transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-
-      <Section labelledBy="timeline-title" section="timeline">
-        <Container>
-          <SectionHeader
-            eyebrow="Evolution"
-            id="timeline-title"
-            title="From Idea to Aerospace Engineering Intelligence"
-            lede="2026 marks the transition from research and proof of concept to product and company."
-          />
-          <div className="mt-12">
-            <Timeline />
+          <div className="lg:col-span-8">
+            <WhatExistsToday />
           </div>
         </Container>
       </Section>
 
-      <EngineeringInitiatives />
-      <LeadershipSection />
+      {/* Go deeper: content moved off this page */}
+      <Section labelledBy="deeper-title" section="go_deeper">
+        <Container>
+          <h2 id="deeper-title" className="eyebrow">
+            Go deeper
+          </h2>
+          <div className="mt-6">
+            <GoDeeper />
+          </div>
+        </Container>
+      </Section>
+
+      {/* 7 · Partners & ecosystem (verified relationships only) */}
       <PartnersSection />
 
+      {/* 8 · CTA */}
       <CtaBand
-        title="Start with one part and one inspection workflow."
-        body="DAQIP is in development. Talk to us about piloting it on a real First Article Inspection or inspection workflow in your organisation."
-        actions={<CommercialCtas location="cta_band" />}
+        title="Start with one readiness question."
+        body="Tell us about the review, test or acceptance decision your team is preparing for. We will be candid about what exists today."
+        actions={
+          <>
+            <ButtonLink
+              href={AEAIP_HREF}
+              ga={{ event: "aeaip_explore", params: { source_location: "aero_cta" } }}
+              label="Explore AEAIP"
+            >
+              Explore AEAIP™
+            </ButtonLink>
+            <ButtonLink
+              href={internalContact("assurance-problem")}
+              variant="secondary"
+              ga={{ event: "contact_sales_click", params: { source_location: "aero_cta" } }}
+              label="Discuss an Engineering Assurance Problem"
+            >
+              Discuss an Engineering Assurance Problem
+            </ButtonLink>
+            <SmartLink
+              href={internalContact("strategic-partnership")}
+              ga={{ event: "aeaip_partner_interest", params: { source_location: "aero_cta" } }}
+              label="Strategic Partnership"
+              className="link-arrow px-1"
+            >
+              <span>Strategic Partnership</span>
+              <ArrowRight className="arrow" />
+            </SmartLink>
+          </>
+        }
       />
     </>
   );

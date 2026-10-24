@@ -104,35 +104,16 @@ export const CAREER_DOMAINS = [
   "Product engineering",
 ];
 
-export const AUDIENCES = [
-  {
-    title: "Engineering & Manufacturing Architects",
-    body: "Turn engineering requirements into manufacturing and inspection-ready digital structures.",
-  },
-  {
-    title: "Aerospace & Defence Manufacturers",
-    body: "Build consistent, traceable engineering and manufacturing evidence.",
-  },
-  {
-    title: "Inspection & Metrology Partners",
-    body: "Connect inspection methods, gauges, CMM results and evidence directly to requirements.",
-  },
-  {
-    title: "Quality & Certification Teams",
-    body: "Review requirements, evidence, test results and approval status across the lifecycle.",
-  },
-];
-
-export const LIFECYCLE = [
-  { n: "01", title: "Design", body: "Design intent and engineering requirements." },
-  { n: "02", title: "Airworthiness", body: "Certification basis, safety and compliance." },
-  { n: "03", title: "Manufacturing", body: "Processes and characteristics to produce." },
-  { n: "04", title: "Inspection", body: "Methods, gauges and measurements." },
-  { n: "05", title: "Evidence", body: "Traceable records with provenance." },
-  { n: "06", title: "Approval", body: "Human review and recorded decisions." },
-];
-
+/**
+ * Predefined contact intents. Only these values are accepted from ?interest=… and by
+ * the contact API; the free-text message is never sent to analytics.
+ */
 export const INTERESTS = [
+  { value: "aeaip", label: "AEAIP™ — discussion" },
+  { value: "assurance-problem", label: "Discuss an engineering assurance problem" },
+  { value: "spacecraft-assurance", label: "Satellite / spacecraft assurance" },
+  { value: "strategic-partnership", label: "Strategic partnership" },
+  { value: "investor", label: "Strategic / investor conversation" },
   { value: "daqip", label: "DAQIP™ — demo or pilot" },
   { value: "quality-problem", label: "Discuss an aerospace quality problem" },
   { value: "fai", label: "First Article Inspection / AS9102" },

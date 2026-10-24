@@ -46,7 +46,8 @@ export function ContactSection({
       <IntentHighlight />
       <Container>
         <h2 className="sr-only">How to reach us</h2>
-        <ul className="grid gap-4 md:grid-cols-3">
+        {/* Intent cards plus "Call Us": three across, or two-by-two / four across when there are four. */}
+        <ul className={intents.length >= 3 ? "grid gap-4 md:grid-cols-2 xl:grid-cols-4" : "grid gap-4 md:grid-cols-3"}>
           {intents.map((i) => (
             <li key={i.interest}>
               {/* Plain <a>: a full load lets the form read ?interest, and mailto needs no router. */}

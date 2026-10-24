@@ -53,9 +53,9 @@ const DIVISIONS = [
   {
     n: "01",
     title: "Gamyaa AeroSystems",
-    subtitle: "Aerospace & Defence Engineering Technology",
-    body: "Engineering intelligence for aerospace and defence assurance, manufacturing and inspection.",
-    keywords: ["Quality", "Airworthiness", "Inspection", "Manufacturing", "AI"],
+    subtitle: "Engineering Assurance Intelligence · Defence · Aerospace · Space",
+    body: "From engineering requirement to verified evidence and readiness decision: AEAIP™, DAQIP™ and AirCert AI™.",
+    keywords: ["AEAIP™", "DAQIP™", "AirCert AI™", "Verification", "Readiness"],
     cta: "Explore AeroSystems",
     href: aero("/"),
     event: "view_aerosystems" as const,

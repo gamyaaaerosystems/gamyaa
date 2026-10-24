@@ -39,7 +39,19 @@ export type AnalyticsEventName =
   | "form_submit"
   | "form_error"
   | "theme_change"
-  | "outbound_click";
+  | "outbound_click"
+  | "aeaip_explore"
+  | "aeaip_demo_open"
+  | "aeaip_demo_start"
+  | "aeaip_gate_select"
+  | "aeaip_subsystem_select"
+  | "aeaip_evidence_trace_open"
+  | "aeaip_evidence_validity_demo"
+  | "aeaip_reference_open"
+  | "aeaip_partner_interest"
+  | "aeaip_investor_interest"
+  | "platform_card_click"
+  | "designer_profile_click";
 
 export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>([
   "nav_click",
@@ -70,6 +82,18 @@ export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>
   "form_error",
   "theme_change",
   "outbound_click",
+  "aeaip_explore",
+  "aeaip_demo_open",
+  "aeaip_demo_start",
+  "aeaip_gate_select",
+  "aeaip_subsystem_select",
+  "aeaip_evidence_trace_open",
+  "aeaip_evidence_validity_demo",
+  "aeaip_reference_open",
+  "aeaip_partner_interest",
+  "aeaip_investor_interest",
+  "platform_card_click",
+  "designer_profile_click",
 ]);
 
 /** Parameters that may ever be sent. Anything else is dropped. */
@@ -89,7 +113,14 @@ export type AnalyticsParam =
   | "product"
   | "topic"
   | "source_page"
-  | "cta_location";
+  | "cta_location"
+  | "source_location"
+  | "gate"
+  | "subsystem"
+  | "trace_category"
+  | "validity_step"
+  | "reference_category"
+  | "platform";
 
 export type AnalyticsParams = Partial<Record<AnalyticsParam, string>>;
 
@@ -110,7 +141,69 @@ const ALLOWED_PARAMS: ReadonlySet<string> = new Set<AnalyticsParam>([
   "topic",
   "source_page",
   "cta_location",
+  "source_location",
+  "gate",
+  "subsystem",
+  "trace_category",
+  "validity_step",
+  "reference_category",
+  "platform",
 ]);
+
+/* AEAIP enumerations. Values are generic categories, never IDs or free text. */
+export const GATE_CODES = ["MCR", "SRR", "SDR", "PDR", "CDR", "SIR", "TRR", "SAR", "ORR", "FRR", "MRR"] as const;
+export type GateCode = (typeof GATE_CODES)[number];
+
+export const SUBSYSTEM_KEYS = [
+  "structure",
+  "eps",
+  "adcs",
+  "thermal",
+  "avionics",
+  "communications",
+  "payload",
+  "flight_software",
+  "cybersecurity",
+] as const;
+export type SubsystemKey = (typeof SUBSYSTEM_KEYS)[number];
+
+export type SourceLocation =
+  | "aero_hero"
+  | "platform_card"
+  | "core_model"
+  | "aero_cta"
+  | "products_page"
+  | "daqip_page"
+  | "aircert_page"
+  | "aeaip_hero"
+  | "aeaip_body"
+  | "aeaip_cta"
+  | "learn_page"
+  | "demo_page"
+  | "strategy_page"
+  | "contact_page"
+  | "footer";
+export type TraceCategory =
+  | "anomaly"
+  | "ncr"
+  | "evidence_gap"
+  | "configuration_mismatch"
+  | "pending_test"
+  | "cybersecurity_finding"
+  | "waiver";
+export type ValidityStep = "verified" | "change" | "at_risk" | "reverify" | "reverified";
+export type ReferenceCategory =
+  | "verification"
+  | "reviews"
+  | "configuration"
+  | "cybersecurity"
+  | "standards"
+  | "continuous_assurance"
+  | "operational_evidence"
+  | "satellite_assurance"
+  | "evidence_graph"
+  | "glossary";
+export type PlatformKey = "aeaip" | "daqip" | "aircert";
 
 /**
  * Enumerated parameters accept only these values. `person_name` is limited to the
@@ -149,6 +242,48 @@ const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
     "solution_page",
     "page_body",
   ]),
+  source_location: new Set<SourceLocation>([
+    "aero_hero",
+    "platform_card",
+    "core_model",
+    "aero_cta",
+    "products_page",
+    "daqip_page",
+    "aircert_page",
+    "aeaip_hero",
+    "aeaip_body",
+    "aeaip_cta",
+    "learn_page",
+    "demo_page",
+    "strategy_page",
+    "contact_page",
+    "footer",
+  ]),
+  gate: new Set<string>(GATE_CODES),
+  subsystem: new Set<string>(SUBSYSTEM_KEYS),
+  trace_category: new Set<TraceCategory>([
+    "anomaly",
+    "ncr",
+    "evidence_gap",
+    "configuration_mismatch",
+    "pending_test",
+    "cybersecurity_finding",
+    "waiver",
+  ]),
+  validity_step: new Set<ValidityStep>(["verified", "change", "at_risk", "reverify", "reverified"]),
+  reference_category: new Set<ReferenceCategory>([
+    "verification",
+    "reviews",
+    "configuration",
+    "cybersecurity",
+    "standards",
+    "continuous_assurance",
+    "operational_evidence",
+    "satellite_assurance",
+    "evidence_graph",
+    "glossary",
+  ]),
+  platform: new Set(["aeaip", "daqip", "aircert"]),
 };
 
 export type DemoProduct = "daqip" | "aircert";
@@ -260,13 +395,17 @@ export function track(name: AnalyticsEventName, params: AnalyticsParams = {}): v
 /**
  * Data-attribute contract for server-rendered elements (no client JS per element):
  *   data-ga-event="partner_click" data-ga-partner-name="EV Society"
+ *   data-ga-also="platform_card_click" (optional second event, same parameters)
  * The global AnalyticsListener reads these on click.
  */
 export function gaAttrs(
   event: AnalyticsEventName,
   params: AnalyticsParams = {},
+  /** Optional second event fired by the same click with the same parameters. */
+  also?: AnalyticsEventName,
 ): Record<string, string> {
   const attrs: Record<string, string> = { "data-ga-event": event };
+  if (also) attrs["data-ga-also"] = also;
   for (const [k, v] of Object.entries(params)) {
     if (v) attrs[`data-ga-${k.replace(/_/g, "-")}`] = v;
   }

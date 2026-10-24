@@ -16,11 +16,29 @@ import { aero, EXTERNAL } from "@/lib/site";
 export const metadata = pageMetadata({
   title: "Engineering Research & Product Development | Gamyaa AeroSystems",
   description:
-    "Product R&D at Gamyaa AeroSystems: FAI automation, drawing intelligence, manufacturing-quality intelligence, engineering assurance, airworthiness, certification evidence and aerospace cybersecurity.",
+    "Product R&D at Gamyaa AeroSystems: AEAIP™ engineering assurance, configuration-aware evidence validity, spacecraft review readiness, FAI automation, drawing intelligence, certification evidence and aerospace cybersecurity.",
   href: aero("/research"),
 });
 
 const AREAS: Array<{ title: string; body: string; status: Status; feeds: string }> = [
+  {
+    title: "Engineering Evidence Graph™",
+    body: "A node and relationship model connecting requirements, configuration, verification evidence, issues and approvals, starting with satellites and spacecraft.",
+    status: "architecture",
+    feeds: "AEAIP™",
+  },
+  {
+    title: "Configuration-aware evidence validity",
+    body: "Determining whether verification evidence still applies to the requirement baseline and configuration under review.",
+    status: "research",
+    feeds: "AEAIP™",
+  },
+  {
+    title: "Review-gate readiness",
+    body: "Configurable review gates, their criteria and the evidence each needs, for spacecraft lifecycles first.",
+    status: "research",
+    feeds: "AEAIP™",
+  },
   {
     title: "FAI automation",
     body: "Reducing the manual effort between a drawing and a reviewed First Article Inspection Report, from ballooning to AS9102 forms.",
@@ -40,10 +58,10 @@ const AREAS: Array<{ title: string; body: string; status: Status; feeds: string 
     feeds: "DAQIP™",
   },
   {
-    title: "Engineering assurance",
+    title: "Cross-domain engineering assurance",
     body: "Connecting design and certification requirements to manufacturing characteristics and their evidence.",
     status: "research",
-    feeds: "DAQIP™ + AirCert AI™",
+    feeds: "AEAIP™ with DAQIP™ + AirCert AI™",
   },
   {
     title: "Airworthiness",
@@ -61,7 +79,7 @@ const AREAS: Array<{ title: string; body: string; status: Status; feeds: string 
     title: "Aerospace cybersecurity",
     body: "Access control, audit trails and evidence integrity for sensitive aerospace and defence engineering data and connected systems.",
     status: "research",
-    feeds: "Platform foundation",
+    feeds: "AEAIP™ cybersecurity assurance",
   },
 ];
 
@@ -79,7 +97,7 @@ export default function ResearchPage() {
         }
         eyebrow="Product R&D"
         title="Engineering Research & Product Development"
-        lede="Our research exists to build products. Each area below feeds a specific DAQIP™ or AirCert AI™ capability and carries its current status."
+        lede="Our research exists to build products. Each area below feeds a specific AEAIP™, DAQIP™ or AirCert AI™ capability and carries its current status."
       >
         <div className="mt-10 flex flex-col gap-3 xs:flex-row">
           <ButtonLink
@@ -109,7 +127,7 @@ export default function ResearchPage() {
                 </p>
               </li>
             ))}
-            <li className="hidden bg-surface md:block lg:hidden" aria-hidden />
+            {/* Fillers keep the hairline grid rectangular: 10 areas = 3 rows of 3 + 1 on large screens. */}
             <li className="hidden bg-surface lg:block" aria-hidden />
             <li className="hidden bg-surface lg:block" aria-hidden />
           </ul>
@@ -153,7 +171,7 @@ export default function ResearchPage() {
             <p className="text-sm text-muted">
               These findings shaped the DAQIP roadmap. We do not publish customer names or data from this work.
             </p>
-            <ArrowLink href={`${aero("/")}#problems-title`}>Problems we are solving</ArrowLink>
+            <ArrowLink href={aero("/aeaip")}>How this work grew into AEAIP™</ArrowLink>
           </div>
         </Container>
       </Section>

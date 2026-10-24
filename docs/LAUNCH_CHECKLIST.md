@@ -8,6 +8,11 @@ Tick each item before public launch. The owner column says who acts.
 - [ ] **AirCert AI status confirmed** (currently "Planned"). *Owner:* product. *How:* edit `src/content/status.ts`.
 - [ ] **Capability statuses confirmed** for the 11 DAQIP layers, 7 solutions and 7 research areas. *Owner:* product. *How:* edit `src/content/daqip.ts`, `solutions.ts` and `research/page.tsx`.
 
+- [ ] **AEAIP™ statuses confirmed** (platform Research & Architecture; Evidence Graph and Assurance Gates Architecture; Assurance Intelligence Engine, evidence validity and cybersecurity Research; continuous and operational assurance Concept; integrations Roadmap; predictive assurance Long-term Vision). *Owner:* product. *How:* `src/content/aeaip.ts`.
+- [ ] **"Built in India. Designed for globally rigorous engineering programs."** confirmed as company positioning (strategy page). *Owner:* founders.
+- [ ] **AEAIP knowledge pages reviewed by a practising systems / V&V engineer** before promotion. *Owner:* engineering. *How:* `/aerosystems/aeaip/*`.
+- [ ] **Designer profile link** (`https://aerospace.gamyaa.in/about/sudarshana-karkala`) resolves. *Owner:* tech.
+
 ## Commercial
 
 - [ ] **"Request a DAQIP Demo" reaches you.** *Owner:* sales. *How:* click it on `/aerosystems`, `/daqip`, the FAI page, `/services` and `/contact`.
@@ -33,11 +38,14 @@ Tick each item before public launch. The owner column says who acts.
 - [ ] **GA4 DebugView verified.** *Owner:* marketing. *How:* deploy once with `NEXT_PUBLIC_GA_DEBUG=1`, or use the GA Debugger extension.
 - [ ] **SPA page views:** one per route change. *Owner:* marketing. *How:* DebugView.
 - [ ] **New events seen** (`demo_interest`, `problem_discussion_click`) and **no PII** in parameters. *Owner:* marketing. *How:* DebugView.
+- [ ] **AEAIP events seen** (`aeaip_explore`, `aeaip_demo_open`, `aeaip_demo_start`, `aeaip_gate_select`, `aeaip_subsystem_select`, `aeaip_evidence_trace_open`, `aeaip_evidence_validity_demo`, `aeaip_reference_open`, `aeaip_partner_interest`, `aeaip_investor_interest`, `platform_card_click`, `designer_profile_click`). Register `source_location`, `gate`, `subsystem`, `trace_category`, `validity_step`, `reference_category` and `platform` as event-scoped custom dimensions. *Owner:* marketing.
 
 ## SEO
 
 - [ ] **Search Console:** verify `gamyaa.in`. *Owner:* marketing. *How:* DNS record, or set `GOOGLE_SITE_VERIFICATION` and redeploy.
 - [ ] **Sitemap submitted.** *Owner:* marketing. *How:* `https://gamyaa.in/sitemap.xml`.
+- [ ] **Indexing requested for AEAIP:** `/aerosystems/aeaip`, `/aerosystems/aeaip/review-gates`, `/aerosystems/aeaip/verification-validation`, `/aerosystems/aeaip/configuration-assurance`. *Owner:* marketing.
+- [ ] **Bing Webmaster Tools:** verify and submit the sitemap (no verification token exists in the repository). *Owner:* marketing.
 - [ ] **Indexing requested** for `/`, `/aerosystems`, `/aerosystems/daqip`, `/aerosystems/aircert-ai`, `/aerosystems/solutions/first-article-inspection` and `/ventures`. *Owner:* marketing. *How:* Search Console → URL inspection.
 
 ## Security

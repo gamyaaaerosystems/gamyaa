@@ -12,7 +12,13 @@ import {
 function paramsFromDataset(ds: DOMStringMap): AnalyticsParams {
   const out: Record<string, string> = {};
   for (const [key, value] of Object.entries(ds)) {
-    if (!key.startsWith("ga") || key === "gaEvent" || key === "gaSection" || key === "gaLabel")
+    if (
+      !key.startsWith("ga") ||
+      key === "gaEvent" ||
+      key === "gaAlso" ||
+      key === "gaSection" ||
+      key === "gaLabel"
+    )
       continue;
     if (value === undefined) continue;
     const name = key
@@ -30,7 +36,8 @@ function sectionOf(el: Element): string | undefined {
 
 /**
  * One delegated click listener for the whole site.
- *  1. Elements with data-ga-event fire that event with their data-ga-* params.
+ *  1. Elements with data-ga-event fire that event with their data-ga-* params
+ *     (and data-ga-also, when present, fires a second event with the same params).
  *  2. mailto: / tel: links fire email_click / phone_click (never the address or number).
  *  3. Links to other domains fire outbound_click (domain only).
  */
@@ -45,10 +52,13 @@ export function AnalyticsListener() {
       const source_section = sectionOf(el);
       const declared = ds.gaEvent;
       if (declared && ANALYTICS_EVENTS.has(declared)) {
-        track(declared as AnalyticsEventName, {
+        const params = {
           ...(source_section ? { source_section } : {}),
           ...paramsFromDataset(ds),
-        });
+        };
+        track(declared as AnalyticsEventName, params);
+        const also = ds.gaAlso;
+        if (also && also !== declared && ANALYTICS_EVENTS.has(also)) track(also as AnalyticsEventName, params);
       }
 
       if (!(el instanceof HTMLAnchorElement)) return;

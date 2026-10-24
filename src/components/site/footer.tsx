@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { LogoMark, LogoWord } from "@/components/brand/logo";
 import { SmartLink } from "@/components/ui/primitives";
 import { PARTNERS } from "@/content/company";
-import { aero, aeroLegalName, BRAND, CONTACT, EXTERNAL, parent, PARENT_HOME } from "@/lib/site";
+import { aero, aeroLegalName, BRAND, CONTACT, DESIGNER, EXTERNAL, parent, PARENT_HOME } from "@/lib/site";
 
 function Col({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -87,7 +87,12 @@ export function AeroFooter() {
                 </span>
               </span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm text-muted">Aerospace &amp; Defence Engineering Technology</p>
+            <p className="mt-4 max-w-xs text-sm text-muted">
+              Engineering Assurance Intelligence
+              <span className="mt-1 block font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-subtle">
+                Defence · Aerospace · Space
+              </span>
+            </p>
             <address className="mt-6 space-y-0.5 text-sm not-italic text-ink-2">
               <p>{CONTACT.location}</p>
               <p>
@@ -103,13 +108,27 @@ export function AeroFooter() {
             </address>
           </div>
 
-          <Col title="Products">
-            <Item href={aero("/daqip")}>DAQIP™</Item>
-            <Item href={aero("/aircert-ai")}>AirCert AI™</Item>
-          </Col>
+          <div className="space-y-10">
+            <Col title="Platforms">
+              <Item href={aero("/aeaip")}>AEAIP™</Item>
+              <Item href={aero("/daqip")}>DAQIP™</Item>
+              <Item href={aero("/aircert-ai")}>AirCert AI™</Item>
+              <Item href={aero("/products")}>All products</Item>
+            </Col>
+            <Col title="AEAIP™ Learn">
+              <Item href={aero("/aeaip/demo")} ga={{ event: "aeaip_demo_open", params: { source_location: "footer" } }}>
+                Interactive Assurance Demo
+              </Item>
+              <Item href={aero("/aeaip/review-gates")}>Review gates</Item>
+              <Item href={aero("/aeaip/verification-validation")}>Verification &amp; validation</Item>
+              <Item href={aero("/aeaip/configuration-assurance")}>Configuration assurance</Item>
+              <Item href={aero("/aeaip/glossary")}>Glossary</Item>
+              <Item href={aero("/aeaip/strategy")}>Strategy</Item>
+            </Col>
+          </div>
 
           <Col title="Solutions">
-            <Item href={aero("/solutions/first-article-inspection")}>FAI</Item>
+            <Item href={aero("/solutions/first-article-inspection")}>First Article Inspection</Item>
             <Item href={aero("/solutions/inspection-intelligence")}>Inspection Intelligence</Item>
             <Item href={aero("/solutions/airworthiness-certification")}>Airworthiness Certification</Item>
             <Item href={aero("/solutions/engineering-assurance")}>Engineering Assurance</Item>
@@ -156,7 +175,17 @@ export function AeroFooter() {
           <p>
             © {BRAND.copyrightYear} {aeroLegalName}. All rights reserved.
           </p>
-          <p>Bangalore, India · Designed by Gamyaa AeroSystems</p>
+          <p>
+            Bangalore, India · Designed by{" "}
+            <SmartLink
+              href={DESIGNER.href}
+              label="designer_profile"
+              ga={{ event: "designer_profile_click", params: { source_location: "footer" } }}
+              className="inline-flex min-h-9 items-center text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
+            >
+              {DESIGNER.name}, {DESIGNER.credential}
+            </SmartLink>
+          </p>
         </div>
       </div>
     </footer>

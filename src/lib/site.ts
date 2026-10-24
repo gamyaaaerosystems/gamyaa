@@ -94,4 +94,12 @@ export const EXTERNAL = {
   internships: "https://aerospace.gamyaa.in/internships",
   daqipResearch:
     "https://aerospace.gamyaa.in/internships/aerospace-quality-intelligence-platform",
+  designerProfile: "https://aerospace.gamyaa.in/about/sudarshana-karkala",
+} as const;
+
+/** Design credit shown in the AeroSystems footer and on AEAIP pages. */
+export const DESIGNER = {
+  name: "Sudarshana Karkala",
+  credential: "EV.ENGINEER™",
+  href: EXTERNAL.designerProfile,
 } as const;

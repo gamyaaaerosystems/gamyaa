@@ -79,10 +79,18 @@ export function StatusBadge({ status, className }: { status: Status; className?:
   const color = {
     available: "var(--st-available)",
     prototype: "var(--st-prototype)",
+    "concept-demo": "var(--st-prototype)",
     "in-development": "var(--st-development)",
+    "research-architecture": "var(--st-research)",
     research: "var(--st-research)",
+    architecture: "var(--st-research)",
+    concept: "var(--st-planned)",
     planned: "var(--st-planned)",
+    roadmap: "var(--st-planned)",
+    vision: "var(--st-planned)",
   }[status];
+  // Not-yet-started items get a hollow dot so status never relies on hue alone.
+  const hollow = status === "planned" || status === "roadmap" || status === "vision" || status === "concept";
   return (
     <span
       className={cn(
@@ -94,11 +102,7 @@ export function StatusBadge({ status, className }: { status: Status; className?:
       <span
         aria-hidden
         className="inline-block size-1.5 rounded-full"
-        style={
-          status === "planned"
-            ? { boxShadow: `inset 0 0 0 1px ${color}` }
-            : { background: color }
-        }
+        style={hollow ? { boxShadow: `inset 0 0 0 1px ${color}` } : { background: color }}
       />
       <span className="sr-only">Status: </span>
       {STATUS_LABEL[status]}
@@ -108,7 +112,7 @@ export function StatusBadge({ status, className }: { status: Status; className?:
 
 /* ------------------------------------------------------------ Links */
 
-type GA = { event: AnalyticsEventName; params?: AnalyticsParams };
+export type GA = { event: AnalyticsEventName; params?: AnalyticsParams; also?: AnalyticsEventName };
 
 function isExternal(href: string) {
   return /^https?:\/\//.test(href) && !href.startsWith("https://gamyaa.in");
@@ -137,7 +141,7 @@ export function SmartLink({
   newTab?: boolean;
 }) {
   const data = {
-    ...(ga ? gaAttrs(ga.event, ga.params) : {}),
+    ...(ga ? gaAttrs(ga.event, ga.params, ga.also) : {}),
     ...(label ? { "data-ga-label": label } : {}),
   };
   const external = isExternal(href) || href.startsWith("mailto:") || href.startsWith("tel:");

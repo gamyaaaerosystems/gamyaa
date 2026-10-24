@@ -1,188 +1,32 @@
-import { AIRCERT } from "@/content/aircert";
-import { DAQIP } from "@/content/daqip";
-import { PRODUCT_STATUS } from "@/content/status";
+import { AEAIP, AEAIP_CAPABILITIES, AEAIP_DEMO_HREF } from "@/content/aeaip";
+import { PRODUCT_STATUS, type Status } from "@/content/status";
 import { aero, EXTERNAL } from "@/lib/site";
-import type { ProblemTopic } from "@/lib/analytics";
-import { PROBLEM_HREF, problemGa } from "./shared";
-import { ArrowLink, KeywordLine, StatusBadge } from "@/components/ui/primitives";
+import { ArrowLink, StatusBadge } from "@/components/ui/primitives";
 
-/** The two flagship product cards used on the AeroSystems and Products pages. */
-export function ProductCards({ headingLevel = "h3" }: { headingLevel?: "h2" | "h3" }) {
-  const H = headingLevel;
-  return (
-    <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
-      <article className="card ticks flex flex-col p-6 sm:p-10" data-ga-section="product_daqip">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="font-mono text-xs uppercase tracking-[0.12em] text-subtle">Platform 01</span>
-          <StatusBadge status={PRODUCT_STATUS.daqip} />
-        </div>
-        <H className="mt-8 text-4xl font-medium tracking-tight text-ink sm:text-5xl">{DAQIP.name}</H>
-        <p className="mt-3 text-lg font-medium text-ink-2">{DAQIP.expanded}</p>
-        <p className="mt-6 flex-1 text-[0.9375rem] leading-relaxed text-muted">{DAQIP.shortExplanation}</p>
-        <p className="mt-6 text-lg leading-snug tracking-tight text-ink">{DAQIP.coreMessage}</p>
-        <KeywordLine className="mt-6" items={["FAI", "AS9102", "Inspection", "Supplier quality", "Evidence"]} />
-        <div className="mt-8 flex flex-col gap-1 sm:flex-row sm:gap-8">
-          <ArrowLink href={aero("/daqip")} label="Explore DAQIP">
-            Explore DAQIP
-          </ArrowLink>
-          <ArrowLink
-            href={EXTERNAL.daqipResearch}
-            ga={{ event: "daqip_research_click" }}
-            label="Research & Product Development"
-          >
-            Research &amp; Product Development
-          </ArrowLink>
-        </div>
-      </article>
-
-      <article className="card ticks flex flex-col p-6 sm:p-10" data-ga-section="product_aircert">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="font-mono text-xs uppercase tracking-[0.12em] text-subtle">Platform 02</span>
-          <StatusBadge status={PRODUCT_STATUS.aircert} />
-        </div>
-        <H className="mt-8 text-4xl font-medium tracking-tight text-ink sm:text-5xl">{AIRCERT.name}</H>
-        <p className="mt-3 text-lg font-medium text-ink-2">{AIRCERT.subtitle}</p>
-        <p className="mt-6 flex-1 text-[0.9375rem] leading-relaxed text-muted">{AIRCERT.shortExplanation}</p>
-        <p className="mt-6 text-lg leading-snug tracking-tight text-ink">{AIRCERT.line}</p>
-        <KeywordLine
-          className="mt-6"
-          items={["Certification basis", "Compliance matrix", "Safety", "Qualification", "Evidence"]}
-        />
-        <div className="mt-8 flex flex-col gap-1 sm:flex-row sm:gap-8">
-          <ArrowLink href={aero("/aircert-ai")} ga={{ event: "aircert_learn_more_click" }} label="Explore AirCert AI">
-            Explore AirCert AI
-          </ArrowLink>
-        </div>
-      </article>
-    </div>
-  );
-}
-
-/** "Engineering Evidence": what exists today, not only the vision. */
-export function EngineeringEvidence() {
-  const items: Array<{
-    tag: string;
-    title: string;
-    body: string;
-    cta: string;
-    href: string;
-    ga?: Parameters<typeof ArrowLink>[0]["ga"];
-  }> = [
-    {
-      tag: "Interactive · illustrative data",
-      title: "Interactive FAI Prototype",
-      body: "Explore ballooned characteristics, inspection traceability and engineering evidence relationships.",
-      cta: "Explore DAQIP Prototype",
-      href: `${aero("/daqip")}#fai-prototype`,
-    },
-    {
-      tag: "Research programme",
-      title: "DAQIP Research & Development",
-      body: "Explore the engineering research, product architecture and development work behind DAQIP.",
-      cta: "View Research",
-      href: EXTERNAL.daqipResearch,
-      ga: { event: "daqip_research_click" },
-    },
-    {
-      tag: "Problem analysis",
-      title: "Engineering Workflow Validation",
-      body: "Aerospace and defence MSME problem analysis covering FAI, inspection, manufacturing quality and engineering documentation.",
-      cta: "Explore Research",
-      href: `${aero("/research")}#workflow-validation`,
-    },
-    {
-      tag: "Status transparency",
-      title: "Product Roadmap",
-      body: "See current, in-development and planned engineering capabilities.",
-      cta: "View Product Roadmap",
-      href: `${aero("/products")}#roadmap`,
-    },
-  ];
-  return (
-    <ul className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((i) => (
-        <li key={i.title} className="flex flex-col bg-surface p-6 sm:p-7">
-          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">{i.tag}</p>
-          <h3 className="mt-5 text-lg font-medium leading-snug text-ink">{i.title}</h3>
-          <p className="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-ink-2">{i.body}</p>
-          <ArrowLink href={i.href} ga={i.ga} label={i.cta} className="mt-6 self-start text-[0.9375rem]">
-            {i.cta}
-          </ArrowLink>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-const PROBLEMS: Array<{ title: string; body: string; product: string; topic: ProblemTopic }> = [
-  {
-    title: "FAI takes too long",
-    body: "Manual drawing ballooning, spreadsheet-based characteristics and fragmented inspection evidence slow First Article Inspection.",
-    product: "DAQIP™",
-    topic: "fai",
-  },
-  {
-    title: "Inspection evidence is disconnected",
-    body: "Drawings, measurements, inspection records, revisions and approvals often exist across separate systems.",
-    product: "DAQIP™",
-    topic: "inspection",
-  },
-  {
-    title: "Certification documentation delays engineering teams",
-    body: "Requirements, compliance evidence, test documentation and approval workflows are difficult to coordinate across aerospace certification programmes.",
-    product: "AirCert AI™",
-    topic: "certification",
-  },
-];
-
-/** "Problems We Are Solving": three short problems, each tied to a product. */
-export function ProblemsList() {
-  return (
-    <ol className="grid gap-4 md:grid-cols-3">
-      {PROBLEMS.map((p, i) => (
-        <li key={p.title} className="flex flex-col border-t border-ink pt-5">
-          <p className="font-mono text-xs text-subtle">{String(i + 1).padStart(2, "0")}</p>
-          <h3 className="mt-3 text-xl font-medium leading-snug tracking-tight text-ink">{p.title}</h3>
-          <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink-2">{p.body}</p>
-          <p className="mt-5 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">
-            Related product · <span className="text-accent">{p.product}</span>
-          </p>
-          <ArrowLink
-            href={PROBLEM_HREF}
-            ga={problemGa("problems", p.topic)}
-            label="Discuss this problem"
-            className="mt-2 self-start text-[0.9375rem]"
-          >
-            Discuss this problem
-          </ArrowLink>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-/** Hero visual: a single characteristic traced to an approved evidence record. */
-export function EvidenceRecordCard() {
+/** Hero visual: one requirement followed along the AEAIP chain (fictitious). */
+export function ReadinessRecordCard() {
   const rows: Array<[string, string]> = [
-    ["Requirement", "Ø12.00 ±0.02 · Datum B"],
-    ["Method", "Bore gauge · CMM verification"],
-    ["Measurement", "Ø12.008"],
-    ["Evidence", "AS9102 Form 3 · line 17"],
-    ["Reviewer", "Quality engineer · verified"],
+    ["Requirement", "SAT-EPS-014 · battery charge termination"],
+    ["Configuration", "BMS FW 2.4.0 · PCB Rev C"],
+    ["Evidence", "TR-EPS-114 · produced on FW 2.3.0, Rev B"],
+    ["Verification", "Reopened · reverification required"],
   ];
   return (
-    <figure className="ticks border border-line bg-surface" aria-label="Illustrative evidence record for one characteristic">
+    <figure
+      className="ticks border border-line bg-surface"
+      aria-label="Illustrative readiness record for one requirement"
+    >
       <div className="flex items-center justify-between border-b border-line px-5 py-3">
-        <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-subtle">Evidence record</span>
+        <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-subtle">Readiness record</span>
         <span className="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-subtle">Illustrative</span>
       </div>
       <div className="px-5 pb-5 pt-4">
-        <p className="font-mono text-xs text-subtle">Characteristic</p>
-        <p className="mt-0.5 text-3xl font-medium tracking-tight text-ink">#17</p>
+        <p className="font-mono text-xs text-subtle">Gate</p>
+        <p className="mt-0.5 text-3xl font-medium tracking-tight text-ink">TRR</p>
         <dl className="relative mt-5">
           <span aria-hidden className="absolute bottom-[1.05rem] left-[4px] top-[1.05rem] w-px bg-line-strong" />
           {rows.map(([k, v], i) => (
-            <div key={k} className="relative grid grid-cols-[6.5rem_1fr] items-baseline gap-x-3 py-1.5 pl-6">
+            <div key={k} className="relative grid grid-cols-[6.75rem_1fr] items-baseline gap-x-3 py-1.5 pl-6">
               <span
                 aria-hidden
                 className="anim-fade-up absolute left-0 top-[0.8rem] size-[9px] rounded-full border border-ink bg-surface"
@@ -192,20 +36,87 @@ export function EvidenceRecordCard() {
               <dd className="text-sm text-ink">{v}</dd>
             </div>
           ))}
-          <div className="relative grid grid-cols-[6.5rem_1fr] items-baseline gap-x-3 py-1.5 pl-6">
+          <div className="relative grid grid-cols-[6.75rem_1fr] items-baseline gap-x-3 py-1.5 pl-6">
             <span
               aria-hidden
               className="anim-fade-up absolute left-0 top-[0.8rem] size-[9px] rounded-full"
-              style={{ background: "var(--st-available)", animationDelay: "800ms" }}
+              style={{ background: "var(--st-prototype)", animationDelay: "700ms" }}
             />
-            <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">Approval</dt>
-            <dd className="text-sm font-medium text-ink">Approved by Quality</dd>
+            <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">Readiness</dt>
+            <dd className="text-sm font-medium text-ink">Condition: delta test before TVAC</dd>
           </div>
         </dl>
+        <p className="mt-4 border border-[var(--st-prototype)] px-3 py-2 font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-ink">
+          Evidence validity: At Risk
+        </p>
       </div>
-      <figcaption className="border-t border-line px-5 py-3 text-xs text-subtle">
-        AI assists. Engineers verify. Quality approves.
-      </figcaption>
+      <figcaption className="border-t border-line px-5 py-3 text-xs text-subtle">{AEAIP.governance}</figcaption>
     </figure>
+  );
+}
+
+/** "What exists today": status honesty across all three platforms. */
+export function WhatExistsToday() {
+  const pick = (id: string) => AEAIP_CAPABILITIES.find((c) => c.id === id)!;
+  const rows: Array<{ title: string; note: string; status: Status; href: string }> = [
+    {
+      title: "Interactive Assurance Demo (AEAIP™)",
+      note: "Fictitious satellite readiness scenario you can explore now.",
+      status: "concept-demo",
+      href: AEAIP_DEMO_HREF,
+    },
+    {
+      title: "Interactive FAI prototype (DAQIP™)",
+      note: "Ballooned drawing and characteristic traceability with illustrative data.",
+      status: "concept-demo",
+      href: `${aero("/daqip")}#fai-prototype`,
+    },
+    { title: "DAQIP™ platform", note: "Drawing, FAI, inspection and manufacturing-quality workflows.", status: PRODUCT_STATUS.daqip, href: aero("/daqip") },
+    { title: "AEAIP™ platform", note: pick("platform").summary, status: PRODUCT_STATUS.aeaip, href: aero("/aeaip") },
+    { title: "Engineering Evidence Graph™", note: pick("evidence-graph").summary, status: "architecture", href: aero("/aeaip/engineering-evidence-graph") },
+    { title: "Assurance Intelligence Engine™", note: pick("engine").summary, status: "research", href: `${aero("/aeaip/engineering-evidence-graph")}#engine` },
+    { title: "AirCert AI™ platform", note: "Certification planning and certification evidence.", status: PRODUCT_STATUS.aircert, href: aero("/aircert-ai") },
+    { title: "Engineering-tool integrations", note: "Requirements, PLM, MBSE, test and quality systems.", status: "roadmap", href: `${aero("/aeaip/strategy")}#positioning` },
+    { title: "Predictive assurance", note: "Risk patterns and likely verification problems.", status: "vision", href: `${aero("/aeaip/strategy")}#roadmap` },
+  ];
+  return (
+    <ul className="divide-y divide-line border-y border-line">
+      {rows.map((r) => (
+        <li key={r.title} className="grid gap-2 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6">
+          <div>
+            <ArrowLink href={r.href} className="min-h-0 text-[1.0625rem]">
+              {r.title}
+            </ArrowLink>
+            <p className="mt-0.5 text-sm text-muted">{r.note}</p>
+          </div>
+          <span>
+            <StatusBadge status={r.status} />
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Compact links to content that moved off the landing page. */
+export function GoDeeper() {
+  const links: Array<[string, string]> = [
+    ["Solutions by engineering workflow", aero("/solutions")],
+    ["Product roadmap and status", `${aero("/products")}#roadmap`],
+    ["Company evolution, 2024 to today", `${aero("/about")}#timeline-title`],
+    ["Engineering research & product development", aero("/research")],
+    ["Engineering & consulting services", aero("/services")],
+    ["DAQIP research programme", EXTERNAL.daqipResearch],
+  ];
+  return (
+    <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+      {links.map(([label, href]) => (
+        <li key={href} className="border-b border-line">
+          <ArrowLink href={href} className="w-full justify-between py-2" label={label}>
+            {label}
+          </ArrowLink>
+        </li>
+      ))}
+    </ul>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { absoluteUrl, aero, aeroLegalName, BRAND, CONTACT, parent, PRIMARY_ORIGIN } from "./site";
+import { absoluteUrl, aero, aeroLegalName, BRAND, CONTACT, DESIGNER, parent, PRIMARY_ORIGIN } from "./site";
 
 type PageMetaInput = {
   /** Full, unique <title>. */
@@ -25,13 +25,19 @@ export function pageMetadata({
 }: PageMetaInput): Metadata {
   const url = absoluteUrl(href);
   const isAero = href.includes("aerosystems");
+  const isAeaip = isAero && /\/aeaip(\/|$)/.test(href);
   // Section-level fallback image. Segments with their own opengraph-image file
-  // (DAQIP, AirCert AI, Ventures) override this automatically.
+  // (AEAIP, DAQIP, AirCert AI, Ventures) override this automatically; AEAIP
+  // knowledge pages reuse the AEAIP image.
   const image = {
-    url: isAero ? "/aerosystems/opengraph-image" : "/opengraph-image",
+    url: isAeaip ? "/aerosystems/aeaip/opengraph-image" : isAero ? "/aerosystems/opengraph-image" : "/opengraph-image",
     width: 1200,
     height: 630,
-    alt: isAero ? "Gamyaa AeroSystems — Intelligence for Aerospace & Defence Manufacturing" : "GAMYAA — Aerospace & Defence Engineering Intelligence. Building the Future.",
+    alt: isAeaip
+      ? AEAIP_OG_ALT
+      : isAero
+        ? AERO_OG_ALT
+        : "GAMYAA — Aerospace & Defence Engineering Intelligence. Building the Future.",
   };
   return {
     title: { absolute: title },
@@ -57,9 +63,14 @@ export function pageMetadata({
 
 /* ------------------------------------------------------------ JSON-LD */
 
+export const AERO_OG_ALT =
+  "Gamyaa AeroSystems — Engineering Assurance Intelligence for Defence, Aerospace and Space";
+export const AEAIP_OG_ALT =
+  "AEAIP™ — Aerospace Engineering Assurance Intelligence Platform. Requirement → Configuration → Evidence → Verification → Readiness.";
+
 /** Company-level category (positioning, not a product name). Use sparingly. */
 export const ENGINEERING_ASSURANCE_DEFINITION =
-  "Gamyaa AeroSystems builds engineering assurance intelligence platforms for aerospace and defence — connecting airworthiness, manufacturing quality, inspection, evidence and approval.";
+  "Gamyaa AeroSystems builds Engineering Assurance Intelligence for defence, aerospace and space programmes — connecting requirements, configuration, evidence, verification and readiness decisions, with human authority at every approval.";
 
 export const ORG_ID = `${PRIMARY_ORIGIN}/#organization`;
 export const AERO_ORG_ID = `${absoluteUrl(aero())}#organization`;
@@ -103,7 +114,7 @@ export function aeroOrganizationLd() {
     url: absoluteUrl(aero()),
     logo: LOGO,
     description: ENGINEERING_ASSURANCE_DEFINITION,
-    slogan: "Intelligence for Aerospace & Defence Manufacturing",
+    slogan: "Engineering Assurance Intelligence — Defence · Aerospace · Space",
     parentOrganization: { "@id": ORG_ID },
     address: {
       "@type": "PostalAddress",
@@ -120,6 +131,11 @@ export function aeroOrganizationLd() {
       availableLanguage: ["en"],
     },
     knowsAbout: [
+      "Engineering assurance",
+      "Spacecraft verification and validation",
+      "Engineering review gates",
+      "Configuration management",
+      "Aerospace cybersecurity assurance",
       "First Article Inspection",
       "AS9102",
       "Aerospace quality management",
@@ -214,16 +230,84 @@ export function personLd(people: Array<{ name: string; role: string; linkedin?: 
   };
 }
 
-export function techArticleLd(input: { headline: string; description: string; href: string }) {
+export function techArticleLd(input: {
+  headline: string;
+  description: string;
+  href: string;
+  /** ISO dates. Only pass values that are shown on the page. */
+  datePublished?: string;
+  dateModified?: string;
+  /** Topics the article explains (plain names). */
+  about?: string[];
+  /** Adds the visible design credit as a contributor. */
+  withDesigner?: boolean;
+  isPartOfHref?: string;
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     headline: input.headline,
     description: input.description,
     url: absoluteUrl(input.href),
+    mainEntityOfPage: absoluteUrl(input.href),
     author: { "@id": AERO_ORG_ID },
     publisher: { "@id": AERO_ORG_ID },
+    contributor: input.withDesigner ? designerLd() : undefined,
+    datePublished: input.datePublished,
+    dateModified: input.dateModified,
+    about: input.about?.map((name) => ({ "@type": "Thing", name })),
+    isPartOf: input.isPartOfHref ? { "@type": "WebPage", url: absoluteUrl(input.isPartOfHref) } : undefined,
     inLanguage: "en-IN",
+  };
+}
+
+function designerLd() {
+  return {
+    "@type": "Person",
+    name: DESIGNER.name,
+    url: DESIGNER.href,
+    description: `Designed by ${DESIGNER.name}, ${DESIGNER.credential}`,
+  };
+}
+
+/** Plain WebPage for overview pages that are neither articles nor product listings. */
+export function webPageLd(input: { name: string; description: string; href: string; dateModified?: string; about?: string[] }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: input.name,
+    description: input.description,
+    url: absoluteUrl(input.href),
+    isPartOf: { "@id": WEBSITE_ID },
+    publisher: { "@id": AERO_ORG_ID },
+    contributor: designerLd(),
+    dateModified: input.dateModified,
+    about: input.about?.map((name) => ({ "@type": "Thing", name })),
+    inLanguage: "en-IN",
+  };
+}
+
+/** Glossary page: a DefinedTermSet whose terms are all visible on the page. */
+export function definedTermSetLd(input: {
+  name: string;
+  href: string;
+  terms: ReadonlyArray<{ term: string; slug: string; definition: string }>;
+}) {
+  const url = absoluteUrl(input.href);
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "@id": `${url}#terms`,
+    name: input.name,
+    url,
+    publisher: { "@id": AERO_ORG_ID },
+    hasDefinedTerm: input.terms.map((t) => ({
+      "@type": "DefinedTerm",
+      name: t.term,
+      description: t.definition,
+      url: `${url}#${t.slug}`,
+      inDefinedTermSet: `${url}#terms`,
+    })),
   };
 }
 

@@ -25,6 +25,7 @@ const PRODUCT_LINK: Record<Solution["product"], Array<{ label: string; href: str
   daqip: [{ label: "DAQIP™", href: aero("/daqip"), note: "Defence Aerospace Quality Intelligence Platform" }],
   aircert: [{ label: "AirCert AI™", href: aero("/aircert-ai"), note: "Airworthiness Certification Engineering Copilot" }],
   both: [
+    { label: "AEAIP™", href: aero("/aeaip"), note: "Engineering Assurance Intelligence architecture" },
     { label: "AirCert AI™", href: aero("/aircert-ai"), note: "Design assurance / certification" },
     { label: "DAQIP™", href: aero("/daqip"), note: "Manufacturing assurance / quality" },
   ],
@@ -127,7 +128,7 @@ export function SolutionTemplate({ slug }: { slug: string }) {
             <BulletList items={s.outcomes} className="text-base" />
           </Block>
           <Block n="06" title="Related product">
-            <ul className="grid gap-4 sm:grid-cols-2">
+            <ul className={s.product === "both" ? "grid gap-4 sm:grid-cols-3" : "grid gap-4 sm:grid-cols-2"}>
               {PRODUCT_LINK[s.product].map((p) => (
                 <li key={p.href} className="border border-line bg-surface p-5">
                   <ArrowLink href={p.href} className="text-lg">

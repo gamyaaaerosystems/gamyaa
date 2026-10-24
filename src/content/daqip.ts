@@ -165,6 +165,10 @@ export const DAQIP_FAQ = [
     a: DAQIP.definition,
   },
   {
+    q: "How does DAQIP relate to AEAIP?",
+    a: "DAQIP is Platform 02 and the Manufacturing Assurance Intelligence specialization within the AEAIP (Aerospace Engineering Assurance Intelligence Platform) architecture. AEAIP connects requirements, configuration, evidence, verification and readiness at system level; DAQIP provides depth for manufacturing quality, First Article Inspection, inspection and product-conformity evidence.",
+  },
+  {
     q: "Who makes DAQIP?",
     a: "DAQIP is developed by Gamyaa AeroSystems, Bangalore, India.",
   },

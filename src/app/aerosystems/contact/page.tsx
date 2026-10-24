@@ -7,11 +7,18 @@ import { aero } from "@/lib/site";
 export const metadata = pageMetadata({
   title: "Contact Gamyaa AeroSystems | Bangalore, India",
   description:
-    "Contact Gamyaa AeroSystems about DAQIP™, First Article Inspection, AirCert AI™, engineering services or partnerships. Purushothama Padmanabha, Bangalore, India.",
+    "Contact Gamyaa AeroSystems about AEAIP™, DAQIP™, AirCert AI™, engineering assurance problems, strategic partnerships or engineering services. Purushothama Padmanabha, Bangalore, India.",
   href: aero("/contact"),
 });
 
 const INTENTS: ContactIntent[] = [
+  {
+    interest: "aeaip",
+    title: "Discuss AEAIP™",
+    body: "Engineering assurance, spacecraft verification and review readiness. AEAIP is at Research & Architecture status.",
+    subject: "AEAIP discussion",
+    ga: { event: "contact_sales_click", params: { source_location: "contact_page" } },
+  },
   {
     interest: "daqip",
     title: "Request a DAQIP Demo",
@@ -42,7 +49,7 @@ export default function AeroContactPage() {
         }
         eyebrow="Contact"
         title="Talk to Gamyaa AeroSystems"
-        lede="Demos, pilots, partnerships and engineering questions. Email us, or call during Indian business hours."
+        lede="Engineering assurance problems, AEAIP™ discussions, DAQIP™ demos, partnerships and engineering questions. Email us, or call during Indian business hours."
       />
       <ContactSection formName="aerosystems_contact" intents={INTENTS} />
     </>

@@ -15,6 +15,7 @@ import {
   SmartLink,
   StatusBadge,
 } from "@/components/ui/primitives";
+import { SPECIALISED_PLATFORMS } from "@/content/aeaip";
 import { DAQIP, DAQIP_CAPABILITIES, DAQIP_FAQ } from "@/content/daqip";
 import { PRODUCT_STATUS, STATUS_AS_OF, STATUS_LABEL } from "@/content/status";
 import { faqLd, pageMetadata, softwareLd } from "@/lib/seo";
@@ -97,7 +98,7 @@ export default function DaqipPage() {
         }
         eyebrow={
           <span className="flex flex-wrap items-center gap-3">
-            <span>Gamyaa AeroSystems · Platform 01</span>
+            <span>Platform 02 · Manufacturing Assurance Intelligence</span>
             <StatusBadge status={PRODUCT_STATUS.daqip} />
           </span>
         }
@@ -122,6 +123,25 @@ export default function DaqipPage() {
           Research &amp; Product Development
         </ArrowLink>
       </PageHero>
+
+      {/* Parent relationship: DAQIP within the AEAIP architecture */}
+      <section aria-label="DAQIP within AEAIP" className="border-t border-line py-8" data-ga-section="daqip_parent">
+        <Container className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <p className="max-w-3xl text-[0.9375rem] leading-relaxed text-ink-2">
+            <span className="font-medium text-ink">{SPECIALISED_PLATFORMS[0].relation}</span> AEAIP™ connects
+            requirements, configuration, evidence, verification and readiness at system level; DAQIP™ provides the
+            manufacturing-quality depth: drawings, FAI, inspection and product-conformity evidence.
+          </p>
+          <ArrowLink
+            href={aero("/aeaip")}
+            ga={{ event: "aeaip_explore", params: { source_location: "daqip_page" } }}
+            label="Explore AEAIP"
+            className="shrink-0"
+          >
+            Explore AEAIP™
+          </ArrowLink>
+        </Container>
+      </section>
 
       {/* Canonical definition + one-sentence answer */}
       <Section labelledBy="what-is-daqip" section="daqip_definition">
@@ -279,6 +299,10 @@ export default function DaqipPage() {
                 </li>
               ))}
             </ol>
+            <p className="mt-6 text-sm leading-relaxed text-muted">
+              Across the AEAIP™ architecture the principle is: AI assists, engineers verify, authorized authorities
+              approve. For product conformity in DAQIP, that authority is Quality.
+            </p>
             <Notice className="mt-6">
               DAQIP supports AS9102-aligned First Article Inspection workflows. It does not by itself make an
               organisation compliant with AS9102 or AS9100, and it holds no formal compliance certification.

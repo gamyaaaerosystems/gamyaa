@@ -28,7 +28,7 @@ export default function SolutionsPage() {
         }
         eyebrow="Solutions"
         title="Solutions by engineering workflow"
-        lede="Each solution is delivered through DAQIP™, AirCert AI™ or both, and carries its current status."
+        lede="Each solution is delivered through DAQIP™, AirCert AI™ or both, within the AEAIP™ Engineering Assurance Intelligence architecture, and carries its current status."
       />
       <section className="pb-8" aria-label="All solutions">
         <Container>

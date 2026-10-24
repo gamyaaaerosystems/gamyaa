@@ -1,6 +1,6 @@
 # GAMYAA website — implementation report
 
-Status as of 19 October 2026 (V1.1). Covers gamyaa.in, Gamyaa AeroSystems (`/aerosystems`) and Gamyaa Ventures (`/ventures`). Launch tasks are tracked in [`LAUNCH_CHECKLIST.md`](LAUNCH_CHECKLIST.md); planned reference articles are in [`CONTENT_PROGRAM.md`](CONTENT_PROGRAM.md).
+Status as of 19 October 2026 (V1.1). **The AEAIP™ release (24 October 2026) is documented separately in [`AEAIP_IMPLEMENTATION_REPORT.md`](AEAIP_IMPLEMENTATION_REPORT.md); where the two differ (product numbering, `/aerosystems` structure, analytics events, sitemap), that report is current.** Covers gamyaa.in, Gamyaa AeroSystems (`/aerosystems`) and Gamyaa Ventures (`/ventures`). Launch tasks are tracked in [`LAUNCH_CHECKLIST.md`](LAUNCH_CHECKLIST.md); planned reference articles are in [`CONTENT_PROGRAM.md`](CONTENT_PROGRAM.md).
 
 ## V1.1 changes (optimisation and launch readiness)
 

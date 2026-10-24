@@ -27,7 +27,7 @@ export default function ServicesPage() {
         }
         eyebrow="Services"
         title="Engineering & Consulting Services"
-        lede="Focused engineering engagements that complement our platforms. DAQIP™ and AirCert AI™ remain the core of what we build; services help teams adopt traceable quality and certification practices along the way."
+        lede="Focused engineering engagements that complement our platforms. AEAIP™, DAQIP™ and AirCert AI™ remain the core of what we build; services help teams adopt traceable quality, certification and assurance practices along the way."
       />
 
       <section aria-label="Service offerings" className="pb-16 md:pb-24" data-ga-section="services">
@@ -53,6 +53,7 @@ export default function ServicesPage() {
           <h2 id="platform-link-title" className="sr-only">
             Related platforms
           </h2>
+          <ArrowLink href={aero("/aeaip")}>AEAIP™ — Aerospace Engineering Assurance Intelligence Platform</ArrowLink>
           <ArrowLink href={aero("/daqip")}>DAQIP™ — Defence Aerospace Quality Intelligence Platform</ArrowLink>
           <ArrowLink href={aero("/aircert-ai")}>AirCert AI™ — Airworthiness Certification Engineering Copilot</ArrowLink>
         </Container>

@@ -223,7 +223,7 @@ export const SOLUTIONS: Solution[] = [
     title: "Engineering Assurance — Design to Approval as One Digital Thread",
     metaTitle: "Aerospace Engineering Assurance | Gamyaa AeroSystems",
     metaDescription:
-      "Aerospace engineering assurance connecting design, certification, manufacturing, inspection, evidence and approval through DAQIP™ and AirCert AI™.",
+      "Aerospace engineering assurance connecting design, certification, manufacturing, inspection, evidence and approval through DAQIP™ and AirCert AI™ within the AEAIP™ architecture.",
     intro: "Follow a design requirement to the measurement that proves it and the person who approved it.",
     problem:
       "Design assurance and manufacturing quality are usually managed by different teams in different tools. When a design changes, nobody can easily see which certification evidence, inspection plans or FAIs are affected.",
@@ -232,6 +232,7 @@ export const SOLUTIONS: Solution[] = [
       "Link certification and design requirements to manufacturing characteristics",
       "Show the impact of a design change across safety, test, FAI and manufacturing evidence",
       "Keep one approval history from design to delivery",
+      "Carry the same evidence into system-level readiness in AEAIP™",
     ],
     flow: ["Design", "Certification", "Manufacturing", "Inspection", "Evidence", "Approval"],
     outcomes: [
