@@ -19,7 +19,7 @@ export const AEAIP = {
   promise: "Know what is verified. Know what is missing. Know when the system is ready.",
   /** The promise as three separate statements (one per line on the platform card). */
   promiseLines: ["Know what is verified.", "Know what is missing.", "Know when the system is ready."] as const,
-  question: "Can we prove that this critical system is ready?",
+  question: "Can we prove that this exact product configuration is ready?",
   governance: "AI assists. Engineers verify. Authorized authorities approve.",
   initialFocus: "Satellites & Spacecraft",
   expansion: "Launch systems · defence aerospace systems · aircraft and advanced aerospace systems",
@@ -107,11 +107,13 @@ export const READINESS_QUESTIONS: Array<{ group: string; items: string[] }> = [
 ];
 
 /** What the Assurance Intelligence Engine™ is designed to help identify. */
+/** The first ENGINE_CORE_FINDINGS entries are the core findings shown by default. */
 export const ENGINE_FINDINGS = [
   "Verification coverage",
   "Missing evidence",
   "Stale evidence",
   "Configuration mismatches",
+  "Readiness blockers",
   "Unverified requirements",
   "Open tests",
   "Failed tests",
@@ -121,8 +123,8 @@ export const ENGINE_FINDINGS = [
   "Risks",
   "Cybersecurity findings",
   "Change impact",
-  "Review-gate readiness",
 ] as const;
+export const ENGINE_CORE_FINDINGS = 5;
 
 export const ENGINE_FLOW = [
   "Engineering systems + engineering evidence",

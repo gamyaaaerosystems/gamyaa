@@ -174,16 +174,18 @@ export function KnowledgeIndex({
   only,
   source,
   headingLevel = "h3",
+  columns = 2,
 }: {
   exclude?: string;
   only?: string[];
   source: SourceLocation;
-  headingLevel?: "h2" | "h3";
+  headingLevel?: "h2" | "h3" | "h4";
+  columns?: 1 | 2;
 }) {
   const H = headingLevel;
   const pages = only ? only.map(learnPage) : LEARN_PAGES.filter((p) => p.slug !== exclude);
   return (
-    <ul className="grid gap-x-12 md:grid-cols-2">
+    <ul className={cn("grid gap-x-12", columns === 2 && "md:grid-cols-2")}>
       {pages.map((p) => (
         <li key={p.slug} className="border-t border-line">
           <SmartLink
@@ -201,6 +203,29 @@ export function KnowledgeIndex({
         </li>
       ))}
     </ul>
+  );
+}
+
+/** All knowledge pages in four groups (two balanced columns from md; stacked on phones). */
+const KNOWLEDGE_GROUPS = [
+  { title: "Core Assurance", slugs: ["engineering-evidence-graph", "configuration-assurance", "continuous-assurance"] },
+  { title: "Verification & Readiness", slugs: ["verification-validation", "review-gates", "satellites-spacecraft"] },
+  { title: "Cross-Cutting Assurance", slugs: ["cybersecurity-assurance", "operational-evidence"] },
+  { title: "Reference", slugs: ["standards-frameworks", "glossary"] },
+];
+
+export function KnowledgeGroups({ source }: { source: SourceLocation }) {
+  return (
+    <div className="grid gap-x-12 gap-y-10 md:grid-cols-2">
+      {KNOWLEDGE_GROUPS.map((g) => (
+        <section key={g.title} aria-label={g.title}>
+          <h3 className="text-sm text-muted">{g.title}</h3>
+          <div className="mt-2">
+            <KnowledgeIndex only={g.slugs} source={source} headingLevel="h4" columns={1} />
+          </div>
+        </section>
+      ))}
+    </div>
   );
 }
 

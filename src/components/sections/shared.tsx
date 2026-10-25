@@ -253,17 +253,21 @@ export function CommercialCtas({
   product?: DemoProduct;
   className?: string;
 }) {
-  const demo =
-    product === "aircert"
-      ? { label: "Register interest in AirCert AI", href: internalContact("aircert") }
-      : { label: "Request a DAQIP Demo", href: DEMO_HREF };
+  const aircert = product === "aircert";
+  const demo = aircert
+    ? { label: "Register interest in AirCert AI", href: internalContact("aircert") }
+    : { label: "Request a DAQIP Demo", href: DEMO_HREF };
+  // Certification wording for AirCert; the quality wording stays for DAQIP.
+  const problem = aircert
+    ? { label: "Discuss a Certification Assurance Problem", href: internalContact("assurance-problem") }
+    : { label: "Discuss an Aerospace Quality Problem", href: PROBLEM_HREF };
   return (
     <div className={cn("flex flex-col gap-3 xs:flex-row xs:flex-wrap", className)}>
       <ButtonLink href={demo.href} ga={demoGa(location, product)} label={demo.label}>
         {demo.label}
       </ButtonLink>
-      <ButtonLink href={PROBLEM_HREF} variant="secondary" ga={problemGa(location, topic)} label="Discuss an Aerospace Quality Problem">
-        Discuss an Aerospace Quality Problem
+      <ButtonLink href={problem.href} variant="secondary" ga={problemGa(location, topic)} label={problem.label}>
+        {problem.label}
       </ButtonLink>
     </div>
   );

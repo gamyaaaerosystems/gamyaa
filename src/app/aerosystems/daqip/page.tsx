@@ -30,6 +30,20 @@ export const metadata = pageMetadata({
 
 const FAI = aero("/solutions/first-article-inspection");
 
+/** The eleven capabilities, grouped (ids from content/daqip.ts; none omitted). */
+const CAPABILITY_FAMILIES = [
+  { title: "Drawing & FAI", ids: ["drawing", "fai"] },
+  { title: "Inspection & Manufacturing", ids: ["inspection", "manufacturing"] },
+  { title: "Supplier / NCR", ids: ["supplier", "ncr"] },
+  { title: "Evidence / Configuration / Security", ids: ["evidence-graph", "configuration", "ai-assurance", "cybersecurity", "executive"] },
+];
+
+/** Intended outcomes only: no percentages, savings or customer results until pilot data exists. */
+const OUTCOMES = {
+  reduce: ["FAI preparation effort", "Manual traceability", "Missing inspection evidence", "Configuration mistakes", "NCR closure delays"],
+  improve: ["Characteristic accountability", "Evidence completeness", "Supplier-quality visibility", "Audit and review readiness"],
+};
+
 export default function DaqipPage() {
   return (
     <>
@@ -156,31 +170,55 @@ export default function DaqipPage() {
               lede={`Status as of ${STATUS_AS_OF}. Roadmap items are not presented as released.`}
             />
           </div>
+          {/* Four families; `name` makes it a native one-open-at-a-time accordion. Every capability
+              keeps its own status inside, and each family shows its statuses in the closed row. */}
           <ul className="border-b border-line lg:col-span-8">
-            {DAQIP_CAPABILITIES.map((c) => (
-              <li key={c.id} className="border-t border-line">
-                <details className="group">
-                  <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-3">
-                    <span>
-                      <span className="block text-[1.0625rem] font-medium text-ink">{c.title}</span>
-                      <span className="mt-0.5 block text-sm text-muted">{c.summary}</span>
-                    </span>
-                    <span className="flex shrink-0 items-center gap-3">
-                      <StatusBadge status={c.status} />
-                      <span aria-hidden className="text-subtle transition-transform group-open:rotate-45">
-                        +
+            {CAPABILITY_FAMILIES.map((f, fi) => {
+              const caps = f.ids.map((id) => DAQIP_CAPABILITIES.find((c) => c.id === id)!);
+              const statuses = Array.from(new Set(caps.map((c) => c.status)));
+              return (
+                <li key={f.title} className="border-t border-line">
+                  <details name="daqip-capabilities" open={fi === 0} className="group">
+                    <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-3 [&::-webkit-details-marker]:hidden">
+                      <span>
+                        <span className="block text-[1.125rem] font-medium text-ink">{f.title}</span>
+                        <span className="mt-0.5 block text-sm text-muted">{caps.map((c) => c.title).join(" · ")}</span>
+                        <span className="mt-2 flex flex-wrap gap-1.5 sm:hidden">
+                          {statuses.map((s) => (
+                            <StatusBadge key={s} status={s} />
+                          ))}
+                        </span>
                       </span>
-                    </span>
-                  </summary>
-                  <div className="pb-5">
-                    {c.id === "evidence-graph" ? (
-                      <p className="mb-3 text-sm text-accent">Requirement → Method → Measurement → Evidence → Approval</p>
-                    ) : null}
-                    <BulletList items={c.items} className="sm:columns-2 sm:gap-8 [&>li]:break-inside-avoid" />
-                  </div>
-                </details>
-              </li>
-            ))}
+                      <span className="flex shrink-0 items-center gap-3">
+                        <span className="hidden flex-col items-end gap-1 sm:flex">
+                          {statuses.map((s) => (
+                            <StatusBadge key={s} status={s} />
+                          ))}
+                        </span>
+                        <span aria-hidden className="text-subtle transition-transform group-open:rotate-45">
+                          +
+                        </span>
+                      </span>
+                    </summary>
+                    <ul className="pb-6">
+                      {caps.map((c) => (
+                        <li key={c.id} className="border-t border-line py-5 first:border-t-0 first:pt-2">
+                          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                            <h3 className="font-medium text-ink">{c.title}</h3>
+                            <StatusBadge status={c.status} />
+                          </div>
+                          <p className="mt-1 text-sm text-muted">{c.summary}</p>
+                          {c.id === "evidence-graph" ? (
+                            <p className="mt-3 text-sm text-accent">Requirement → Method → Measurement → Evidence → Approval</p>
+                          ) : null}
+                          <BulletList items={c.items} className="mt-3 sm:columns-2 sm:gap-8 [&>li]:break-inside-avoid" />
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+              );
+            })}
           </ul>
         </Container>
       </Section>
@@ -217,6 +255,33 @@ export default function DaqipPage() {
               DAQIP supports AS9102-aligned First Article Inspection workflows. It does not by itself make an
               organisation compliant with AS9102 or AS9100, and it holds no formal compliance certification.
             </Notice>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Engineering outcomes: intended, not measured */}
+      <Section labelledBy="outcomes-title" section="daqip_outcomes" className="pt-0 md:pt-0">
+        <Container className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionHeader
+              eyebrow="Outcomes"
+              id="outcomes-title"
+              title="Engineering outcomes"
+              lede="What DAQIP is designed to change. Intended outcomes, not measured customer results."
+            />
+          </div>
+          <div className="grid gap-10 sm:grid-cols-2 lg:col-span-8">
+            {(
+              [
+                ["Reduce", OUTCOMES.reduce],
+                ["Improve", OUTCOMES.improve],
+              ] as const
+            ).map(([title, items]) => (
+              <div key={title}>
+                <h3 className="kicker">{title}</h3>
+                <BulletList items={items} className="mt-4 text-base" />
+              </div>
+            ))}
           </div>
         </Container>
       </Section>

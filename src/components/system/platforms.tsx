@@ -236,7 +236,7 @@ const CROSS_CUTTING = ["Software", "Cybersecurity", "Simulation", "Test", "Telem
  * Architecture diagram: AEAIP umbrella → DAQIP and AirCert, with cross-cutting
  * evidence sources feeding the same graph. Plain HTML so every label is text.
  */
-export function ArchitectureDiagram({ compact = false }: { compact?: boolean }) {
+export function ArchitectureDiagram({ compact = false, caption = true }: { compact?: boolean; caption?: boolean }) {
   return (
     <figure aria-label="AEAIP architecture" className="rounded-sm border border-line p-5 sm:p-8">
       <div className="rounded-sm border border-accent bg-surface-accent px-5 py-7 text-center sm:py-9">
@@ -276,11 +276,13 @@ export function ArchitectureDiagram({ compact = false }: { compact?: boolean }) 
           ))}
         </ul>
       </div>
-      <figcaption className="sr-only">
-        AEAIP is the umbrella. DAQIP provides manufacturing assurance and AirCert AI provides certification assurance
-        within it. Software, cybersecurity, simulation, test and telemetry evidence feed the same Engineering Evidence
-        Graph.
-      </figcaption>
+      {caption ? (
+        <figcaption className="sr-only">
+          AEAIP is the umbrella. DAQIP provides manufacturing assurance and AirCert AI provides certification assurance
+          within it. Software, cybersecurity, simulation, test and telemetry evidence feed the same Engineering Evidence
+          Graph.
+        </figcaption>
+      ) : null}
     </figure>
   );
 }

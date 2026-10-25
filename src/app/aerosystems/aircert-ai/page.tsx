@@ -161,24 +161,26 @@ export default function AircertPage() {
               eyebrow="Planned capabilities"
               id="caps-title"
               title="Seven areas of certification assurance"
-              lede="All planned; none is available yet. Open an area for its detail."
+              lede="The capabilities below describe the planned AirCert AI engineering architecture and workflow direction."
             />
+            {/* One status for the whole section, rather than "Planned" on every row. */}
+            <p className="mt-5">
+              <StatusBadge status={PRODUCT_STATUS.aircert} />
+            </p>
           </div>
+          {/* Collapsed by default; `name` lets only one area be open at a time. */}
           <div className="border-b border-line lg:col-span-8">
             {CATEGORIES.map((cat) => (
-              <details key={cat.title} className="group border-t border-line">
-                <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-3">
+              <details key={cat.title} name="aircert-capabilities" className="group border-t border-line">
+                <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-3 [&::-webkit-details-marker]:hidden">
                   <span>
                     <span className="block text-[1.0625rem] font-medium text-ink">{cat.title}</span>
                     <span className="mt-0.5 block text-sm text-muted">
                       {cat.evidence ? AIRCERT_EXTENDED.map((x) => x.title).join(" · ") : cat.capabilities.map((c) => c.title).join(" · ")}
                     </span>
                   </span>
-                  <span className="flex shrink-0 items-center gap-3">
-                    <StatusBadge status="planned" />
-                    <span aria-hidden className="text-subtle transition-transform group-open:rotate-45">
-                      +
-                    </span>
+                  <span aria-hidden className="shrink-0 text-subtle transition-transform group-open:rotate-45">
+                    +
                   </span>
                 </summary>
                 <div className="pb-6">

@@ -443,6 +443,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    /* A label that wraps on a phone stays centred and evenly split. */
+    text-align: center;
+    text-wrap: balance;
     gap: 0.5rem;
     min-height: 2.75rem;
     padding: 0.625rem 1.125rem;

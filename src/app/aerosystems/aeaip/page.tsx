@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { KnowledgeIndex } from "@/components/aeaip/learn";
+import { KnowledgeGroups } from "@/components/aeaip/learn";
 import { CtaBand, internalContact, PageHero } from "@/components/sections/shared";
 import { EngineeringCallout } from "@/components/system/callout";
 import { ConvergenceDiagram } from "@/components/system/convergence";
@@ -16,9 +16,11 @@ import {
   AEAIP_REVIEWED,
   AEAIP_STRATEGY_HREF,
   AI_NEVER,
+  ENGINE_CORE_FINDINGS,
   ENGINE_FINDINGS,
 } from "@/content/aeaip";
 import { PRODUCT_STATUS } from "@/content/status";
+import { cn } from "@/lib/cn";
 import { pageMetadata, webPageLd } from "@/lib/seo";
 import { aero } from "@/lib/site";
 
@@ -29,6 +31,51 @@ const DESCRIPTION =
 export const metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, href: AEAIP_HREF, hasOwnOgImage: true });
 
 const L = (slug: string) => aero(`/aeaip/${slug}`);
+
+function FindingChips({ items, className }: { items: readonly string[]; className?: string }) {
+  return (
+    <ul className={cn("flex flex-wrap gap-2", className)}>
+      {items.map((f) => (
+        <li key={f} className="rounded-full border border-line-strong px-3 py-1.5 text-sm text-ink-2">
+          {f}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** One compact, clearly illustrative change-impact example (fictitious figures). */
+const CHANGE_EXAMPLE = [
+  ["12", "requirements potentially affected"],
+  ["4", "test reports potentially stale"],
+  ["2", "engineering reviews required"],
+  ["1", "TRR blocker"],
+] as const;
+
+function ConfigChangeExample() {
+  return (
+    <figure className="mt-14 max-w-3xl rounded-sm border border-line bg-surface p-6 sm:p-8">
+      <figcaption className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <span className="font-mono text-xl tracking-tight text-ink">
+          PCB Rev C <span aria-hidden className="text-accent">→</span>
+          <span className="sr-only"> to </span> Rev D
+        </span>
+        <span className="text-sm text-muted">Illustrative configuration-change scenario · fictitious figures</span>
+      </figcaption>
+      <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4">
+        {CHANGE_EXAMPLE.map(([n, label], i) => (
+          // Number above its label (dt stays first for screen readers); justify-end pins both to the top.
+          <div key={label} className="flex flex-col-reverse justify-end border-t border-line pt-3">
+            <dt className="mt-1 text-sm leading-snug text-ink-2">{label}</dt>
+            <dd className={cn("font-mono text-3xl tabular-nums tracking-tight", i === CHANGE_EXAMPLE.length - 1 ? "text-[var(--danger)]" : "text-ink")}>
+              {n}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </figure>
+  );
+}
 
 function Chapter({ id, n, title, intro, children, className }: { id: string; n: string; title: string; intro?: string; children: ReactNode; className?: string }) {
   return (
@@ -119,6 +166,9 @@ export default function AeaipPage() {
         intro="The evidence exists, spread across requirements, PLM, test, quality and software systems. Before every review, engineers rebuild the connections by hand, and still cannot be sure the evidence applies to the exact system they are about to test, ship or fly."
       >
         <ConvergenceDiagram />
+        <p className="heading mt-12 max-w-3xl text-2xl text-ink sm:text-3xl">
+          Know whether the exact product configuration is ready — and prove why.
+        </p>
       </Chapter>
 
       {/* 02 — The model */}
@@ -129,7 +179,9 @@ export default function AeaipPage() {
         intro="Configuration sits between requirement and evidence on purpose: evidence proves a requirement only for the configuration it was produced on."
         className="bg-surface-accent"
       >
-        <InteractiveEvidenceLine steps={AEAIP_STEPS} line="aeaip" label="AEAIP core model" />
+        {/* Labels only: one stage explanation is shown at a time, below the selector. */}
+        <InteractiveEvidenceLine steps={AEAIP_STEPS.map(({ label, detail }) => ({ label, detail }))} line="aeaip" label="AEAIP core model" />
+        <ConfigChangeExample />
       </Chapter>
 
       {/* 03 — The intelligence */}
@@ -164,13 +216,18 @@ export default function AeaipPage() {
               It reasons over the graph and prepares findings for the engineer and the review board. It never closes a
               requirement or makes the decision.
             </p>
-            <ul className="mt-8 flex flex-wrap gap-2">
-              {ENGINE_FINDINGS.map((f) => (
-                <li key={f} className="rounded-full border border-line-strong px-3 py-1.5 text-sm text-ink-2">
-                  {f}
-                </li>
-              ))}
-            </ul>
+            <FindingChips items={ENGINE_FINDINGS.slice(0, ENGINE_CORE_FINDINGS)} className="mt-8" />
+            {/* The full list stays in the HTML; <details> exposes its expanded state natively. */}
+            <details className="group mt-3">
+              <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-medium text-ink [&::-webkit-details-marker]:hidden">
+                <span className="group-open:hidden">View all assurance findings ({ENGINE_FINDINGS.length})</span>
+                <span className="hidden group-open:inline">Show core findings only</span>
+                <span aria-hidden className="text-subtle transition-transform group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <FindingChips items={ENGINE_FINDINGS.slice(ENGINE_CORE_FINDINGS)} className="mt-2" />
+            </details>
             <ArrowLink
               href={`${L("engineering-evidence-graph")}#engine`}
               className="mt-6"
@@ -217,12 +274,14 @@ export default function AeaipPage() {
       >
         <div className="grid items-center gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <ArchitectureDiagram />
+            {/* The paragraph beside it is the caption here, so the diagram's hidden caption is omitted. */}
+            <ArchitectureDiagram caption={false} />
           </div>
           <div className="space-y-5 lg:col-span-5">
             <p className="text-[1.0625rem] leading-relaxed text-ink-2">
-              DAQIP™ brings manufacturing and FAI evidence; AirCert AI™ brings certification evidence. Software,
-              cybersecurity, simulation, test and telemetry evidence feed the same graph.
+              AEAIP™ is the umbrella. DAQIP™ provides manufacturing assurance and AirCert AI™ provides certification
+              assurance within it. Software, cybersecurity, simulation, test and telemetry evidence feed the same
+              Engineering Evidence Graph.
             </p>
             <ArrowLink href={aero("/daqip")}>DAQIP™ — Manufacturing Assurance</ArrowLink>
             <ArrowLink href={aero("/aircert-ai")} className="flex">
@@ -283,8 +342,8 @@ export default function AeaipPage() {
           <h2 id="learn-title" className="kicker">
             Learn the engineering behind AEAIP
           </h2>
-          <div className="mt-6">
-            <KnowledgeIndex source="aeaip_body" />
+          <div className="mt-8">
+            <KnowledgeGroups source="aeaip_body" />
           </div>
         </Container>
       </Section>
