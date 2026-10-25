@@ -88,11 +88,35 @@ export function ParentFooter() {
         </Col>
       </div>
       <div className="border-t border-line">
-        <p className="container-x py-6 text-xs text-subtle">
-          © {BRAND.copyrightYear} {BRAND.parent}. All rights reserved.
-        </p>
+        <div
+          className="container-x flex flex-col gap-2 py-6 text-xs text-subtle sm:flex-row sm:items-center sm:justify-between"
+          style={{ paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
+        >
+          <p>
+            © {BRAND.copyrightYear} {BRAND.parent}. All rights reserved.
+          </p>
+          <PoweredBy />
+        </div>
       </div>
     </footer>
+  );
+}
+
+/** Bottom-row credit shared by both footers: "Powered by EV.ENGINEER™, Bangalore, India". */
+function PoweredBy() {
+  return (
+    <p>
+      Powered by{" "}
+      <SmartLink
+        href={DESIGNER.credentialHref}
+        label="ev_engineer"
+        ga={{ event: "designer_profile_click", params: { source_location: "footer" } }}
+        className="inline-flex min-h-9 items-center text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
+      >
+        {DESIGNER.credential}
+      </SmartLink>
+      , Bangalore, India
+    </p>
   );
 }
 
@@ -187,18 +211,7 @@ export function AeroFooter() {
           <p>
             © {BRAND.copyrightYear} {aeroLegalName}. All rights reserved.
           </p>
-          <p>
-            Designed by{" "}
-            <SmartLink
-              href={DESIGNER.credentialHref}
-              label="ev_engineer"
-              ga={{ event: "designer_profile_click", params: { source_location: "footer" } }}
-              className="inline-flex min-h-9 items-center text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
-            >
-              {DESIGNER.credential}
-            </SmartLink>
-            , Bangalore, India
-          </p>
+          <PoweredBy />
         </div>
       </div>
     </footer>
