@@ -100,6 +100,8 @@ export const EXTERNAL = {
   evEngineer: "https://ev.engineer",
   uflight: "https://www.uflight.in/",
   uflightCybersecurity: "https://cybersecurity.uflight.in/",
+  /** Official GAMYAA login entry point. Authentication happens there, never on this site. */
+  login: "https://login.gamyaa.in/",
 } as const;
 
 /** Design credit shown in the AeroSystems footer and on AEAIP pages. */

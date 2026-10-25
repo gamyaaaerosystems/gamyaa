@@ -56,7 +56,8 @@ export type AnalyticsEventName =
   | "evidence_graph_node_open"
   | "review_gate_select"
   | "contact_intent_select"
-  | "division_card_click";
+  | "division_card_click"
+  | "login_click";
 
 export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>([
   "nav_click",
@@ -104,6 +105,7 @@ export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>
   "review_gate_select",
   "contact_intent_select",
   "division_card_click",
+  "login_click",
 ]);
 
 /** Parameters that may ever be sent. Anything else is dropped. */
@@ -135,7 +137,8 @@ export type AnalyticsParam =
   | "step"
   | "node_type"
   | "intent"
-  | "division";
+  | "division"
+  | "source";
 
 export type AnalyticsParams = Partial<Record<AnalyticsParam, string>>;
 
@@ -168,6 +171,7 @@ const ALLOWED_PARAMS: ReadonlySet<string> = new Set<AnalyticsParam>([
   "node_type",
   "intent",
   "division",
+  "source",
 ]);
 
 /* AEAIP enumerations. Values are generic categories, never IDs or free text. */
@@ -237,6 +241,8 @@ const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
   form_name: new Set(["aerosystems_contact", "gamyaa_contact"]),
   // Homepage division cards (division_card_click).
   division: new Set(["aerosystems", "ventures", "uflight"]),
+  // Where the Login link was used (login_click). Never identity or auth state.
+  source: new Set(["desktop_header", "mobile_menu"]),
   error_type: new Set([
     "validation",
     "rate_limited",

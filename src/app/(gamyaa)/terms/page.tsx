@@ -50,14 +50,14 @@ export default function TermsPage() {
 
             <h2>3. No certification or approval</h2>
             <p>
-              DAQIP™ and AirCert AI™ are intended to assist engineering, quality and certification work. They do not
+              AEAIP™, DAQIP™ and AirCert AI™ are intended to assist engineering, quality and certification work. They do not
               certify products, grant airworthiness approval or replace the decisions of engineers, quality
               functions or certification authorities.
             </p>
 
             <h2>4. Intellectual property</h2>
             <p>
-              GAMYAA, Gamyaa AeroSystems, DAQIP™ and AirCert AI™ names, logos and site content belong to their
+              GAMYAA, Gamyaa AeroSystems, AEAIP™, DAQIP™ and AirCert AI™ names, logos and site content belong to their
               respective owners. Illustrative drawings on this site are fictitious and are not customer data.
             </p>
 

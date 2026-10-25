@@ -11,6 +11,7 @@ import {
   Notice,
   Section,
   SectionHeader,
+  SmartLink,
   StatusBadge,
 } from "@/components/ui/primitives";
 import { EVIDENCE_LINES } from "@/content/aeaip";
@@ -80,14 +81,14 @@ export default function DaqipPage() {
         <p className="lede mt-4 max-w-2xl">{DAQIP.shortExplanation}</p>
         <p className="mt-6 text-[0.9375rem] text-ink-2">
           Part of{" "}
-          <ArrowLink
+          <SmartLink
             href={aero("/aeaip")}
             ga={{ event: "aeaip_explore", params: { source_location: "daqip_page" } }}
             label="Explore AEAIP"
-            className="inline-flex min-h-6"
+            className="font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink"
           >
             AEAIP™
-          </ArrowLink>
+          </SmartLink>
           : the Manufacturing Assurance Intelligence specialization within the AEAIP™ architecture.
         </p>
         <CommercialCtas location="hero" className="mt-10" />

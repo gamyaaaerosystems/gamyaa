@@ -12,6 +12,7 @@ import {
   Notice,
   Section,
   SectionHeader,
+  SmartLink,
   StatusBadge,
 } from "@/components/ui/primitives";
 import { EVIDENCE_LINES } from "@/content/aeaip";
@@ -92,14 +93,14 @@ export default function AircertPage() {
         <p className="lede mt-8 max-w-2xl">{AIRCERT.statement}</p>
         <p className="mt-6 text-[0.9375rem] text-ink-2">
           Part of{" "}
-          <ArrowLink
+          <SmartLink
             href={aero("/aeaip")}
             ga={{ event: "aeaip_explore", params: { source_location: "aircert_page" } }}
             label="Explore AEAIP"
-            className="inline-flex min-h-6"
+            className="font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink"
           >
             AEAIP™
-          </ArrowLink>
+          </SmartLink>
           : the Certification Assurance Intelligence specialization within the AEAIP™ architecture.
         </p>
         <Notice className="mt-8 max-w-2xl">

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LogoMark, LogoWord } from "@/components/brand/logo";
 import { AERO_MENU_GROUPS, AERO_NAV, PARENT_NAV } from "@/content/navigation";
 import { aero, CONTACT, parent } from "@/lib/site";
+import { LoginLink } from "./login-link";
 import { MobileMenu } from "./mobile-menu";
 import { NavLinks } from "./nav-links";
 import { ThemeToggle } from "./theme-toggle";
@@ -55,11 +56,13 @@ export function ParentHeader() {
       >
         <div className="container-x flex h-16 items-center justify-between gap-4">
           <ParentBrand />
-          <nav aria-label="Primary" className="hidden items-center gap-4 sm:flex">
+          {/* lg, not sm: with Login the inline nav needs ~800px; below that the menu (which has Login) is used. */}
+          <nav aria-label="Primary" className="hidden items-center gap-4 lg:flex">
             <NavLinks items={PARENT_NAV} />
+            <LoginLink source="desktop_header" />
             <ThemeToggle />
           </nav>
-          <MobileMenu className="sm:hidden" primary={PARENT_NAV} brand={<ParentBrand />} />
+          <MobileMenu className="lg:hidden" primary={PARENT_NAV} brand={<ParentBrand />} />
         </div>
       </header>
     </>
@@ -80,6 +83,7 @@ export function AeroHeader() {
           {/* xl, not lg: the full AeroSystems nav needs ~1120px on one line. */}
           <nav aria-label="Primary" className="hidden items-center gap-3 xl:flex">
             <NavLinks items={AERO_NAV} ctaLast />
+            <LoginLink source="desktop_header" />
             <ThemeToggle />
           </nav>
           <MobileMenu

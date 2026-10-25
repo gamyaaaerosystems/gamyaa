@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import type { NavGroup, NavItem } from "@/content/navigation";
 import { CloseIcon, MenuIcon } from "@/components/ui/icons";
+import { LoginLink } from "./login-link";
 import { ThemeToggle } from "./theme-toggle";
 
 /**
@@ -135,6 +136,7 @@ export function MobileMenu({
           </nav>
 
           <div className="container-x mt-auto flex flex-col gap-4 border-t border-line pt-6">
+            <LoginLink source="mobile_menu" variant="menu" />
             <ThemeToggle showLabels />
             {footer}
           </div>
