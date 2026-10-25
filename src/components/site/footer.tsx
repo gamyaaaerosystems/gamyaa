@@ -55,6 +55,12 @@ export function ParentFooter() {
           >
             EV Society™
           </Item>
+          <Item
+            href={EXTERNAL.evEngineer}
+            ga={{ event: "partner_click", params: { partner_name: "EV.ENGINEER", destination: EXTERNAL.evEngineer } }}
+          >
+            EV.ENGINEER™
+          </Item>
         </Col>
         <Col title="Company">
           <Item href={parent("/privacy")}>Privacy</Item>
@@ -163,23 +169,16 @@ export function AeroFooter() {
             © {BRAND.copyrightYear} {aeroLegalName}. All rights reserved.
           </p>
           <p>
-            Bangalore, India · Designed by{" "}
-            <SmartLink
-              href={DESIGNER.href}
-              label="designer_profile"
-              ga={{ event: "designer_profile_click", params: { source_location: "footer" } }}
-              className="inline-flex min-h-9 items-center text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
-            >
-              {DESIGNER.name}
-            </SmartLink>
-            ,{" "}
+            Designed by{" "}
             <SmartLink
               href={DESIGNER.credentialHref}
               label="ev_engineer"
+              ga={{ event: "designer_profile_click", params: { source_location: "footer" } }}
               className="inline-flex min-h-9 items-center text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
             >
               {DESIGNER.credential}
             </SmartLink>
+            , Bangalore, India
           </p>
         </div>
       </div>

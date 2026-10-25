@@ -87,6 +87,10 @@ export const PARTNERS: readonly Partner[] = [
     href: EXTERNAL.iTelematics,
     /** Display form of the domain (the URL itself stays lower-case). */
     domain: "iTelematics.com",
+    actions: [
+      { label: "iTelematics.com", href: EXTERNAL.iTelematics, caption: "Official website", arrow: "external" },
+      { label: "EV.ENGINEER™", href: EXTERNAL.evEngineer, caption: "ev.engineer", arrow: "external" },
+    ],
   },
   {
     name: "EV Society™",

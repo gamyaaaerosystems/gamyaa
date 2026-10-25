@@ -228,7 +228,7 @@ export type PlatformKey = "aeaip" | "daqip" | "aircert";
  */
 const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
   theme: new Set(["light", "dark", "system"]),
-  partner_name: new Set(["EV Society", "iTelematics", "APEX Rocket Systems"]),
+  partner_name: new Set(["EV Society", "EV.ENGINEER", "iTelematics", "APEX Rocket Systems"]),
   person_name: new Set(["Purushothama Padmanabha", "Manjunatha G", "Sudarshana Karkala"]),
   form_name: new Set(["aerosystems_contact", "gamyaa_contact"]),
   error_type: new Set([

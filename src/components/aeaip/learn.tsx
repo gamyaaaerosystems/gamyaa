@@ -238,24 +238,17 @@ export function Authorship({ status }: { status?: Status }) {
   );
 }
 
-/** Name → designer profile; credential → ev.engineer. Two links, since links cannot nest. */
+/** Design credit, as in the footer: "Designed by EV.ENGINEER™", linked to ev.engineer. */
 export function DesignerLink({ className, location }: { className?: string; location: SourceLocation }) {
   return (
-    <>
-      <SmartLink
-        href={DESIGNER.href}
-        className={className}
-        label="designer_profile"
-        ga={{ event: "designer_profile_click", params: { source_location: location } }}
-        ariaLabel={`${DESIGNER.name} — designer profile (opens in a new tab)`}
-      >
-        {DESIGNER.name}
-      </SmartLink>
-      ,{" "}
-      <SmartLink href={DESIGNER.credentialHref} className={className} label="ev_engineer">
-        {DESIGNER.credential}
-      </SmartLink>
-    </>
+    <SmartLink
+      href={DESIGNER.credentialHref}
+      className={className}
+      label="ev_engineer"
+      ga={{ event: "designer_profile_click", params: { source_location: location } }}
+    >
+      {DESIGNER.credential}
+    </SmartLink>
   );
 }
 

@@ -14,8 +14,9 @@ export const metadata = pageMetadata({
 });
 
 function AeroGlyph() {
-  // Ground station → ascent trajectory → satellite in orbit, above the Earth's limb.
-  // The trajectory carries evidence nodes: the Evidence Line motif, in flight.
+  // Launch → ascent → orbit, above the Earth's limb: the rocket on its trajectory (flown
+  // path solid, path still to fly dashed) and the satellite it delivers. The nodes on
+  // the path are the Evidence Line motif, in flight.
   return (
     <svg viewBox="0 0 240 120" aria-hidden className="h-auto w-full text-line-strong" fill="none">
       {[[14, 38], [58, 18], [104, 8], [232, 52], [168, 62]].map(([x, y]) => (
@@ -24,13 +25,22 @@ function AeroGlyph() {
       {/* Earth's limb and atmosphere */}
       <path d="M0 112Q120 84 240 112" stroke="currentColor" />
       <path d="M0 104Q120 76 240 104" stroke="currentColor" strokeDasharray="1 4" />
-      {/* Ground station */}
-      <path d="M24 113l4-7 4 7M22.5 100.5q5.5 5 11 0" stroke="currentColor" />
-      {/* Ascent trajectory with evidence nodes */}
-      <path d="M28 106C70 42 140 20 181 30" stroke="var(--accent)" strokeWidth="1.2" className="anim-draw" style={{ ["--gx-len" as string]: 190 }} />
-      {[[28, 106], [80, 54], [138, 30]].map(([x, y]) => (
-        <circle key={`n-${x}`} cx={x} cy={y} r="2.5" fill="var(--bg)" stroke="var(--accent)" />
+      {/* Launch tower */}
+      <path d="M21 112V97M21 101h4M21 105.5h4M18 112h8" stroke="currentColor" />
+      {/* Trajectory, split at the rocket (t = 0.35 of one cubic): flown, then still to fly */}
+      <path d="M28 106C42.7 83.6 60.8 66.4 80 53.8" stroke="var(--accent)" strokeWidth="1.2" className="anim-draw" style={{ ["--gx-len" as string]: 70 }} />
+      <path d="M80 53.8C115.5 30.5 154.4 23.5 181 30" stroke="var(--accent)" strokeWidth="1.2" strokeDasharray="2 3" opacity="0.7" />
+      {[[28, 106], [138, 30]].map(([x, y]) => (
+        <circle key={`n-${x}`} cx={x} cy={y} r="2.5" fill="var(--surface)" stroke="var(--accent)" />
       ))}
+      {/* Rocket, nose along the trajectory's tangent */}
+      <g transform="translate(80 53.8) rotate(57)" stroke="var(--accent)" fill="var(--surface)">
+        <path d="M-2.4 10.2C-2.4 14 -1 17.5 0 20C1 17.5 2.4 14 2.4 10.2" opacity="0.5" />
+        <path d="M-3.5 2.5L-7.5 9V11L-3.5 8.5ZM3.5 2.5L7.5 9V11L3.5 8.5Z" />
+        <path d="M0-13C2.6-10.4 3.5-7 3.5-3.5V8.5H-3.5V-3.5C-3.5-7-2.6-10.4 0-13Z" />
+        <path d="M-2.4 8.5L-2.9 10.2H2.9L2.4 8.5" />
+        <circle cx="0" cy="-3.5" r="1.4" />
+      </g>
       {/* Satellite: bus, solar arrays, antenna */}
       <g stroke="var(--accent)">
         <rect x="201" y="25" width="10" height="10" />

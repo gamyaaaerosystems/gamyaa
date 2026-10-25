@@ -261,12 +261,13 @@ export function techArticleLd(input: {
   };
 }
 
+/** Matches the visible credit: "Designed by EV.ENGINEER™". */
 function designerLd() {
   return {
-    "@type": "Person",
-    name: DESIGNER.name,
-    url: DESIGNER.href,
-    description: `Designed by ${DESIGNER.name}, ${DESIGNER.credential}`,
+    "@type": "Organization",
+    name: DESIGNER.credential,
+    url: DESIGNER.credentialHref,
+    description: `Designed by ${DESIGNER.credential}`,
   };
 }
 
