@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GateRail } from "@/components/aeaip/diagrams";
+import { ReviewGateNavigator } from "@/components/system/review-gate-navigator";
 import {
   AeaipRelation,
   ArticleSection,
@@ -84,6 +84,7 @@ export default function ReviewGatesPage() {
             </p>
           </>
         }
+        visual={<ReviewGateNavigator initial="TRR" />}
       />
 
       <ArticleSection id="what" n="01" title="What happens at a review gate">
@@ -127,11 +128,6 @@ export default function ReviewGatesPage() {
         </p>
       </ArticleSection>
 
-      <section aria-label="Illustrative sequence" className="border-t border-line py-12 md:py-16">
-        <Container>
-          <GateRail highlight="" />
-        </Container>
-      </section>
 
       <section aria-labelledby="gates-title" className="border-t border-line py-12 md:py-16" data-ga-section="gate_detail">
         <Container>
@@ -144,10 +140,10 @@ export default function ReviewGatesPage() {
             question in one line, and what AEAIP would evaluate. Educational and high-level; a programme&apos;s own
             criteria always govern.
           </p>
-          <ol className="mt-10 space-y-6">
+          <ol className="mt-10 space-y-14">
             {GATES.map((g, i) => (
               <li key={g.code} id={g.code.toLowerCase()} className="scroll-mt-28">
-                <article aria-labelledby={`${g.code}-title`} className="card p-6 sm:p-8">
+                <article aria-labelledby={`${g.code}-title`} className="border-t border-line-strong pt-8">
                   <div className="flex flex-wrap items-baseline justify-between gap-3">
                     <h3 id={`${g.code}-title`} className="text-2xl font-medium tracking-tight text-ink">
                       <span className="font-mono text-accent">{g.code}</span> — {g.name}

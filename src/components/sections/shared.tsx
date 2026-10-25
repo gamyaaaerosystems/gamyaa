@@ -1,30 +1,49 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import type { CtaLocation, DemoProduct, ProblemTopic } from "@/lib/analytics";
-import { aero, EXTERNAL } from "@/lib/site";
+import { aero } from "@/lib/site";
 import { LEADERSHIP, PARTNERS } from "@/content/company";
 import { ArrowLink, ButtonLink, Container, Section, SectionHeader, SmartLink } from "@/components/ui/primitives";
-import { ArrowUpRight, LinkedInIcon } from "@/components/ui/icons";
+import { LinkedInIcon } from "@/components/ui/icons";
 
 /* --------------------------------------------------------- Leadership */
 
 /** Pass `id="leadership"` only on the About page (footer links to /about#leadership). */
 export function LeadershipSection({ id }: { id?: string }) {
   return (
-    <Section id={id} section="leadership">
-      <Container>
-        <SectionHeader eyebrow="Gamyaa AeroSystems" title="Leadership Team" />
-        <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-3">
+    <Section id={id} labelledBy="leadership-title" section="leadership">
+      <Container className="grid gap-10 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <SectionHeader eyebrow="Gamyaa AeroSystems" id="leadership-title" title="Leadership" />
+        </div>
+        <ul className="border-b border-line lg:col-span-8">
           {LEADERSHIP.map((p) => (
-            <li key={p.name} className="flex flex-col bg-surface p-6 sm:p-8">
-              <h3 className="text-xl font-medium tracking-tight text-ink">{p.name}</h3>
-              <p className="mt-1 text-sm text-muted">{p.role}</p>
+            <li key={p.name} className="grid gap-x-8 gap-y-2 border-t border-line py-6 sm:grid-cols-[1fr_auto] sm:items-start">
+              <div>
+                <h3 className="text-xl font-medium tracking-tight text-ink">{p.name}</h3>
+                <p className="mt-1 text-sm text-muted">
+                  {p.role}
+                  {p.credential ? (
+                    <>
+                      ,{" "}
+                      <SmartLink
+                        href={p.credential.href}
+                        label="ev_engineer"
+                        className="text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
+                      >
+                        {p.credential.label}
+                      </SmartLink>
+                    </>
+                  ) : null}
+                </p>
+                <p className="mt-3 max-w-xl text-[0.9375rem] leading-relaxed text-ink-2">{p.summary}</p>
+              </div>
               {p.linkedin ? (
                 <SmartLink
                   href={p.linkedin}
                   label="linkedin"
                   ga={{ event: "leadership_link_click", params: { person_name: p.name } }}
-                  className="mt-6 inline-flex min-h-11 items-center gap-2 self-start text-sm text-ink-2 hover:text-ink"
+                  className="inline-flex min-h-11 items-center gap-2 self-start text-sm text-ink-2 hover:text-ink"
                   ariaLabel={`${p.name} on LinkedIn (opens in a new tab)`}
                 >
                   <LinkedInIcon size={15} />
@@ -41,96 +60,38 @@ export function LeadershipSection({ id }: { id?: string }) {
 
 /* ----------------------------------------------------------- Partners */
 
+/** Verified partners only, by category. Planned tool integrations are never shown as partners. */
 export function PartnersSection() {
   return (
-    <Section id="partners" section="partners">
-      <Container>
-        <SectionHeader eyebrow="Ecosystem" title="Partners & Ecosystem" />
-        <ul className="mt-10 grid gap-4 md:grid-cols-2">
+    <Section id="partners" labelledBy="partners-title" section="partners">
+      <Container className="grid gap-10 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <SectionHeader eyebrow="Ecosystem" id="partners-title" title="Partners & Ecosystem" />
+        </div>
+        <ul className="border-b border-line lg:col-span-8">
           {PARTNERS.map((p) => (
-            <li key={p.href}>
-              {p.actions ? (
-                // Several destinations: the card itself is not a link (anchors can't nest).
-                <div className="card group flex h-full flex-col p-6 transition-colors hover:border-line-strong sm:p-8">
-                  <span className="flex items-start justify-between gap-4">
-                    <span className="text-lg font-medium text-ink">{p.name}</span>
-                    <ArrowUpRight className="mt-1 shrink-0 text-subtle transition-colors group-hover:text-ink" />
-                  </span>
-                  <span className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{p.description}</span>
-                  <span className="mt-auto flex flex-col gap-x-10 gap-y-3 pt-6 xs:flex-row xs:flex-wrap">
-                    {p.actions.map((a) => (
-                      <span key={a.href} className="flex flex-col">
-                        <ArrowLink
-                          href={a.href}
-                          arrow={a.arrow}
-                          label={`${p.analyticsName}: ${a.label}`}
-                          ga={{ event: "partner_click", params: { partner_name: p.analyticsName, destination: a.href } }}
-                          className="self-start"
-                        >
-                          {a.label}
-                        </ArrowLink>
-                        <span className="font-mono text-xs text-subtle">{a.caption}</span>
-                      </span>
-                    ))}
-                  </span>
+            <li key={p.href} className="grid gap-x-8 gap-y-3 border-t border-line py-6 md:grid-cols-[12rem_1fr]">
+              <p className="text-sm text-muted">{p.category}</p>
+              <div>
+                <h3 className="text-lg font-medium text-ink">{p.name}</h3>
+                <p className="mt-1 text-[0.9375rem] leading-relaxed text-ink-2">{p.description}</p>
+                <div className="mt-3 flex flex-wrap gap-x-8 gap-y-1">
+                  {(p.actions ?? [{ label: p.domain, href: p.href, caption: "", arrow: "external" as const }]).map((a) => (
+                    <ArrowLink
+                      key={a.href}
+                      href={a.href}
+                      arrow={a.arrow}
+                      label={`${p.analyticsName}: ${a.label}`}
+                      ga={{ event: "partner_click", params: { partner_name: p.analyticsName, destination: a.href } }}
+                    >
+                      {a.label}
+                    </ArrowLink>
+                  ))}
                 </div>
-              ) : (
-                <SmartLink
-                  href={p.href}
-                  label={p.analyticsName}
-                  ga={{ event: "partner_click", params: { partner_name: p.analyticsName, destination: p.href } }}
-                  className="card group flex h-full flex-col p-6 transition-colors hover:border-line-strong sm:p-8"
-                >
-                  <span className="flex items-start justify-between gap-4">
-                    <span className="text-lg font-medium text-ink">{p.name}</span>
-                    <ArrowUpRight className="mt-1 shrink-0 text-subtle transition-colors group-hover:text-ink" />
-                  </span>
-                  <span className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{p.description}</span>
-                  <span className="mt-auto pt-6 font-mono text-xs text-subtle">{p.domain}</span>
-                </SmartLink>
-              )}
+              </div>
             </li>
           ))}
         </ul>
-      </Container>
-    </Section>
-  );
-}
-
-/* ------------------------------------------------ Engineering Initiatives */
-
-export function EngineeringInitiatives() {
-  const items = [
-    {
-      title: "Aerospace Cybersecurity",
-      body: "Engineering cybersecurity for connected aerospace systems, avionics, telemetry, embedded systems and digital engineering environments.",
-      cta: "Explore Aerospace Cybersecurity",
-      href: EXTERNAL.aerospaceCybersecurity,
-      event: "aerospace_cybersecurity_click" as const,
-    },
-    {
-      title: "Engineering Learning & Research Programs",
-      body: "Applied engineering programs across aerospace, defence, quality intelligence, cybersecurity, digital twins and advanced engineering systems.",
-      cta: "Explore Internships",
-      href: EXTERNAL.internships,
-      event: "internship_outbound_click" as const,
-    },
-  ];
-  return (
-    <Section section="engineering_initiatives">
-      <Container>
-        <SectionHeader eyebrow="Beyond the platforms" title="Engineering Initiatives" />
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {items.map((i) => (
-            <article key={i.title} className="card flex flex-col p-6 sm:p-8">
-              <h3 className="text-xl font-medium tracking-tight text-ink">{i.title}</h3>
-              <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink-2">{i.body}</p>
-              <ArrowLink href={i.href} ga={{ event: i.event }} label={i.cta} className="mt-6 self-start">
-                {i.cta}
-              </ArrowLink>
-            </article>
-          ))}
-        </div>
       </Container>
     </Section>
   );
@@ -223,6 +184,7 @@ export function PageHero({
   children,
   breadcrumbs,
   className,
+  aside,
 }: {
   eyebrow?: ReactNode;
   title: ReactNode;
@@ -230,18 +192,30 @@ export function PageHero({
   children?: ReactNode;
   breadcrumbs?: ReactNode;
   className?: string;
+  /** Optional visual beside the heading on large screens (stacked below on phones). */
+  aside?: ReactNode;
 }) {
+  const text = (
+    <div className={aside ? "lg:col-span-7" : "max-w-4xl"}>
+      {eyebrow ? <div className="kicker mb-6 flex-wrap">{eyebrow}</div> : null}
+      <h1 className="display text-[2.25rem] text-ink sm:text-5xl lg:text-[3.75rem]">{title}</h1>
+      {lede ? <div className="lede mt-6 max-w-2xl">{lede}</div> : null}
+      {children}
+    </div>
+  );
   return (
     <section className={cn("relative overflow-hidden", className)} data-ga-section="hero">
       <div aria-hidden className="tech-grid tech-grid-fade absolute inset-0" />
-      <Container className="relative pb-14 pt-10 md:pb-20 md:pt-14">
+      <Container className="relative pb-16 pt-10 md:pb-24 md:pt-14">
         {breadcrumbs}
-        <div className="max-w-4xl">
-          {eyebrow ? <div className="eyebrow mb-5">{eyebrow}</div> : null}
-          <h1 className="display text-[2.25rem] text-ink sm:text-5xl lg:text-[3.75rem]">{title}</h1>
-          {lede ? <div className="lede mt-6 max-w-3xl">{lede}</div> : null}
-          {children}
-        </div>
+        {aside ? (
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
+            {text}
+            <div className="lg:col-span-5">{aside}</div>
+          </div>
+        ) : (
+          text
+        )}
       </Container>
     </section>
   );

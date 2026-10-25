@@ -67,25 +67,27 @@
   --gx-edge: rgb(13 16 19 / 0.35);
 }
 
+/* Dark theme: "midnight", a blue-black page with cards and accent bands as lighter steps
+   of the same blue; hairlines are blue-tinted. Muted/subtle text stays ≥ 5:1 on every surface. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #0a0b0d;
-    --surface: #111317;
-    --surface-2: #16191e;
-    --surface-accent: #0e1828;
-    --ink: #eceef0;
-    --ink-2: #c3c8cf;
-    --muted: #9aa1aa;
-    --subtle: #8b929b;
-    --line: rgb(236 238 240 / 0.1);
-    --line-strong: rgb(236 238 240 / 0.2);
-    --steel: #3a4048;
-    --grid: rgb(236 238 240 / 0.035);
+    --bg: #05080f;
+    --surface: #0b111d;
+    --surface-2: #101828;
+    --surface-accent: #0a1426;
+    --ink: #eaeef5;
+    --ink-2: #c2cad7;
+    --muted: #97a2b4;
+    --subtle: #8994a8;
+    --line: rgb(190 206 232 / 0.1);
+    --line-strong: rgb(190 206 232 / 0.2);
+    --steel: #2c3850;
+    --grid: rgb(190 206 232 / 0.035);
     --accent: #9ec0e6;
     --accent-2: #a9d4f5;
     --btn: #eceef0;
-    --btn-ink: #0a0b0d;
+    --btn-ink: #05080f;
     --focus: #a9d4f5;
     --st-available: #7fcba4;
     --st-prototype: #e3b867;
@@ -95,16 +97,16 @@
     --danger: #ff8a8a;
     --logo-mark: url(#gx-grad-silver);
     --logo-word: #f3f5f7;
-    --sheet: #0d1014;
+    --sheet: #080d17;
     --sheet-line: #c9ced5;
     --sheet-dim: #a9d4f5;
     --sheet-hatch: rgb(201 206 213 / 0.3);
     --gx-lit: #c9ced5;
-    --gx-shade: #2a2f36;
+    --gx-shade: #1f2836;
     --gx-cell-lit: #4f6f96;
-    --gx-cell-shade: #0c1624;
+    --gx-cell-shade: #091321;
     --gx-dark-lit: #6b737d;
-    --gx-dark-shade: #15181c;
+    --gx-dark-shade: #0e1520;
     --gx-sel-lit: #d4ecff;
     --gx-sel-shade: #2d5f96;
     --gx-edge: rgb(236 238 240 / 0.28);
@@ -113,22 +115,22 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0a0b0d;
-  --surface: #111317;
-  --surface-2: #16191e;
-  --surface-accent: #0e1828;
-  --ink: #eceef0;
-  --ink-2: #c3c8cf;
-  --muted: #9aa1aa;
-  --subtle: #8b929b;
-  --line: rgb(236 238 240 / 0.1);
-  --line-strong: rgb(236 238 240 / 0.2);
-  --steel: #3a4048;
-  --grid: rgb(236 238 240 / 0.035);
+  --bg: #05080f;
+  --surface: #0b111d;
+  --surface-2: #101828;
+  --surface-accent: #0a1426;
+  --ink: #eaeef5;
+  --ink-2: #c2cad7;
+  --muted: #97a2b4;
+  --subtle: #8994a8;
+  --line: rgb(190 206 232 / 0.1);
+  --line-strong: rgb(190 206 232 / 0.2);
+  --steel: #2c3850;
+  --grid: rgb(190 206 232 / 0.035);
   --accent: #9ec0e6;
   --accent-2: #a9d4f5;
   --btn: #eceef0;
-  --btn-ink: #0a0b0d;
+  --btn-ink: #05080f;
   --focus: #a9d4f5;
   --st-available: #7fcba4;
   --st-prototype: #e3b867;
@@ -138,16 +140,16 @@
   --danger: #ff8a8a;
   --logo-mark: url(#gx-grad-silver);
   --logo-word: #f3f5f7;
-  --sheet: #0d1014;
+  --sheet: #080d17;
   --sheet-line: #c9ced5;
   --sheet-dim: #a9d4f5;
   --sheet-hatch: rgb(201 206 213 / 0.3);
   --gx-lit: #c9ced5;
-  --gx-shade: #2a2f36;
+  --gx-shade: #1f2836;
   --gx-cell-lit: #4f6f96;
-  --gx-cell-shade: #0c1624;
+  --gx-cell-shade: #091321;
   --gx-dark-lit: #6b737d;
-  --gx-dark-shade: #15181c;
+  --gx-dark-shade: #0e1520;
   --gx-sel-lit: #d4ecff;
   --gx-sel-shade: #2d5f96;
   --gx-edge: rgb(236 238 240 / 0.28);
@@ -271,6 +273,32 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--subtle);
+  }
+
+  /*
+   * Kicker: the section label. Sentence case with a small "evidence line" mark
+   * (a hairline ending in a node), replacing tiny monospace capitals as the default
+   * label. `.eyebrow` stays for technical micro-labels inside diagrams and data.
+   */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--accent);
+  }
+  .kicker::before {
+    content: "";
+    flex: none;
+    width: 1.5rem;
+    height: 7px;
+    background:
+      linear-gradient(currentColor, currentColor) left center / calc(100% - 6px) 1px no-repeat,
+      radial-gradient(circle, currentColor 2.5px, transparent 3px) right center / 7px 7px no-repeat;
   }
 
   .display {
@@ -521,7 +549,35 @@
   }
 }
 
+@keyframes gx-scale-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes gx-state-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  /* Evidence trace drawing top to bottom: explains direction, runs once. */
+  .anim-trace {
+    animation: gx-scale-y 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s both;
+  }
+  /* A state change (readiness, validity) settling into place. */
+  .anim-state {
+    animation: gx-state-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
   .anim-draw {
     stroke-dasharray: var(--gx-len, 1000);
     animation: gx-draw 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
@@ -610,6 +666,67 @@ dialog.gx-sheet::backdrop {
 @media (prefers-reduced-motion: no-preference) {
   dialog.gx-sheet[open] {
     animation: gx-fade-up 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+}
+
+/* Evidence trace drawer: bottom sheet on phones, right-hand drawer on large screens. */
+dialog.gx-drawer {
+  position: fixed;
+  inset: auto 0 0 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 88dvh;
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+  border-radius: 12px 12px 0 0;
+  background: var(--bg);
+  color: var(--ink);
+  overflow: hidden;
+}
+dialog.gx-drawer::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
+@media (min-width: 64rem) {
+  dialog.gx-drawer {
+    inset: 0 0 0 auto;
+    width: min(32rem, 92vw);
+    height: 100dvh;
+    max-height: 100dvh;
+    border-top: 0;
+    border-left: 1px solid var(--line-strong);
+    border-radius: 0;
+  }
+}
+@keyframes gx-sheet-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes gx-drawer-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.gx-drawer[open] {
+    animation: gx-sheet-up 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  @media (min-width: 64rem) {
+    dialog.gx-drawer[open] {
+      animation-name: gx-drawer-in;
+    }
   }
 }
 

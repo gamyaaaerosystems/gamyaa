@@ -495,6 +495,9 @@ export function gateMetrics(gate: GateCode) {
 
 export type ValidityStage = {
   step: ValidityStep;
+  /** Large state label used by the validity sequence. */
+  headline: "VERIFIED" | "CONFIGURATION CHANGED" | "EVIDENCE AT RISK" | "REVERIFICATION REQUIRED" | "CURRENT AGAIN";
+  tone: "ok" | "change" | "risk" | "action";
   title: string;
   state: "Current" | "Change detected" | "At Risk" | "Reverification Required" | "Current — reverified";
   body: string;
@@ -508,6 +511,8 @@ const NOW = { requirement: "Rev 3", firmware: "BMS FW 2.4.0", board: "PCB Rev C"
 export const VALIDITY_STAGES: ValidityStage[] = [
   {
     step: "verified",
+    headline: "VERIFIED",
+    tone: "ok",
     title: "June: requirement verified",
     state: "Current",
     body: "TR-EPS-114 passes at 4.102 V per cell. The evidence and the baseline under review are the same configuration.",
@@ -516,6 +521,8 @@ export const VALIDITY_STAGES: ValidityStage[] = [
   },
   {
     step: "change",
+    headline: "CONFIGURATION CHANGED",
+    tone: "change",
     title: "Configuration changes",
     state: "Change detected",
     body: "The battery management firmware moves to 2.4.0, the board to Rev C, the EPS–OBC interface to Rev D, the test procedure to Rev B, and the requirement tolerance is tightened in Rev 3.",
@@ -524,6 +531,8 @@ export const VALIDITY_STAGES: ValidityStage[] = [
   },
   {
     step: "at_risk",
+    headline: "EVIDENCE AT RISK",
+    tone: "risk",
     title: "Evidence validity: At Risk",
     state: "At Risk",
     body: "The June evidence was produced on a configuration that no longer matches the baseline. AEAIP flags it; it does not delete or silently keep it.",
@@ -532,6 +541,8 @@ export const VALIDITY_STAGES: ValidityStage[] = [
   },
   {
     step: "reverify",
+    headline: "REVERIFICATION REQUIRED",
+    tone: "action",
     title: "Engineering disposition: Reverification Required",
     state: "Reverification Required",
     body: "Delta analysis shows the charge-termination logic changed in firmware 2.4.0, so the result cannot be retained by rationale. The requirement is reopened and a retest is planned.",
@@ -540,6 +551,8 @@ export const VALIDITY_STAGES: ValidityStage[] = [
   },
   {
     step: "reverified",
+    headline: "CURRENT AGAIN",
+    tone: "ok",
     title: "Retest on the current configuration",
     state: "Current — reverified",
     body: "TP-EPS-022 Rev B passes at 4.098 V per cell on BMS FW 2.4.0 and PCB Rev C. The June evidence is marked superseded and kept for history.",

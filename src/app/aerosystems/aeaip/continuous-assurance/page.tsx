@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChangeImpactFigure } from "@/components/aeaip/diagrams";
+import { ChangeImpactPropagation } from "@/components/system/change-impact";
 import {
   AeaipRelation,
   ArticleSection,
@@ -57,6 +57,7 @@ export default function ContinuousAssurancePage() {
             </p>
           </>
         }
+        visual={<ChangeImpactPropagation />}
       />
 
       <ArticleSection id="decay" n="01" title="Readiness decays between reviews">
@@ -95,9 +96,8 @@ export default function ContinuousAssurancePage() {
         </p>
       </ArticleSection>
 
-      <ArticleSection id="example" n="03" title="Illustrative example: a flight-computer change" wide>
-        <ChangeImpactFigure />
-        <dl className="mt-8 grid max-w-5xl gap-x-10 gap-y-4 md:grid-cols-2">
+      <ArticleSection id="example" n="03" title="What each number in the example means" wide>
+        <dl className="grid max-w-5xl gap-x-10 gap-y-4 md:grid-cols-2">
           {IMPACT_NOTES.map(([k, v]) => (
             <div key={k}>
               <dt className="text-[0.9375rem] font-medium text-ink">{k}</dt>

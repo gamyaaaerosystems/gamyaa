@@ -15,7 +15,7 @@ const INTENTS: ContactIntent[] = [
   {
     interest: "daqip",
     title: "Gamyaa AeroSystems",
-    body: "DAQIP™ demos, AirCert AI™, engineering services and aerospace quality problems.",
+    body: "AEAIP™, DAQIP™ demos, AirCert AI™, engineering assurance problems and services.",
     subject: "Gamyaa AeroSystems enquiry",
     ga: { event: "contact_sales_click" },
   },

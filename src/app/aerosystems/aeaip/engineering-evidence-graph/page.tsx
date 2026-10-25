@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { EngineArchitecture, EvidenceGraphFigure } from "@/components/aeaip/diagrams";
+import { EngineArchitecture } from "@/components/aeaip/diagrams";
+import { EvidenceGraphExplorer } from "@/components/system/evidence-graph-explorer";
 import {
   AeaipRelation,
   ArticleSection,
@@ -80,6 +81,7 @@ export default function EvidenceGraphPage() {
             </p>
           </>
         }
+        visual={<EvidenceGraphExplorer />}
       />
 
       <ArticleSection id="why-graph" n="01" title="Why traceability needs a graph, not only a matrix">
@@ -101,24 +103,17 @@ export default function EvidenceGraphPage() {
       </ArticleSection>
 
       <ArticleSection id="nodes" n="02" title="Nodes: the things being connected" wide>
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-            <EvidenceGraphFigure compact />
-          </div>
-          <div className="lg:col-span-5">
-            <dl className="divide-y divide-line border-y border-line">
-              {NODES.map(([k, v]) => (
-                <div key={k} className="py-3">
-                  <dt className="text-[0.9375rem] font-medium text-ink">{k}</dt>
-                  <dd className="mt-0.5 text-sm text-ink-2">{v}</dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-4 text-sm text-muted">
-              Every node carries an identifier, a revision, an owner, a status and its provenance.
-            </p>
-          </div>
-        </div>
+        <dl className="grid gap-x-12 md:grid-cols-2">
+          {NODES.map(([k, v]) => (
+            <div key={k} className="border-t border-line py-4">
+              <dt className="text-[0.9375rem] font-medium text-ink">{k}</dt>
+              <dd className="mt-1 text-sm leading-relaxed text-ink-2">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-4 text-sm text-muted">
+          Every node carries an identifier, a revision, an owner, a status and its provenance.
+        </p>
       </ArticleSection>
 
       <ArticleSection
@@ -221,7 +216,13 @@ export default function EvidenceGraphPage() {
         title="Worked example: one evidence chain"
         lede="A fictitious flight-software requirement, from the Interactive Assurance Demo."
       >
-        <FlowChain label="Example evidence chain for FSW-247" orientation="vertical" numbered steps={fsw.trace.map((t) => `${t.label}: ${t.value}`)} />
+        <details className="group">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-ink">
+            <span aria-hidden className="text-subtle transition-transform group-open:rotate-90">›</span>
+            Show the full FSW-247 evidence chain ({fsw.trace.length} steps)
+          </summary>
+          <FlowChain className="mt-4" label="Example evidence chain for FSW-247" orientation="vertical" numbered steps={fsw.trace.map((t) => `${t.label}: ${t.value}`)} />
+        </details>
         <p>
           Every step is a node; every arrow is a typed relationship. The chain shows not only that FSW-247 is not yet
           verified, but exactly why, what has been done about it and who still has to act.

@@ -1,20 +1,9 @@
 import { TrackView } from "@/components/analytics/track-view";
 import { BalloonDrawing } from "@/components/diagrams/balloon-drawing";
-import { FlowChain } from "@/components/diagrams/flow";
-import { CommercialCtas, CtaBand, FaqSection, PageHero } from "@/components/sections/shared";
-import { RelatedSolutions, solutionMetadata, SolutionBreadcrumbs } from "@/components/sections/solution-template";
-import {
-  ArrowLink,
-  BulletList,
-  Container,
-  JsonLd,
-  Notice,
-  Section,
-  SectionHeader,
-  StatusBadge,
-} from "@/components/ui/primitives";
-import { solutionBySlug } from "@/content/solutions";
-import { faqLd, techArticleLd } from "@/lib/seo";
+import { FaqSection } from "@/components/sections/shared";
+import { solutionMetadata, SolutionTemplate } from "@/components/sections/solution-template";
+import { ArrowLink, Container, JsonLd, Notice, Section, SectionHeader } from "@/components/ui/primitives";
+import { faqLd } from "@/lib/seo";
 import { aero } from "@/lib/site";
 
 export const metadata = solutionMetadata("first-article-inspection");
@@ -72,134 +61,55 @@ const FAI_FAQ = [
 ];
 
 export default function FaiPage() {
-  const s = solutionBySlug("first-article-inspection")!;
-  const href = aero(`/solutions/${s.slug}`);
   return (
     <>
       <TrackView event="view_fai_solution" />
-      <JsonLd data={techArticleLd({ headline: s.title, description: s.metaDescription, href })} />
       <JsonLd data={faqLd(FAI_FAQ)} />
-
-      <PageHero
-        breadcrumbs={<SolutionBreadcrumbs s={s} />}
-        eyebrow={
-          <span className="flex flex-wrap items-center gap-3">
-            <span>Solution · DAQIP™</span>
-            <StatusBadge status={s.status} />
-          </span>
+      <SolutionTemplate
+        slug="first-article-inspection"
+        extra={
+          <Section id="as9102" labelledBy="forms-title" section="as9102" className="pt-0 md:pt-0">
+            <Container>
+              <SectionHeader
+                eyebrow="AS9102"
+                id="forms-title"
+                title="AS9102 Forms 1, 2 and 3"
+                lede="DAQIP structures First Article Inspection Report data around the three AS9102 forms, for full, partial and delta FAI."
+              />
+              <ol className="mt-12 grid border-b border-line lg:grid-cols-3 lg:gap-10 lg:border-b-0">
+                {FORMS.map((f) => (
+                  <li key={f.form} className="border-t border-line py-6 lg:border-t-2 lg:border-ink">
+                    <p className="font-mono text-xs text-accent">{f.form}</p>
+                    <h3 className="mt-2 text-lg font-medium leading-snug text-ink">{f.title}</h3>
+                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">{f.body}</p>
+                  </li>
+                ))}
+              </ol>
+              <dl className="mt-10 grid gap-x-10 gap-y-6 md:grid-cols-3">
+                {FAI_TYPES.map((t) => (
+                  <div key={t.title}>
+                    <dt className="font-medium text-ink">{t.title}</dt>
+                    <dd className="mt-1 text-sm leading-relaxed text-muted">{t.body}</dd>
+                  </div>
+                ))}
+              </dl>
+              <Notice className="mt-10 max-w-3xl">
+                DAQIP supports AS9102-aligned workflows. It holds no formal AS9102 or AS9100 compliance certification,
+                and using it does not by itself make an organisation compliant. FAI acceptance remains a decision of
+                your quality function and, where required, your customer.
+              </Notice>
+            </Container>
+          </Section>
         }
-        title={s.title}
-        lede={s.intro}
-      >
-        <div className="mt-10">
-          <FlowChain label="First Article Inspection workflow" steps={s.flow} />
-        </div>
-        <CommercialCtas location="hero" topic="fai" className="mt-10" />
-        <ArrowLink href={aero("/daqip")} label="Explore DAQIP" className="mt-4">
-          Explore DAQIP™
-        </ArrowLink>
-      </PageHero>
-
-      <Section labelledBy="problem-title" section="fai_problem">
-        <Container className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <SectionHeader eyebrow="Problem" id="problem-title" title="Why FAI takes so long" />
-          </div>
-          <div className="lg:col-span-8">
-            <p className="lede">{s.problem}</p>
-            <p className="eyebrow mb-3 mt-8">Who experiences it</p>
-            <ul className="flex flex-wrap gap-2">
-              {s.who.map((w) => (
-                <li key={w} className="border border-line-strong bg-surface px-3 py-1.5 text-sm text-ink-2">
-                  {w}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Container>
-      </Section>
-
-      <Section labelledBy="balloon-title" section="balloon_drawing">
-        <Container>
-          <SectionHeader
-            eyebrow="Drawing → Balloon → Characteristics"
-            id="balloon-title"
-            title="Balloon drawing that stays connected to the evidence"
-            lede="Each balloon is a characteristic with a requirement, an inspection method, a measured result, evidence and an approval decision."
-          />
-          <div className="mt-12">
+        example={
+          <>
             <BalloonDrawing />
-          </div>
-        </Container>
-      </Section>
-
-      <Section id="as9102" labelledBy="forms-title" section="as9102">
-        <Container>
-          <SectionHeader
-            eyebrow="AS9102"
-            id="forms-title"
-            title="AS9102 Forms 1, 2 and 3"
-            lede="DAQIP structures First Article Inspection Report data around the three AS9102 forms."
-          />
-          <ul className="mt-12 grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-3">
-            {FORMS.map((f) => (
-              <li key={f.form} className="bg-surface p-6 sm:p-8">
-                <p className="font-mono text-xs uppercase tracking-[0.12em] text-accent">{f.form}</p>
-                <h3 className="mt-3 text-lg font-medium leading-snug text-ink">{f.title}</h3>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{f.body}</p>
-              </li>
-            ))}
-          </ul>
-          <ul className="mt-6 grid gap-4 md:grid-cols-3">
-            {FAI_TYPES.map((t) => (
-              <li key={t.title} className="border border-line p-6">
-                <h3 className="font-medium text-ink">{t.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{t.body}</p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-
-      <Section labelledBy="scope-title">
-        <Container className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <SectionHeader eyebrow="Scope" id="scope-title" title="What DAQIP covers in FAI" />
-          </div>
-          <div className="lg:col-span-8">
-            <BulletList
-              className="text-base sm:columns-2 sm:gap-10 [&>li]:break-inside-avoid [&>li]:mb-2"
-              items={[
-                "AS9102 Forms 1, 2 and 3",
-                "Full FAI and partial FAI",
-                "Drawing revision comparison and delta FAI",
-                "GD&T characteristics and datums",
-                "Material and special-process evidence",
-                "Measurement results by characteristic",
-                "FAIR review with comments and resolution",
-                "Approval history with reviewer and date",
-              ]}
-            />
-            <Notice className="mt-10">
-              DAQIP supports AS9102-aligned workflows. It holds no formal AS9102 or AS9100 compliance certification,
-              and using it does not by itself make an organisation compliant. FAI acceptance remains a decision of
-              your quality function and, where required, your customer.
-            </Notice>
             <ArrowLink href={aero("/solutions/drawing-intelligence")} className="mt-6">
               How drawing intelligence feeds FAI
             </ArrowLink>
-          </div>
-        </Container>
-      </Section>
-
-      <FaqSection title="FAI software questions" items={FAI_FAQ} />
-
-      <RelatedSolutions current={s.slug} />
-
-      <CtaBand
-        title="Run your next First Article Inspection with traceable evidence"
-        body="Tell us about your parts, your current FAI process and your customers' requirements."
-        actions={<CommercialCtas location="cta_band" topic="fai" />}
+          </>
+        }
+        after={<FaqSection title="FAI software questions" items={FAI_FAQ} />}
       />
     </>
   );

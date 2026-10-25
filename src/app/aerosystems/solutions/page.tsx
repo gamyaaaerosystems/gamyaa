@@ -2,15 +2,15 @@ import Link from "next/link";
 import { CtaBand, internalContact, PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ArrowRight } from "@/components/ui/icons";
-import { Container, StatusBadge } from "@/components/ui/primitives";
-import { SOLUTIONS } from "@/content/solutions";
+import { ArrowLink, Container, StatusBadge } from "@/components/ui/primitives";
+import { SOLUTION_GROUPS, SOLUTIONS } from "@/content/solutions";
 import { pageMetadata } from "@/lib/seo";
 import { aero } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "Solutions — FAI, Inspection, Supplier Quality & Airworthiness | Gamyaa AeroSystems",
   description:
-    "Aerospace and defence engineering solutions from Gamyaa AeroSystems: drawing intelligence, First Article Inspection, inspection intelligence, manufacturing and supplier quality, airworthiness certification and certification evidence.",
+    "Aerospace and defence assurance solutions: drawing intelligence, First Article Inspection, inspection, manufacturing and supplier quality, airworthiness, certification evidence and engineering assurance.",
   href: aero("/solutions"),
 });
 
@@ -27,34 +27,53 @@ export default function SolutionsPage() {
           />
         }
         eyebrow="Solutions"
-        title="Solutions by engineering workflow"
-        lede="Each solution is delivered through DAQIP™, AirCert AI™ or both, within the AEAIP™ Engineering Assurance Intelligence architecture, and carries its current status."
+        title="Solutions by engineering problem"
+        lede="Each solution answers one problem and is delivered through a GAMYAA platform. Every status is stated as it is today."
       />
-      <section className="pb-8" aria-label="All solutions">
+
+      <div className="pb-12 md:pb-20" data-ga-section="solutions_index">
         <Container>
-          <ul className="grid gap-px overflow-hidden border border-line bg-line md:grid-cols-2">
-            {SOLUTIONS.map((s, i) => (
-              <li key={s.slug} className="bg-surface">
-                <Link
-                  href={aero(`/solutions/${s.slug}`)}
-                  className="group flex h-full flex-col p-6 transition-colors hover:bg-surface-2 sm:p-8"
-                >
-                  <span className="flex items-center justify-between gap-4">
-                    <span className="font-mono text-xs text-subtle">{String(i + 1).padStart(2, "0")}</span>
-                    <StatusBadge status={s.status} />
-                  </span>
-                  <span className="mt-6 text-xl font-medium tracking-tight text-ink">{s.label}</span>
-                  <span className="mt-2 flex-1 text-[0.9375rem] leading-relaxed text-muted">{s.metaDescription}</span>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink">
-                    View solution
-                    <ArrowRight className="transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {SOLUTION_GROUPS.map((g) => {
+            const items = SOLUTIONS.filter((s) => s.group === g.key);
+            return (
+              <section key={g.key} aria-labelledby={`group-${g.key}`} className="grid gap-8 border-t border-line-strong py-12 lg:grid-cols-12 lg:gap-10">
+                <div className="lg:col-span-4">
+                  <h2 id={`group-${g.key}`} className="heading text-2xl text-ink sm:text-[1.75rem]">
+                    {g.title}
+                  </h2>
+                  <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{g.summary}</p>
+                  <p className="mt-5 text-sm text-muted">Delivered through</p>
+                  <ArrowLink href={g.platform.href} className="mt-1">
+                    {g.platform.label}
+                  </ArrowLink>
+                </div>
+                <ul className="border-b border-line lg:col-span-8">
+                  {items.map((s) => (
+                    <li key={s.slug} className="border-t border-line first:border-t-0 lg:first:border-t">
+                      <Link
+                        href={aero(`/solutions/${s.slug}`)}
+                        className="group grid gap-x-6 gap-y-2 py-5 sm:grid-cols-[1fr_auto] sm:items-center"
+                      >
+                        <span>
+                          <h3 className="text-[1.125rem] font-medium tracking-tight text-ink transition-colors group-hover:text-accent">
+                            {s.label}
+                          </h3>
+                          <span className="mt-1 block text-[0.9375rem] leading-relaxed text-muted">{s.intro}</span>
+                        </span>
+                        <span className="flex items-center gap-4">
+                          <StatusBadge status={s.status} />
+                          <ArrowRight className="text-subtle transition-transform group-hover:translate-x-1" />
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })}
         </Container>
-      </section>
+      </div>
+
       <CtaBand
         title="Not sure where to start?"
         body="Most teams begin with First Article Inspection. Tell us about yours."

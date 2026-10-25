@@ -78,6 +78,7 @@ const CURRENT_EMAIL = "gamyaa.aerosystems@gmail.com";
 
 export const CONTACT = {
   person: "Purushothama Padmanabha",
+  role: "Founder, CEO",
   organisation: "Gamyaa AeroSystems",
   location: "Bangalore, India",
   email: (CORPORATE_EMAILS.find((e) => e.active)?.address ?? CURRENT_EMAIL) as string,
@@ -91,10 +92,12 @@ export const EXTERNAL = {
   apexRocketSystems: "https://www.apexrocketsystems.com/",
   apexEngineeringPartnership: "https://aerospace.ev.engineer/space/partners/apexrocketsystems",
   aerospaceCybersecurity: "https://aerospace.gamyaa.in/aerospace",
+  spaceResearch: "https://aerospace.ishavasyam.org/space",
   internships: "https://aerospace.gamyaa.in/internships",
   daqipResearch:
     "https://aerospace.gamyaa.in/internships/aerospace-quality-intelligence-platform",
   designerProfile: "https://aerospace.gamyaa.in/about/sudarshana-karkala",
+  evEngineer: "https://ev.engineer",
 } as const;
 
 /** Design credit shown in the AeroSystems footer and on AEAIP pages. */
@@ -102,4 +105,5 @@ export const DESIGNER = {
   name: "Sudarshana Karkala",
   credential: "EV.ENGINEER™",
   href: EXTERNAL.designerProfile,
+  credentialHref: EXTERNAL.evEngineer,
 } as const;

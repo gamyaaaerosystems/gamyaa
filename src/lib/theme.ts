@@ -4,7 +4,7 @@ export const THEME_STORAGE_KEY = "gamyaa-theme";
 /** Theme used when the visitor has not chosen one. */
 export const DEFAULT_THEME: ThemePref = "dark";
 
-export const THEME_COLOR = { light: "#f6f5f1", dark: "#0a0b0d" } as const;
+export const THEME_COLOR = { light: "#f6f5f1", dark: "#05080f" } as const;
 
 /**
  * Inline pre-paint script: applies the stored theme (or the dark default) before the

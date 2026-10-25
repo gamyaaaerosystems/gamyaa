@@ -8,7 +8,7 @@ import {
   References,
   RelatedTopics,
 } from "@/components/aeaip/learn";
-import { SmartLink } from "@/components/ui/primitives";
+import { StandardsReference, type StandardRow } from "@/components/system/standards-reference";
 import { learnPage } from "@/content/aeaip";
 import { REFERENCES, refs, type ReferenceId } from "@/content/references";
 import { pageMetadata } from "@/lib/seo";
@@ -21,47 +21,68 @@ const DESCRIPTION =
 
 export const metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, href: page.href });
 
-const FAMILIES: Array<{ family: string; sources: Array<ReferenceId | string>; maps: string }> = [
-  {
-    family: "Systems engineering",
-    sources: ["iso-15288", "iso-29148", "incose-handbook", "nasa-seh", "npr-7123"],
-    maps: "Requirements quality, traceability, verification and validation processes, technical reviews.",
-  },
-  {
-    family: "Space engineering and product assurance (Europe)",
-    sources: ["ecss-verification", "ecss-testing", "ecss-project", "ecss-software", "ecss-swpa"],
-    maps: "Verification methods, levels and stages; test evidence; project reviews; software assurance.",
-  },
-  {
-    family: "NASA software and environmental verification",
-    sources: ["npr-7150", "nasa-std-8739-8", "gevs"],
-    maps: "Software verification and assurance evidence; environmental test evidence and levels.",
-  },
-  {
-    family: "Aerospace quality management",
-    sources: ["as9100", "as9102"],
-    maps: "Quality-system evidence, First Article Inspection records and product conformity (with DAQIP™).",
-  },
-  {
-    family: "Configuration management",
-    sources: ["eia-649", "iso-10007", "ecss-cm", "nasa-seh-cm"],
-    maps: "Configuration identification, change control, status accounting and audits as evidence context.",
-  },
-  {
-    family: "Airworthiness and certification",
-    sources: ["arp4754b", "arp4761a", "faa", "easa", "dgca", "imap-2023", "RTCA DO-178C (airborne software)", "RTCA DO-254 (airborne electronic hardware)"],
-    maps: "Development and safety assurance evidence, compliance matrices and certification evidence (with AirCert AI™).",
-  },
-  {
-    family: "Cybersecurity",
-    sources: ["nist-csf", "nist-ir-8270", "nist-ir-8401", "nist-ssdf", "nist-800-160", "spd-5", "ntia-sbom", "RTCA DO-326A / EUROCAE ED-202A (airworthiness security)"],
-    maps: "Security requirements, controls, verification, findings, remediation and retest.",
-  },
-  {
-    family: "Indian space ecosystem",
-    sources: ["indian-space-policy", "in-space"],
-    maps: "Authorisation and regulatory evidence for missions by Indian non-government entities.",
-  },
+const CATEGORIES: Array<{ name: string; maps: string }> = [
+  { name: "Systems Engineering", maps: "requirements quality, traceability, verification and validation processes, technical reviews and configuration management." },
+  { name: "Space", maps: "verification methods, levels and stages; environmental test evidence; project reviews; national authorisation evidence." },
+  { name: "Software", maps: "software verification, coverage and assurance evidence tied to reproducible builds." },
+  { name: "Quality", maps: "quality-system evidence, First Article Inspection records and product conformity (with DAQIP™)." },
+  { name: "Cybersecurity", maps: "security requirements, controls, verification, findings, remediation and retest." },
+  { name: "Certification", maps: "development and safety assurance evidence, compliance matrices and certification evidence (with AirCert AI™)." },
+];
+
+const TAGS: Partial<Record<ReferenceId, string[]>> = {
+  "nasa-seh": ["Systems Engineering", "Space"],
+  "npr-7123": ["Systems Engineering", "Space"],
+  "iso-15288": ["Systems Engineering"],
+  "iso-29148": ["Systems Engineering"],
+  "incose-handbook": ["Systems Engineering"],
+  "nasa-seh-cm": ["Systems Engineering"],
+  "eia-649": ["Systems Engineering", "Quality"],
+  "iso-10007": ["Systems Engineering", "Quality"],
+  "ecss-verification": ["Space"],
+  "ecss-testing": ["Space"],
+  "ecss-project": ["Space"],
+  "ecss-cm": ["Space", "Systems Engineering"],
+  gevs: ["Space"],
+  "npr-7150": ["Software", "Space"],
+  "nasa-std-8739-8": ["Software", "Space"],
+  "ecss-software": ["Software", "Space"],
+  "ecss-swpa": ["Software", "Space"],
+  as9100: ["Quality"],
+  as9102: ["Quality"],
+  arp4754b: ["Certification"],
+  arp4761a: ["Certification"],
+  faa: ["Certification"],
+  easa: ["Certification"],
+  dgca: ["Certification"],
+  "imap-2023": ["Certification"],
+  "nist-csf": ["Cybersecurity"],
+  "nist-ir-8270": ["Cybersecurity", "Space"],
+  "nist-ir-8401": ["Cybersecurity", "Space"],
+  "nist-ssdf": ["Cybersecurity", "Software"],
+  "nist-800-160": ["Cybersecurity", "Systems Engineering"],
+  "spd-5": ["Cybersecurity", "Space"],
+  "ntia-sbom": ["Cybersecurity", "Software"],
+  "indian-space-policy": ["Space"],
+  "in-space": ["Space"],
+};
+
+const UNLINKED: StandardRow[] = [
+  { id: "do-178c", title: "RTCA DO-178C, Software Considerations in Airborne Systems and Equipment Certification", publisher: "RTCA", note: "Airborne software development assurance.", categories: ["Software", "Certification"] },
+  { id: "do-254", title: "RTCA DO-254, Design Assurance Guidance for Airborne Electronic Hardware", publisher: "RTCA", note: "Airborne electronic hardware design assurance.", categories: ["Certification"] },
+  { id: "do-326a", title: "RTCA DO-326A / EUROCAE ED-202A, Airworthiness Security Process Specification", publisher: "RTCA / EUROCAE", note: "Airworthiness security for aircraft systems.", categories: ["Cybersecurity", "Certification"] },
+];
+
+const ROWS: StandardRow[] = [
+  ...(Object.keys(TAGS) as ReferenceId[]).map((id) => ({
+    id,
+    title: REFERENCES[id].title,
+    publisher: REFERENCES[id].publisher,
+    url: REFERENCES[id].url,
+    note: REFERENCES[id].note,
+    categories: TAGS[id]!,
+  })),
+  ...UNLINKED,
 ];
 
 const MAPPING_EXAMPLE: Array<[string, string, string]> = [
@@ -86,18 +107,6 @@ const MAPPING_EXAMPLE: Array<[string, string, string]> = [
     "Security requirement → control → test → finding → remediation → retest",
   ],
 ];
-
-function SourceItem({ source }: { source: ReferenceId | string }) {
-  const ref = (REFERENCES as Record<string, (typeof REFERENCES)[ReferenceId]>)[source];
-  if (!ref) return <li className="text-ink-2">{source}</li>;
-  return (
-    <li>
-      <SmartLink href={ref.url} label={`reference_${ref.id}`} className="text-ink underline decoration-line-strong underline-offset-4 hover:text-accent">
-        {ref.title}
-      </SmartLink>
-    </li>
-  );
-}
 
 export default function StandardsFrameworksPage() {
   return (
@@ -179,26 +188,11 @@ export default function StandardsFrameworksPage() {
       <ArticleSection
         id="families"
         n="03"
-        title="Framework families"
-        lede="Frameworks a programme may apply, depending on its domain, customer and jurisdiction. Links go to the publisher or official source."
+        title="Standards and frameworks, by category"
+        lede="Frameworks a programme may apply, depending on its domain, customer and jurisdiction. Filter by category; links go to the publisher or official source."
         wide
       >
-        <ul className="divide-y divide-line border-y border-line">
-          {FAMILIES.map((f) => (
-            <li key={f.family} className="grid gap-4 py-6 lg:grid-cols-12">
-              <h3 className="text-lg font-medium text-ink lg:col-span-3">{f.family}</h3>
-              <ul className="space-y-1.5 text-sm lg:col-span-6">
-                {f.sources.map((s) => (
-                  <SourceItem key={s} source={s} />
-                ))}
-              </ul>
-              <p className="text-sm text-ink-2 lg:col-span-3">
-                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">AEAIP would map · </span>
-                {f.maps}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <StandardsReference rows={ROWS} categories={CATEGORIES} />
       </ArticleSection>
 
       <ArticleSection id="copyright" n="04" title="Standards are referenced, not reproduced">

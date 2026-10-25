@@ -75,13 +75,19 @@ export default function DemoPage() {
         </Container>
       </Section>
 
-      {/* Readiness logic, stated plainly */}
-      <Section labelledBy="logic-title" section="demo_logic">
-        <Container className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <SectionHeader eyebrow="How the demo decides" id="logic-title" title="Transparent readiness rules" />
-          </div>
-          <div className="space-y-4 text-[0.9375rem] leading-relaxed text-ink-2 lg:col-span-8">
+      {/* About the demo: rules and the full text version, collapsed but in the HTML
+          (crawlable, screen-reader friendly, no JavaScript needed). */}
+      <Section labelledBy="about-demo" section="demo_about" className="pt-0 md:pt-0">
+        <Container>
+          <h2 id="about-demo" className="kicker">
+            About this demo
+          </h2>
+          <details className="group mt-6 border-t border-line">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 text-lg text-ink">
+              How the demo decides readiness
+              <span aria-hidden className="text-subtle transition-transform group-open:rotate-45">+</span>
+            </summary>
+          <div className="max-w-3xl space-y-4 pb-8 text-[0.9375rem] leading-relaxed text-ink-2">
             <p>
               Every open item records the first gate it affects and whether it is a <strong className="text-ink">condition</strong>{" "}
               or a <strong className="text-ink">blocker</strong> there. Many conditions become blockers at a later gate:
@@ -98,20 +104,17 @@ export default function DemoPage() {
               the review board&apos;s.
             </p>
           </div>
-        </Container>
-      </Section>
+          </details>
 
-      {/* Text equivalent of the demo dataset (crawlable, screen-reader friendly, no JavaScript needed) */}
-      <Section labelledBy="text-version" section="demo_text_version">
-        <Container>
-          <SectionHeader
-            eyebrow="Text version"
-            id="text-version"
-            title={`${DEMO_PROGRAMME.name} sample data`}
-            lede="The complete demo dataset as text: the same content the interactive view presents."
-          />
-
-          <div className="mt-10 grid gap-10 lg:grid-cols-12">
+          <details className="group border-y border-line">
+            <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 text-lg text-ink">
+              <span id="text-version">Text version of the {DEMO_PROGRAMME.name} sample data</span>
+              <span aria-hidden className="text-subtle transition-transform group-open:rotate-45">+</span>
+            </summary>
+          <p className="max-w-3xl text-[0.9375rem] text-ink-2">
+            The complete demo dataset as text: the same content the interactive view presents.
+          </p>
+          <div className="mt-8 grid gap-10 pb-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <h3 className="text-lg font-medium text-ink">
                 {gate} readiness: {overallReadiness(gate)} (illustrative)
@@ -195,7 +198,8 @@ export default function DemoPage() {
               </ol>
             </div>
           </div>
-          <p className="mt-10 text-xs text-subtle">
+          </details>
+          <p className="mt-6 text-xs text-muted">
             Sample data last reviewed <time dateTime={AEAIP_REVIEWED.iso}>{AEAIP_REVIEWED.display}</time>. Fictitious;
             any resemblance to a real programme, requirement or serial number is coincidental.
           </p>

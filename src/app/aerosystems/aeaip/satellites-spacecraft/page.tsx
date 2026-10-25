@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { GateRail } from "@/components/aeaip/diagrams";
+import { EvidenceLine } from "@/components/system/evidence-line";
+import { SpacecraftAssuranceExplorer } from "@/components/system/spacecraft-explorer";
 import {
   AeaipRelation,
   ArticleSection,
@@ -13,8 +14,11 @@ import { FlowChain } from "@/components/diagrams/flow";
 import { FaqSection } from "@/components/sections/shared";
 import { ButtonLink, JsonLd } from "@/components/ui/primitives";
 import { AEAIP_DEMO_HREF, learnPage } from "@/content/aeaip";
+import { GATES } from "@/content/review-gates";
+import { SPACECRAFT_AREAS } from "@/content/spacecraft";
 import { refs } from "@/content/references";
 import { faqLd, pageMetadata } from "@/lib/seo";
+import { aero } from "@/lib/site";
 
 const page = learnPage("satellites-spacecraft");
 const TITLE = "Satellite & Spacecraft Assurance — Verification, Qualification & Mission Readiness | AEAIP";
@@ -23,20 +27,6 @@ const DESCRIPTION =
 
 export const metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, href: page.href });
 
-const SUBSYSTEMS: Array<[string, string, string]> = [
-  ["Mission", "Objectives, coverage, revisit, lifetime, orbit and disposal", "Mission analysis, concept of operations, end-to-end mission simulation"],
-  ["Payload", "Imaging resolution, MTF, signal-to-noise, data volume", "Optical and radiometric tests, calibration, MTF measurement on the flight model"],
-  ["Electrical power (EPS)", "Power generation, energy balance, battery charge control, bus regulation", "Power budget analysis, solar-array illumination tests, battery and charge-regulation tests"],
-  ["ADCS / GNC (where applicable)", "Pointing accuracy, stability, slew rates, safe-mode behaviour", "Simulation and Monte Carlo analysis, sensor polarity and phasing tests, HIL closed-loop tests"],
-  ["Avionics / on-board computer", "Processing, memory, data handling, radiation tolerance, interfaces", "Functional and interface tests, radiation analysis, EMC tests, worst-case timing"],
-  ["Flight software", "Modes, fault detection and recovery, commanding, telemetry", "Requirements-based tests, SIL/HIL campaigns, regression, coverage, code analysis"],
-  ["Communications", "Link margins, frequency plan, data rates, ground compatibility", "Link-budget analysis, RF tests, end-to-end RF compatibility with ground stations"],
-  ["Thermal", "Unit temperature limits with margin in all modes", "Thermal analysis, thermal balance and thermal-vacuum tests, model correlation"],
-  ["Structures & mechanisms", "Strength, stiffness, natural frequencies, deployments", "Structural analysis, sine and random vibration, shock, deployment tests"],
-  ["Propulsion (where applicable)", "Thrust, impulse, leak tightness, contamination", "Proof and leak tests, hot-fire or flow tests, cleanliness verification"],
-  ["Cybersecurity", "Command authentication, secure boot, software provenance", "Threat model, secure-design review, penetration test and retest, SBOM per build"],
-  ["Ground segment (where applicable)", "Command and control, scheduling, data reception and security", "Ground system verification, end-to-end tests, operations rehearsals, security assessments"],
-];
 
 const ENV_TESTS: Array<[string, string]> = [
   ["Vibration (sine and random)", "Launch loads transmitted through the launch-vehicle interface. Sine surveys before and after reveal structural changes."],
@@ -92,6 +82,7 @@ export default function SatellitesSpacecraftPage() {
             </p>
           </>
         }
+        visual={<SpacecraftAssuranceExplorer />}
       />
 
       <ArticleSection id="why" n="01" title="Why satellites and spacecraft first">
@@ -116,7 +107,8 @@ export default function SatellitesSpacecraftPage() {
       </ArticleSection>
 
       <ArticleSection id="lifecycle" n="02" title="The lifecycle at a glance" wide>
-        <FlowChain
+        <EvidenceLine
+          orientation="scroll"
           label="Illustrative satellite lifecycle"
           steps={[
             "Concept",
@@ -131,9 +123,15 @@ export default function SatellitesSpacecraftPage() {
             "Operations",
           ]}
         />
-        <div className="mt-8">
-          <GateRail highlight="TRR" />
-        </div>
+        <p className="mt-10 text-sm text-muted">Illustrative review gates along the way (select one for its evidence)</p>
+        <EvidenceLine
+          className="mt-4"
+          orientation="scroll"
+          label="Illustrative review gates"
+          active={6}
+          emphasize="none"
+          steps={GATES.map((g) => ({ label: g.code, note: g.name, href: `${aero("/aeaip/review-gates")}#${g.code.toLowerCase()}` }))}
+        />
       </ArticleSection>
 
       <ArticleSection
@@ -143,29 +141,27 @@ export default function SatellitesSpacecraftPage() {
         lede="Representative requirements and evidence. Actual content depends on the mission, the design and the programme's standards."
         wide
       >
-        <div className="gx-scroll-x overflow-x-auto border border-line bg-surface">
-          <table className="w-full min-w-[46rem] border-collapse text-left text-sm">
-            <caption className="sr-only">Satellite subsystems with representative requirements and evidence</caption>
-            <thead>
-              <tr className="border-b border-line">
-                {["Subsystem", "Representative requirements", "Representative evidence"].map((h) => (
-                  <th key={h} scope="col" className="px-4 py-3 font-mono text-[0.6875rem] font-normal uppercase tracking-[0.08em] text-subtle">
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {SUBSYSTEMS.map(([s, r, e]) => (
-                <tr key={s} className="border-b border-line align-top last:border-b-0">
-                  <th scope="row" className="px-4 py-3 font-medium text-ink">{s}</th>
-                  <td className="px-4 py-3 text-ink-2">{r}</td>
-                  <td className="px-4 py-3 text-ink-2">{e}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <details className="group border-y border-line">
+          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 text-ink">
+            All {SPACECRAFT_AREAS.length} areas as a reference table
+            <span aria-hidden className="text-subtle transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <dl className="grid gap-x-10 pb-6 md:grid-cols-2">
+            {SPACECRAFT_AREAS.map((a) => (
+              <div key={a.key} className="border-t border-line py-4">
+                <dt className="font-medium text-ink">{a.name}</dt>
+                <dd className="mt-1 text-sm text-ink-2">
+                  <span className="text-muted">Requirements · </span>
+                  {a.requirements}
+                </dd>
+                <dd className="mt-1 text-sm text-ink-2">
+                  <span className="text-muted">Evidence · </span>
+                  {a.evidence.join(", ")}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </details>
       </ArticleSection>
 
       <ArticleSection id="environmental" n="04" title="Environmental testing">

@@ -68,6 +68,47 @@ const FAQ = [
   },
 ];
 
+const classical = METHOD_FAMILIES.find((f) => f.id === "classical")!;
+const others = METHOD_FAMILIES.filter((f) => f.id !== "classical");
+
+/** Top-level comparison: the two questions side by side. */
+function VVComparison() {
+  const cols = [
+    {
+      name: "Verification",
+      q: "Did we build the product right?",
+      against: "Specified requirements",
+      evidence: "Test, analysis, inspection, demonstration and review records, on a known configuration",
+    },
+    {
+      name: "Validation",
+      q: "Did we build the right product?",
+      against: "Stakeholder needs and intended use, in the intended environment",
+      evidence: "End-to-end tests, operational scenarios, mission simulations and operator evaluations",
+    },
+  ];
+  return (
+    <div className="grid gap-px overflow-hidden rounded-sm border border-line bg-line md:grid-cols-2">
+      {cols.map((c) => (
+        <div key={c.name} className="bg-bg p-6 sm:p-10">
+          <p className="text-sm font-medium text-accent">{c.name}</p>
+          <p className="heading mt-3 text-3xl text-ink sm:text-4xl">{c.q}</p>
+          <dl className="mt-8 space-y-4 text-[0.9375rem]">
+            <div>
+              <dt className="text-muted">Measured against</dt>
+              <dd className="mt-0.5 text-ink">{c.against}</dd>
+            </div>
+            <div>
+              <dt className="text-muted">Typical evidence</dt>
+              <dd className="mt-0.5 text-ink-2">{c.evidence}</dd>
+            </div>
+          </dl>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function VerificationValidationPage() {
   return (
     <>
@@ -97,6 +138,7 @@ export default function VerificationValidationPage() {
             </p>
           </>
         }
+        visual={<VVComparison />}
       />
 
       <ArticleSection id="definitions" n="01" title="Verification and validation are different questions">
@@ -171,16 +213,33 @@ export default function VerificationValidationPage() {
         lede="Six families of methods. Methods are selected according to the system, the requirement, the programme and the applicable assurance framework. Not every method applies to every programme."
         wide
       >
-        <div className="grid gap-4 lg:grid-cols-2">
-          {METHOD_FAMILIES.map((f) => (
-            <section key={f.id} id={`methods-${f.id}`} aria-labelledby={`methods-${f.id}-title`} className="card p-6 sm:p-7">
-              <h3 id={`methods-${f.id}-title`} className="text-xl font-medium tracking-tight text-ink">
-                {f.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{f.summary}</p>
-              <dl className="mt-5 divide-y divide-line border-t border-line">
+        {/* Classical methods stay visible; the other families expand on demand (content stays in the HTML). */}
+        <ul aria-label="Classical verification methods" className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+          {classical.methods.map((m) => (
+            <li key={m.name} className="border-t border-line-strong pt-4">
+              <h3 className="text-2xl font-medium tracking-tight text-ink">{m.name}</h3>
+              <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">{m.body}</p>
+              {m.example ? <p className="mt-2 text-sm text-muted">Example: {m.example}</p> : null}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-12 border-b border-line">
+          {others.map((f) => (
+            <details key={f.id} id={`methods-${f.id}`} className="group scroll-mt-28 border-t border-line">
+              <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-3">
+                <span>
+                  <span className="block text-lg font-medium text-ink">{f.title}</span>
+                  <span className="mt-0.5 block text-sm text-muted">
+                    {f.methods.length} methods · {f.summary}
+                  </span>
+                </span>
+                <span aria-hidden className="text-xl text-subtle transition-transform group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <dl className="grid gap-x-10 pb-6 md:grid-cols-2">
                 {f.methods.map((m) => (
-                  <div key={m.name} className="py-3">
+                  <div key={m.name} className="border-t border-line py-3">
                     <dt className="text-[0.9375rem] font-medium text-ink">{m.name}</dt>
                     <dd className="mt-0.5 text-sm leading-relaxed text-ink-2">
                       {m.body}
@@ -189,7 +248,7 @@ export default function VerificationValidationPage() {
                   </div>
                 ))}
               </dl>
-            </section>
+            </details>
           ))}
         </div>
         <p className="mt-6 max-w-3xl text-sm text-muted">

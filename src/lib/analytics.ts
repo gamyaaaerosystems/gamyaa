@@ -51,7 +51,11 @@ export type AnalyticsEventName =
   | "aeaip_partner_interest"
   | "aeaip_investor_interest"
   | "platform_card_click"
-  | "designer_profile_click";
+  | "designer_profile_click"
+  | "evidence_line_step"
+  | "evidence_graph_node_open"
+  | "review_gate_select"
+  | "contact_intent_select";
 
 export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>([
   "nav_click",
@@ -94,6 +98,10 @@ export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>
   "aeaip_investor_interest",
   "platform_card_click",
   "designer_profile_click",
+  "evidence_line_step",
+  "evidence_graph_node_open",
+  "review_gate_select",
+  "contact_intent_select",
 ]);
 
 /** Parameters that may ever be sent. Anything else is dropped. */
@@ -120,7 +128,11 @@ export type AnalyticsParam =
   | "trace_category"
   | "validity_step"
   | "reference_category"
-  | "platform";
+  | "platform"
+  | "line"
+  | "step"
+  | "node_type"
+  | "intent";
 
 export type AnalyticsParams = Partial<Record<AnalyticsParam, string>>;
 
@@ -148,6 +160,10 @@ const ALLOWED_PARAMS: ReadonlySet<string> = new Set<AnalyticsParam>([
   "validity_step",
   "reference_category",
   "platform",
+  "line",
+  "step",
+  "node_type",
+  "intent",
 ]);
 
 /* AEAIP enumerations. Values are generic categories, never IDs or free text. */
@@ -181,6 +197,7 @@ export type SourceLocation =
   | "learn_page"
   | "demo_page"
   | "strategy_page"
+  | "solution_page"
   | "contact_page"
   | "footer";
 export type TraceCategory =
@@ -256,6 +273,7 @@ const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
     "learn_page",
     "demo_page",
     "strategy_page",
+    "solution_page",
     "contact_page",
     "footer",
   ]),
@@ -284,7 +302,56 @@ const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
     "glossary",
   ]),
   platform: new Set(["aeaip", "daqip", "aircert"]),
+  line: new Set<LineKey>(["aeaip", "daqip", "aircert", "ptf", "cyber"]),
+  // Step position within a line, never its content.
+  step: new Set(Array.from({ length: 13 }, (_, i) => String(i + 1).padStart(2, "0"))),
+  node_type: new Set<GraphNodeType>([
+    "requirement",
+    "design",
+    "interface",
+    "hardware",
+    "software",
+    "procedure",
+    "result",
+    "ncr",
+    "corrective_action",
+    "retest",
+    "approval",
+    "configuration_change",
+  ]),
+  // Predefined contact intents only (mirrors INTERESTS in content/company.ts).
+  intent: new Set([
+    "aeaip",
+    "assurance-problem",
+    "spacecraft-assurance",
+    "strategic-partnership",
+    "investor",
+    "daqip",
+    "quality-problem",
+    "fai",
+    "aircert",
+    "services",
+    "partnership",
+    "ventures",
+    "careers",
+    "other",
+  ]),
 };
+
+export type LineKey = "aeaip" | "daqip" | "aircert" | "ptf" | "cyber";
+export type GraphNodeType =
+  | "requirement"
+  | "design"
+  | "interface"
+  | "hardware"
+  | "software"
+  | "procedure"
+  | "result"
+  | "ncr"
+  | "corrective_action"
+  | "retest"
+  | "approval"
+  | "configuration_change";
 
 export type DemoProduct = "daqip" | "aircert";
 export type ProblemTopic =

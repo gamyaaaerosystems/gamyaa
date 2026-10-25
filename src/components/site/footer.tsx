@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { LogoMark, LogoWord } from "@/components/brand/logo";
 import { SmartLink } from "@/components/ui/primitives";
-import { PARTNERS } from "@/content/company";
 import { aero, aeroLegalName, BRAND, CONTACT, DESIGNER, EXTERNAL, parent, PARENT_HOME } from "@/lib/site";
 
 function Col({ title, children }: { title: string; children: ReactNode }) {
@@ -134,27 +133,15 @@ export function AeroFooter() {
             <Item href={aero("/solutions/engineering-assurance")}>Engineering Assurance</Item>
           </Col>
 
-          <div className="space-y-10">
-            <Col title="Engineering Initiatives">
-              <Item href={EXTERNAL.aerospaceCybersecurity} ga={{ event: "aerospace_cybersecurity_click" }}>
-                Aerospace Cybersecurity
-              </Item>
-              <Item href={EXTERNAL.internships} ga={{ event: "internship_outbound_click" }}>
-                Internships
-              </Item>
-            </Col>
-            <Col title="Partners & Ecosystem">
-              {PARTNERS.map((p) => (
-                <Item
-                  key={p.href}
-                  href={p.href}
-                  ga={{ event: "partner_click", params: { partner_name: p.analyticsName, destination: p.href } }}
-                >
-                  {p.name}
-                </Item>
-              ))}
-            </Col>
-          </div>
+          <Col title="Engineering Initiatives">
+            <Item href={EXTERNAL.aerospaceCybersecurity} ga={{ event: "aerospace_cybersecurity_click" }}>
+              Aerospace Cybersecurity
+            </Item>
+            <Item href={EXTERNAL.spaceResearch}>Space Research</Item>
+            <Item href={EXTERNAL.internships} ga={{ event: "internship_outbound_click" }}>
+              Internships
+            </Item>
+          </Col>
 
           <Col title="Company">
             <Item href={aero("/about")}>About</Item>
@@ -183,7 +170,15 @@ export function AeroFooter() {
               ga={{ event: "designer_profile_click", params: { source_location: "footer" } }}
               className="inline-flex min-h-9 items-center text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
             >
-              {DESIGNER.name}, {DESIGNER.credential}
+              {DESIGNER.name}
+            </SmartLink>
+            ,{" "}
+            <SmartLink
+              href={DESIGNER.credentialHref}
+              label="ev_engineer"
+              className="inline-flex min-h-9 items-center text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
+            >
+              {DESIGNER.credential}
             </SmartLink>
           </p>
         </div>

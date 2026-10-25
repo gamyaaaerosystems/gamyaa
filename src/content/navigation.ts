@@ -14,7 +14,7 @@ export const AERO_NAV: NavItem[] = [
   { label: "Solutions", href: aero("/solutions") },
   { label: "Services", href: aero("/services") },
   { label: "Research", href: aero("/research") },
-  { label: "Partners & Ecosystem", href: aero("#partners") },
+  { label: "Partners & Ecosystem", href: aero("/about#partners") },
   { label: "Company", href: aero("/about") },
   { label: "Careers", href: aero("/careers"), match: [aero("/internships")] },
   { label: "Contact", href: aero("/contact") },

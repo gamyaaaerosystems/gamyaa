@@ -16,13 +16,14 @@ export function Section({
   labelledBy,
   className,
   children,
-  bordered = true,
+  bordered = false,
   section,
 }: {
   id?: string;
   labelledBy?: string;
   className?: string;
   children: ReactNode;
+  /** Hairline rule above the section. Off by default: sections are separated by space. */
   bordered?: boolean;
   /** Analytics source_section for links inside this section. */
   section?: string;
@@ -32,7 +33,7 @@ export function Section({
       id={id}
       aria-labelledby={labelledBy}
       data-ga-section={section}
-      className={cn("py-16 md:py-24", bordered && "border-t border-line", className)}
+      className={cn("scroll-mt-28 py-20 md:py-28", bordered && "border-t border-line", className)}
     >
       {children}
     </section>
@@ -58,17 +59,17 @@ export function SectionHeader({
 }) {
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
-      {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
+      {eyebrow ? <p className="kicker mb-5">{eyebrow}</p> : null}
       <Tag
         id={id}
         className={cn(
           "heading text-ink",
-          Tag === "h1" ? "text-4xl sm:text-5xl lg:text-6xl display" : "text-3xl sm:text-4xl",
+          Tag === "h1" ? "text-4xl sm:text-5xl lg:text-6xl display" : "text-[2rem] sm:text-[2.625rem]",
         )}
       >
         {title}
       </Tag>
-      {lede ? <div className="lede mt-5">{lede}</div> : null}
+      {lede ? <div className="lede mt-5 max-w-2xl">{lede}</div> : null}
     </div>
   );
 }

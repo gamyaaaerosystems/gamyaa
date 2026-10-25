@@ -14,17 +14,30 @@ export const metadata = pageMetadata({
 });
 
 function AeroGlyph() {
-  // Characteristic → evidence trace, drawn as a fine technical line.
+  // Ground station → ascent trajectory → satellite in orbit, above the Earth's limb.
+  // The trajectory carries evidence nodes: the Evidence Line motif, in flight.
   return (
     <svg viewBox="0 0 240 120" aria-hidden className="h-auto w-full text-line-strong" fill="none">
-      <circle cx="40" cy="60" r="22" stroke="currentColor" />
-      <circle cx="40" cy="60" r="9" stroke="currentColor" />
-      <path d="M8 60h64M40 28v64" stroke="currentColor" strokeDasharray="6 2 1 2" />
-      <path d="M62 60h40l14-22h38l14 22h44" stroke="var(--accent)" strokeWidth="1.2" className="anim-draw" style={{ ["--gx-len" as string]: 200 }} />
-      {[102, 116, 154, 168, 212].map((x, i) => (
-        <circle key={x} cx={x} cy={i === 1 || i === 2 ? 38 : 60} r="2.5" fill="var(--bg)" stroke="var(--accent)" />
+      {[[14, 38], [58, 18], [104, 8], [232, 52], [168, 62]].map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r="0.9" fill="currentColor" />
       ))}
-      <rect x="212" y="48" width="24" height="24" stroke="currentColor" />
+      {/* Earth's limb and atmosphere */}
+      <path d="M0 112Q120 84 240 112" stroke="currentColor" />
+      <path d="M0 104Q120 76 240 104" stroke="currentColor" strokeDasharray="1 4" />
+      {/* Ground station */}
+      <path d="M24 113l4-7 4 7M22.5 100.5q5.5 5 11 0" stroke="currentColor" />
+      {/* Ascent trajectory with evidence nodes */}
+      <path d="M28 106C70 42 140 20 181 30" stroke="var(--accent)" strokeWidth="1.2" className="anim-draw" style={{ ["--gx-len" as string]: 190 }} />
+      {[[28, 106], [80, 54], [138, 30]].map(([x, y]) => (
+        <circle key={`n-${x}`} cx={x} cy={y} r="2.5" fill="var(--bg)" stroke="var(--accent)" />
+      ))}
+      {/* Satellite: bus, solar arrays, antenna */}
+      <g stroke="var(--accent)">
+        <rect x="201" y="25" width="10" height="10" />
+        <rect x="181" y="26.5" width="16" height="7" />
+        <rect x="215" y="26.5" width="16" height="7" />
+        <path d="M197 30h4M211 30h4M186.3 26.5v7M191.7 26.5v7M220.3 26.5v7M225.7 26.5v7M206 25v-5M202 19.5q4 3 8 0" />
+      </g>
     </svg>
   );
 }

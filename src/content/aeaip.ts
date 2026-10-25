@@ -26,6 +26,8 @@ export const AEAIP = {
   statement: "From engineering requirement to verified evidence and readiness decision.",
   definition:
     "AEAIP is the Aerospace Engineering Assurance Intelligence Platform being researched and architected by Gamyaa AeroSystems. It is designed to connect engineering requirements, the exact configuration being evaluated, verification evidence and review decisions, so that teams can see what is verified, what is missing and what stands between them and the next readiness gate.",
+  oneLiner:
+    "AEAIP connects requirements, configuration, evidence and verification, so engineering teams can see what stands between them and the next readiness decision.",
   oneSentence:
     "AEAIP is Gamyaa AeroSystems' flagship Engineering Assurance Intelligence architecture for defence, aerospace and space systems, with satellites and spacecraft as its first engineering focus.",
 } as const;
@@ -296,7 +298,7 @@ export const LEARN_PAGES: LearnPage[] = [
   {
     slug: "engineering-evidence-graph",
     href: aero("/aeaip/engineering-evidence-graph"),
-    nav: "Evidence Graph",
+    nav: "Engineering Evidence Graph",
     title: "Engineering Evidence Graph™",
     summary: "Nodes, relationships, provenance and change impact: how evidence is connected to requirements.",
     category: "evidence_graph",
@@ -320,7 +322,7 @@ export const LEARN_PAGES: LearnPage[] = [
   {
     slug: "configuration-assurance",
     href: aero("/aeaip/configuration-assurance"),
-    nav: "Configuration",
+    nav: "Configuration Assurance",
     title: "Configuration-aware evidence validity",
     summary: "Why a verified requirement can stop being verified when the configuration changes.",
     category: "configuration",
@@ -328,7 +330,7 @@ export const LEARN_PAGES: LearnPage[] = [
   {
     slug: "cybersecurity-assurance",
     href: aero("/aeaip/cybersecurity-assurance"),
-    nav: "Cybersecurity",
+    nav: "Cybersecurity Assurance",
     title: "Cybersecurity as engineering assurance",
     summary: "Security requirements, threats, findings, remediation and retest in one evidence chain.",
     category: "cybersecurity",
@@ -344,7 +346,7 @@ export const LEARN_PAGES: LearnPage[] = [
   {
     slug: "operational-evidence",
     href: aero("/aeaip/operational-evidence"),
-    nav: "Predicted → Tested → Flown",
+    nav: "Operational Evidence",
     title: "Predicted → Tested → Flown: operational evidence",
     summary: "Linking simulation, ground qualification and flight telemetry to the same requirement.",
     category: "operational_evidence",
@@ -382,19 +384,18 @@ export const learnPage = (slug: string) => LEARN_PAGES.find((p) => p.slug === sl
 export const TRUST_PRINCIPLES: Array<{ title: string; body: string }> = [
   { title: "Evidence before assertion", body: "Every readiness claim points to objective evidence." },
   { title: "Configuration matters", body: "Evidence counts only for the configuration it proves." },
-  { title: "Human authority remains accountable", body: "Named people review, close and approve." },
-  { title: "AI assists, never silently approves", body: "Every AI suggestion is visible and reviewable." },
-  { title: "Traceability must be explainable", body: "Any status can be followed back to its source." },
-  { title: "Security is part of assurance", body: "Security findings close like any other finding." },
+  { title: "Human authority", body: "AI assists. Engineers verify. Authorized authorities approve." },
+  { title: "Explainable assurance", body: "Any status can be followed back to its source." },
+  { title: "Security by design", body: "Security findings close like any other finding." },
 ];
 
-export const AUDIENCES: Array<{ title: string; body: string }> = [
-  { title: "Chief Engineers", body: "One view of what is proven, what is open and what blocks the next gate." },
-  { title: "Systems Engineering & V&V", body: "Requirements, verification methods and closure evidence that stay connected." },
-  { title: "Mission / Product Assurance", body: "Anomalies, NCRs, waivers and retest status traced to the requirement they affect." },
-  { title: "Quality & Manufacturing Assurance", body: "FAI, inspection and product-conformity evidence through DAQIP™." },
-  { title: "Certification / Airworthiness", body: "Compliance planning and certification evidence through AirCert AI™." },
-  { title: "Programme Leadership", body: "Readiness, conditions and risk in terms a review board can act on." },
+/** Who AEAIP is for: one decision-oriented question per role. */
+export const AUDIENCES: Array<{ title: string; question: string }> = [
+  { title: "Chief Engineer", question: "Can I defend the readiness decision?" },
+  { title: "Systems & V&V", question: "What remains unverified?" },
+  { title: "Mission / Product Assurance", question: "Which evidence is missing or stale?" },
+  { title: "Quality / Certification", question: "What remains unresolved before approval?" },
+  { title: "Programme Leadership", question: "What prevents the next gate?" },
 ];
 
 /* ------------------------------------------------------- Roadmap */
@@ -499,6 +500,70 @@ export const PTF_CHAIN = [
   "Flight Telemetry",
   "Actual Operational Performance",
 ] as const;
+
+/* ------------------------------------------------------ Evidence Lines */
+
+export type LineStep = { label: string; note?: string };
+
+/**
+ * The "Evidence Line" motif: one traceability chain per context, drawn with the
+ * same component everywhere (see components/system/evidence-line).
+ */
+export const EVIDENCE_LINES = {
+  aeaip: [
+    { label: "Requirement", note: "What must be proven, at which revision" },
+    { label: "Configuration", note: "The exact hardware, software and test article" },
+    { label: "Evidence", note: "Test, analysis, inspection or review records" },
+    { label: "Verification", note: "Assessed, issues closed, approved by a person" },
+    { label: "Readiness", note: "What still stands before the next gate" },
+  ],
+  daqip: [
+    { label: "Drawing" },
+    { label: "Characteristic" },
+    { label: "Inspection Method" },
+    { label: "Measurement" },
+    { label: "Evidence" },
+    { label: "Approval" },
+  ],
+  aircert: [
+    { label: "Requirement" },
+    { label: "Certification Basis" },
+    { label: "Means of Compliance" },
+    { label: "Verification" },
+    { label: "Evidence" },
+    { label: "Authority Review" },
+  ],
+  ptf: [
+    { label: "Predicted", note: "Simulation and digital-twin evidence" },
+    { label: "Tested", note: "Ground qualification and acceptance" },
+    { label: "Flown", note: "Flight telemetry and operations" },
+  ],
+  cyber: [
+    { label: "Security Requirement" },
+    { label: "Threat" },
+    { label: "Control" },
+    { label: "Configuration" },
+    { label: "Security Test" },
+    { label: "Finding" },
+    { label: "Remediation" },
+    { label: "Retest" },
+    { label: "Closure" },
+  ],
+} satisfies Record<string, LineStep[]>;
+
+/** One-line explanations shown when a stage of the core model is selected. */
+export const CORE_MODEL_DETAIL: Record<string, string> = {
+  Requirement:
+    "Every assurance question starts with a requirement: its source, rationale, revision and the subsystem it is allocated to.",
+  Configuration:
+    "Evidence proves a requirement only for the configuration it was produced on: requirement revision, hardware, software, test article, procedure and tools.",
+  Evidence:
+    "Test reports, analyses, inspections, reviews and telemetry, each with its provenance and the configuration it describes.",
+  Verification:
+    "The evidence is assessed against criteria, anomalies and NCRs are closed, and an authorised person approves the closure.",
+  Readiness:
+    "What remains open before the next gate, shown as conditions and blockers for the board that makes the decision.",
+};
 
 /** Illustrative change-impact result (brief §11). Concept only. */
 export const CHANGE_IMPACT_EXAMPLE = [

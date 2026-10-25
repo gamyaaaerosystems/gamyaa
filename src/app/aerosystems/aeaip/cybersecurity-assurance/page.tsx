@@ -10,7 +10,8 @@ import {
   ReviewStages,
 } from "@/components/aeaip/learn";
 import { FlowChain } from "@/components/diagrams/flow";
-import { CYBER_CHAIN, learnPage } from "@/content/aeaip";
+import { CYBER_CHAIN, EVIDENCE_LINES, learnPage } from "@/content/aeaip";
+import { EvidenceLine } from "@/components/system/evidence-line";
 import { ISSUES } from "@/content/aeaip-demo";
 import { refs } from "@/content/references";
 import { pageMetadata } from "@/lib/seo";
@@ -80,6 +81,7 @@ export default function CybersecurityAssurancePage() {
             </p>
           </>
         }
+        visual={<EvidenceLine steps={EVIDENCE_LINES.cyber} label="Security assurance Evidence Line" size="lg" />}
       />
 
       <ArticleSection id="why" n="01" title="Why security belongs in the assurance chain">
@@ -101,25 +103,23 @@ export default function CybersecurityAssurancePage() {
       </ArticleSection>
 
       <ArticleSection id="chain" n="02" title="The security assurance chain" wide>
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <FlowChain label="Cybersecurity assurance chain" orientation="vertical" numbered steps={CYBER_CHAIN} />
-          </div>
-          <dl className="divide-y divide-line border-y border-line lg:col-span-7">
-            {CYBER_CHAIN.map((s) => (
-              <div key={s} className="grid gap-1 py-3 sm:grid-cols-[12rem_1fr] sm:gap-4">
-                <dt className="text-sm font-medium text-ink">{s}</dt>
-                <dd className="text-sm text-ink-2">{CHAIN_NOTES[s]}</dd>
+        <dl className="grid gap-x-12 md:grid-cols-2">
+          {CYBER_CHAIN.map((s, i) => (
+            <div key={s} className="grid grid-cols-[2rem_1fr] border-t border-line py-3.5">
+              <span className="font-mono text-xs text-subtle tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <dt className="text-[0.9375rem] font-medium text-ink">{s}</dt>
+                <dd className="mt-0.5 text-sm leading-relaxed text-ink-2">{CHAIN_NOTES[s]}</dd>
               </div>
-            ))}
-          </dl>
-        </div>
+            </div>
+          ))}
+        </dl>
       </ArticleSection>
 
       <ArticleSection id="areas" n="03" title="Where security assurance applies" wide>
-        <ul className="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
           {AREAS.map(([t, b]) => (
-            <li key={t} className="bg-surface p-5">
+            <li key={t} className="border-t border-line py-5">
               <h3 className="text-[0.9375rem] font-medium text-ink">{t}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{b}</p>
             </li>

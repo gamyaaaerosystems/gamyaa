@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { VALIDITY_STATES, ValidityFigure } from "@/components/aeaip/diagrams";
+import { VALIDITY_STATES } from "@/components/aeaip/diagrams";
+import { ValiditySequence } from "@/components/system/validity-sequence";
 import {
   AeaipRelation,
   ArticleSection,
@@ -136,6 +137,17 @@ export default function ConfigurationAssurancePage() {
             </p>
           </>
         }
+        visual={
+          <div>
+            <p className="max-w-3xl text-2xl leading-snug tracking-tight text-ink sm:text-3xl">
+              SAT-EPS-014 was verified in June. Then the firmware, the PCB revision, the interface and the test procedure
+              changed. <span className="text-accent">Is the old evidence still valid?</span>
+            </p>
+            <div className="mt-10">
+              <ValiditySequence headingLevel="h2" />
+            </div>
+          </div>
+        }
       />
 
       <ArticleSection id="problem" n="01" title="“Verified ✓” is a statement about the past">
@@ -161,9 +173,9 @@ export default function ConfigurationAssurancePage() {
         lede="Each of these is part of the configuration a result was produced on. A change to any of them is a reason to ask whether the evidence still applies."
         wide
       >
-        <ul className="grid gap-px overflow-hidden border border-line bg-line md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-x-10 md:grid-cols-2 lg:grid-cols-3">
           {FACTORS.map((f, i) => (
-            <li key={f.title} className="flex flex-col bg-surface p-6">
+            <li key={f.title} className="flex flex-col border-t border-line py-6">
               <p className="font-mono text-xs text-subtle">{String(i + 1).padStart(2, "0")}</p>
               <h3 className="mt-2 text-lg font-medium text-ink">{f.title}</h3>
               <dl className="mt-3 space-y-2.5 text-sm leading-relaxed">
@@ -223,14 +235,13 @@ export default function ConfigurationAssurancePage() {
         </p>
       </ArticleSection>
 
-      <ArticleSection id="example" n="04" title="Worked example: SAT-EPS-014" wide>
-        <ValidityFigure />
-        <p className="mt-4 max-w-3xl text-[0.9375rem] text-ink-2">
-          Step through the same scenario interactively in the{" "}
-          <Link href={`${aero("/aeaip/demo")}#validity`} className="text-accent underline">
-            evidence validity demonstration
-          </Link>
-          .
+      <ArticleSection id="example" n="04" title="Worked example: SAT-EPS-014">
+        <p>
+          The story at the top of this page is the worked example: a battery charge-termination requirement verified on
+          firmware 2.3.0 and board Rev B, then reopened when firmware 2.4.0, board Rev C, interface Rev D, procedure Rev B
+          and a tightened requirement arrived. The same scenario runs inside the{" "}
+          <Link href={`${aero("/aeaip/demo")}#validity`}>Interactive Assurance Demo</Link>, next to the TRR readiness it
+          affects.
         </p>
       </ArticleSection>
 

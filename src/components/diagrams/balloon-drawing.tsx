@@ -153,7 +153,7 @@ export function BalloonDrawing({ initial = 17 }: { initial?: number }) {
                 aria-hidden="true"
                 onClick={() => setSelected(c.id)}
                 className={cn(
-                  "absolute grid size-[22px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border font-mono text-[10px] leading-none transition-colors sm:size-[26px] sm:text-[11px]",
+                  "absolute grid size-[24px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border font-mono text-[11px] leading-none transition-colors sm:size-[26px] sm:text-[12px]",
                   "before:absolute before:-inset-2 before:content-['']",
                   c.id === selected
                     ? "border-[var(--sheet-dim)] bg-[var(--sheet-dim)] text-[var(--sheet)]"

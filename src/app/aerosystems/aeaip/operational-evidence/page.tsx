@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { PtfFigure } from "@/components/aeaip/diagrams";
+import { MobileStepFlow } from "@/components/system/mobile-step-flow";
+import { PtfVisual } from "@/components/system/ptf-visual";
 import {
   AeaipRelation,
   ArticleSection,
@@ -10,8 +11,7 @@ import {
   RelatedTopics,
   ReviewStages,
 } from "@/components/aeaip/learn";
-import { FlowChain } from "@/components/diagrams/flow";
-import { learnPage, PTF_CHAIN } from "@/content/aeaip";
+import { learnPage } from "@/content/aeaip";
 import { refs } from "@/content/references";
 import { pageMetadata } from "@/lib/seo";
 
@@ -71,33 +71,33 @@ export default function OperationalEvidencePage() {
             </p>
           </>
         }
+        visual={<PtfVisual />}
       />
 
       <ArticleSection id="kinds" n="01" title="Three kinds of evidence for one requirement" wide>
-        <ul className="grid gap-px overflow-hidden border border-line bg-line md:grid-cols-3">
-          {KINDS.map((k) => (
-            <li key={k.title} className="bg-surface p-6">
-              <h3 className="font-mono text-sm uppercase tracking-[0.1em] text-accent">{k.title}</h3>
-              <p className="mt-2 text-[0.9375rem] font-medium text-ink">{k.source}</p>
-              <p className="mt-4 text-sm leading-relaxed text-ink-2">
-                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">Strength · </span>
-                {k.strength}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-ink-2">
-                <span className="font-mono text-[0.6875rem] uppercase tracking-[0.08em] text-subtle">Limit · </span>
-                {k.limit}
-              </p>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-8 max-w-3xl">
-          <FlowChain label="Predicted → Tested → Flown chain" steps={PTF_CHAIN} />
-        </div>
+        <MobileStepFlow
+          label="Three kinds of evidence"
+          steps={KINDS.map((k) => ({
+            title: k.title,
+            kicker: k.source,
+            content: (
+              <>
+                <p>
+                  <span className="text-muted">Strength · </span>
+                  {k.strength}
+                </p>
+                <p className="mt-2">
+                  <span className="text-muted">Limit · </span>
+                  {k.limit}
+                </p>
+              </>
+            ),
+          }))}
+        />
       </ArticleSection>
 
-      <ArticleSection id="example" n="02" title="Worked example: a battery temperature requirement" wide>
-        <PtfFigure />
-        <div className="prose-body mt-8 max-w-3xl">
+      <ArticleSection id="example" n="02" title="Reading the example above" wide>
+        <div className="prose-body max-w-3xl">
           <p>
             The thermal model predicted a hot-case battery temperature of 27.5 °C against a 30 °C limit. Qualification
             thermal-vacuum testing measured 28.9 °C, so the model was correlated: it had been running about 1.4 °C cool.
