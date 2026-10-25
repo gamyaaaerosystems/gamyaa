@@ -17,13 +17,9 @@ import { cn } from "@/lib/cn";
 
 export const AEAIP_STEPS = EVIDENCE_LINES.aeaip.map((s) => ({ ...s, detail: CORE_MODEL_DETAIL[s.label] }));
 
-/** "Aerospace Engineering Assurance Intelligence Platform" with the category emphasised. */
+/** "Aerospace Engineering Assurance Intelligence Platform" in one colour and weight (inherits from its parent). */
 export function AeaipFullName({ className }: { className?: string }) {
-  return (
-    <span className={className}>
-      Aerospace <strong className="font-semibold text-accent">Engineering Assurance</strong> Intelligence Platform
-    </span>
-  );
+  return <span className={className}>{AEAIP.expanded}</span>;
 }
 
 export function PromiseLines({ className }: { className?: string }) {

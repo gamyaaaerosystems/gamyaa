@@ -55,7 +55,8 @@ export type AnalyticsEventName =
   | "evidence_line_step"
   | "evidence_graph_node_open"
   | "review_gate_select"
-  | "contact_intent_select";
+  | "contact_intent_select"
+  | "division_card_click";
 
 export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>([
   "nav_click",
@@ -102,6 +103,7 @@ export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>
   "evidence_graph_node_open",
   "review_gate_select",
   "contact_intent_select",
+  "division_card_click",
 ]);
 
 /** Parameters that may ever be sent. Anything else is dropped. */
@@ -132,7 +134,8 @@ export type AnalyticsParam =
   | "line"
   | "step"
   | "node_type"
-  | "intent";
+  | "intent"
+  | "division";
 
 export type AnalyticsParams = Partial<Record<AnalyticsParam, string>>;
 
@@ -164,6 +167,7 @@ const ALLOWED_PARAMS: ReadonlySet<string> = new Set<AnalyticsParam>([
   "step",
   "node_type",
   "intent",
+  "division",
 ]);
 
 /* AEAIP enumerations. Values are generic categories, never IDs or free text. */
@@ -231,6 +235,8 @@ const ENUM_PARAMS: Partial<Record<AnalyticsParam, ReadonlySet<string>>> = {
   partner_name: new Set(["EV Society", "EV.ENGINEER", "iTelematics", "APEX Rocket Systems"]),
   person_name: new Set(["Purushothama Padmanabha", "Manjunatha G", "Sudarshana Karkala"]),
   form_name: new Set(["aerosystems_contact", "gamyaa_contact"]),
+  // Homepage division cards (division_card_click).
+  division: new Set(["aerosystems", "ventures", "uflight"]),
   error_type: new Set([
     "validation",
     "rate_limited",

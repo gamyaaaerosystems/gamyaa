@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { LogoMark, LogoWord } from "@/components/brand/logo";
+import { ArrowUpRight } from "@/components/ui/icons";
 import { SmartLink } from "@/components/ui/primitives";
 import { aero, aeroLegalName, BRAND, CONTACT, DESIGNER, EXTERNAL, parent, PARENT_HOME } from "@/lib/site";
 
@@ -13,15 +14,27 @@ function Col({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-function Item({ href, children, ga }: { href: string; children: ReactNode; ga?: Parameters<typeof SmartLink>[0]["ga"] }) {
+function Item({
+  href,
+  children,
+  ga,
+  external,
+}: {
+  href: string;
+  children: ReactNode;
+  ga?: Parameters<typeof SmartLink>[0]["ga"];
+  /** Show ↗ for sites outside GAMYAA (they open in a new tab). */
+  external?: boolean;
+}) {
   return (
     <li>
       <SmartLink
         href={href}
         ga={ga}
-        className="inline-flex min-h-9 items-center text-ink-2 transition-colors hover:text-ink"
+        className="inline-flex min-h-9 items-center gap-1.5 text-ink-2 transition-colors hover:text-ink"
       >
         {children}
+        {external ? <ArrowUpRight size={12} className="text-subtle" /> : null}
       </SmartLink>
     </li>
   );
@@ -47,17 +60,23 @@ export function ParentFooter() {
           <Item href={parent("/ventures")} ga={{ event: "view_ventures" }}>
             {BRAND.ventures}
           </Item>
+          {/* Mirrors homepage Division 03; external site, tracked as an outbound click (domain only). */}
+          <Item href={EXTERNAL.uflight} external>
+            UFlight™
+          </Item>
         </Col>
         <Col title="Ecosystem Initiative">
           <Item
             href={EXTERNAL.evSociety}
             ga={{ event: "partner_click", params: { partner_name: "EV Society", destination: EXTERNAL.evSociety } }}
+            external
           >
             EV Society™
           </Item>
           <Item
             href={EXTERNAL.evEngineer}
             ga={{ event: "partner_click", params: { partner_name: "EV.ENGINEER", destination: EXTERNAL.evEngineer } }}
+            external
           >
             EV.ENGINEER™
           </Item>

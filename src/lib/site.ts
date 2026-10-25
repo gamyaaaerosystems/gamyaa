@@ -98,6 +98,8 @@ export const EXTERNAL = {
     "https://aerospace.gamyaa.in/internships/aerospace-quality-intelligence-platform",
   designerProfile: "https://aerospace.gamyaa.in/about/sudarshana-karkala",
   evEngineer: "https://ev.engineer",
+  uflight: "https://www.uflight.in/",
+  uflightCybersecurity: "https://cybersecurity.uflight.in/",
 } as const;
 
 /** Design credit shown in the AeroSystems footer and on AEAIP pages. */
