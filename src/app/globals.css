@@ -431,6 +431,29 @@
     border-right: 1px solid;
   }
 
+  /* Digital Twin banner: 2px accent frame with larger accent ticks on two corners. */
+  .twin-frame {
+    border: 2px solid color-mix(in srgb, var(--accent-2) 45%, transparent);
+  }
+  .twin-frame.ticks::before,
+  .twin-frame.ticks::after {
+    width: 16px;
+    height: 16px;
+    border-color: var(--accent-2);
+  }
+  .twin-frame.ticks::before {
+    top: -2px;
+    left: -2px;
+    border-top-width: 2px;
+    border-left-width: 2px;
+  }
+  .twin-frame.ticks::after {
+    bottom: -2px;
+    right: -2px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+
   .logo-mark {
     fill: var(--logo-mark);
   }
@@ -572,6 +595,19 @@
   }
 }
 
+/* Angle of the light running around the Digital Twin banner frame. */
+@property --gx-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gx-orbit {
+  to {
+    --gx-angle: 360deg;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   /* Evidence trace drawing top to bottom: explains direction, runs once. */
   .anim-trace {
@@ -596,6 +632,22 @@
     stroke-dasharray: 4 8;
     animation: gx-pulse-path 1.2s linear infinite;
   }
+  /* Digital Twin banner: a light runs around the frame only; the image never moves. */
+  .twin-frame {
+    border-color: transparent;
+    background:
+      linear-gradient(var(--bg), var(--bg)) padding-box,
+      conic-gradient(
+          from var(--gx-angle),
+          color-mix(in srgb, var(--accent-2) 35%, transparent) 0deg,
+          var(--accent-2) 40deg,
+          color-mix(in srgb, var(--accent-2) 35%, transparent) 80deg 180deg,
+          var(--accent-2) 220deg,
+          color-mix(in srgb, var(--accent-2) 35%, transparent) 260deg
+        )
+        border-box;
+    animation: gx-orbit 6s linear infinite;
+  }
 
   /* Scroll-linked reveal, progressive enhancement only (no JS). */
   @supports (animation-timeline: view()) {
@@ -616,7 +668,6 @@
     transition-duration: 0.001ms !important;
   }
 }
-
 
 /* Balloon drawing: highlight geometry of the selected characteristic */
 .gx-drawing .gx-hl {

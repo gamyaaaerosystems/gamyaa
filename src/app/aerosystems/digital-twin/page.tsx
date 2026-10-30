@@ -98,15 +98,17 @@ export default function DigitalTwinPage() {
 
       <Section section="digital_twin_banner" className="pt-0 md:pt-0">
         <Container>
-          <figure className="overflow-hidden rounded-sm border border-line">
-            <Image
-              src={banner}
-              alt="Digital Twin Design, physics based: a satellite drawn with engineering dimensions above the Earth, with the GAMYAA Aero Systems mark. Space Systems & Digital Twin Research for Aerospace, Defence and Space."
-              sizes="(min-width: 1280px) 1232px, 100vw"
-              loading="eager"
-              fetchPriority="high"
-              className="h-auto w-full"
-            />
+          <figure className="twin-frame ticks rounded-sm p-1.5 sm:p-2">
+            <div className="overflow-hidden rounded-[1px] border border-line">
+              <Image
+                src={banner}
+                alt="Digital Twin Design, physics based: a satellite drawn with engineering dimensions above the Earth, with the GAMYAA Aero Systems mark. Space Systems & Digital Twin Research for Aerospace, Defence and Space."
+                sizes="(min-width: 1280px) 1216px, 100vw"
+                loading="eager"
+                fetchPriority="high"
+                className="block h-auto w-full"
+              />
+            </div>
           </figure>
         </Container>
       </Section>
