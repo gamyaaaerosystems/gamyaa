@@ -192,16 +192,6 @@ export default function DigitalTwinPage() {
                 >
                   iTelematics.com
                 </SmartLink>
-                <span aria-hidden className="hidden sm:inline">
-                  &amp;
-                </span>
-                <SmartLink
-                  href={EXTERNAL.ishavasyam}
-                  label="ishavasyam"
-                  className="text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
-                >
-                  Ishavasyam.org
-                </SmartLink>
               </p>
             </div>
           </figure>
