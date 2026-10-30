@@ -1,7 +1,17 @@
 import Image from "next/image";
 import { CtaBand, internalContact, PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { ArrowLink, BulletList, ButtonLink, Container, Notice, Section, SectionHeader, StatusBadge } from "@/components/ui/primitives";
+import {
+  ArrowLink,
+  BulletList,
+  ButtonLink,
+  Container,
+  Notice,
+  Section,
+  SectionHeader,
+  SmartLink,
+  StatusBadge,
+} from "@/components/ui/primitives";
 import { pageMetadata } from "@/lib/seo";
 import { aero, EXTERNAL } from "@/lib/site";
 import banner from "./digital-twin-design.webp";
@@ -108,7 +118,7 @@ export default function DigitalTwinPage() {
       <Section labelledBy="demos-title" section="digital_twin_demos" className="pt-0 md:pt-0">
         <Container>
           <figure className="twin-frame ticks rounded-sm p-1.5 sm:p-2">
-            <div className="overflow-hidden rounded-[1px] border border-line">
+            <div className="relative overflow-hidden rounded-[1px] border border-line">
               <Image
                 src={banner}
                 alt="Digital Twin Design, physics based: a satellite drawn with engineering dimensions above the Earth, with the GAMYAA Aero Systems mark. Space Systems & Digital Twin Research for Aerospace, Defence and Space."
@@ -117,6 +127,27 @@ export default function DigitalTwinPage() {
                 fetchPriority="high"
                 className="block h-auto w-full"
               />
+              {/* Credits sit on the image's bottom-right corner: stacked on phones so they clear the banner text. */}
+              <p className="absolute bottom-1.5 right-1.5 flex flex-col items-end gap-0.5 rounded-sm bg-black/65 px-2 py-1.5 text-right text-[0.6875rem] leading-tight text-white/80 backdrop-blur-sm sm:bottom-3 sm:right-3 sm:flex-row sm:items-center sm:gap-2 sm:px-3 sm:text-xs">
+                <span className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-white/60">Credits</span>
+                <SmartLink
+                  href={EXTERNAL.iTelematics}
+                  label="itelematics"
+                  className="text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
+                >
+                  iTelematics.com
+                </SmartLink>
+                <span aria-hidden className="hidden sm:inline">
+                  &amp;
+                </span>
+                <SmartLink
+                  href={EXTERNAL.ishavasyam}
+                  label="ishavasyam"
+                  className="text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
+                >
+                  Ishavasyam.org
+                </SmartLink>
+              </p>
             </div>
           </figure>
 
