@@ -39,7 +39,7 @@ export default function PrivacyPage() {
 
             <h2>Who we are</h2>
             <p>
-              This website is operated by GAMYAA and Gamyaa AeroSystems, Bangalore, India. For privacy questions,
+              This website is operated by GAMYAA and GAMYAA Aero Systems Private Limited, Bangalore, India. For privacy questions,
               email <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
             </p>
 

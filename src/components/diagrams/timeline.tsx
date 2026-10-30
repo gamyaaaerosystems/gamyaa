@@ -38,7 +38,7 @@ export function Timeline() {
       </ol>
       <p className="mt-8 max-w-3xl text-sm leading-relaxed text-muted">
         &ldquo;Next&rdquo; and &ldquo;Future&rdquo; are intentions, not commitments, and will change as we learn
-        from customers and partners. Gamyaa AeroSystems Private Limited is planned and not yet incorporated.
+        from customers and partners.
       </p>
     </div>
   );

@@ -127,6 +127,7 @@ export const INTERESTS = [
   { value: "quality-problem", label: "Discuss an aerospace quality problem" },
   { value: "fai", label: "First Article Inspection / AS9102" },
   { value: "aircert", label: "AirCert AI™ — register interest" },
+  { value: "digital-twin", label: "Digital twin" },
   { value: "services", label: "Engineering & consulting services" },
   { value: "partnership", label: "Inspection / metrology partnership" },
   { value: "ventures", label: "Gamyaa Ventures — partnership" },

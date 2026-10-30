@@ -196,8 +196,7 @@ export default function AboutPage() {
               <a href={PARENT_HOME} className="text-accent underline">
                 GAMYAA
               </a>{" "}
-              and is based in Bangalore, India. Registration as Gamyaa AeroSystems Private Limited is planned and not
-              yet complete.
+              and is based in Bangalore, India. It is incorporated as GAMYAA Aero Systems Private Limited.
             </p>
             <div className="mt-6 flex flex-col gap-1">
               <ArrowLink href={aero("/careers")}>Careers</ArrowLink>

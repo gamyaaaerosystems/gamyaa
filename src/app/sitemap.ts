@@ -7,6 +7,7 @@ import { absoluteUrl, aero, parent } from "@/lib/site";
 // make lastmod truthful per page rather than "now" on every build.
 const V1 = "2026-10-19";
 const AEAIP_RELEASE = "2026-10-24";
+const DIGITAL_TWIN_RELEASE = "2026-10-30";
 
 type Entry = [href: string, priority: number, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"], lastModified: string];
 
@@ -34,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ),
     [aero("/services"), 0.6, "monthly", AEAIP_RELEASE],
     [aero("/research"), 0.6, "monthly", AEAIP_RELEASE],
+    [aero("/digital-twin"), 0.7, "monthly", DIGITAL_TWIN_RELEASE],
     [aero("/about"), 0.6, "monthly", AEAIP_RELEASE],
     [aero("/careers"), 0.5, "monthly", V1],
     [aero("/internships"), 0.5, "monthly", V1],

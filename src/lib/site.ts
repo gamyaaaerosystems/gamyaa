@@ -53,11 +53,11 @@ export const BRAND = {
   aero: "Gamyaa AeroSystems",
   ventures: "Gamyaa Ventures",
   /**
-   * Flip to true ONLY after incorporation of Gamyaa AeroSystems Private Limited
-   * is formally confirmed. Controls legal name in footer and structured data.
+   * Incorporation of GAMYAA Aero Systems Private Limited is confirmed (October 2026).
+   * Controls legal name in footer and structured data.
    */
-  aeroIncorporated: false,
-  aeroLegalNameAfterIncorporation: "Gamyaa AeroSystems Private Limited",
+  aeroIncorporated: true,
+  aeroLegalNameAfterIncorporation: "GAMYAA Aero Systems Private Limited",
   copyrightYear: 2026,
 } as const;
 

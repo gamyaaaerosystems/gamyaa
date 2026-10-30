@@ -37,8 +37,7 @@ export default function TermsPage() {
             <h2>1. About this website</h2>
             <p>
               gamyaa.in provides general information about GAMYAA, Gamyaa AeroSystems and Gamyaa Ventures. Gamyaa
-              AeroSystems Private Limited is planned and not yet incorporated; until it is, references to Gamyaa
-              AeroSystems describe the business and not a registered company.
+              AeroSystems is operated by GAMYAA Aero Systems Private Limited.
             </p>
 
             <h2>2. Information only</h2>
