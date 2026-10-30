@@ -182,15 +182,17 @@ export default function DigitalTwinPage() {
                 fetchPriority="high"
                 className="block h-auto w-full"
               />
-              {/* Credits sit on the image's bottom-right corner: stacked on phones so they clear the banner text. */}
+              {/* "Powered by" sits on the image's bottom-right corner: stacked on phones so it clears the banner text. */}
               <p className="absolute bottom-1.5 right-1.5 flex flex-col items-end gap-0.5 rounded-sm bg-black/65 px-2 py-1.5 text-right text-[0.6875rem] leading-tight text-white/80 backdrop-blur-sm sm:bottom-3 sm:right-3 sm:flex-row sm:items-center sm:gap-2 sm:px-3 sm:text-xs">
-                <span className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-white/60">Credits</span>
+                <span className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-white/60">Powered by</span>
                 <SmartLink
                   href={EXTERNAL.iTelematics}
                   label="itelematics"
                   className="text-white underline decoration-white/40 underline-offset-2 hover:decoration-white"
                 >
-                  iTelematics.com
+                  {/* Full name from md up; below that it would run into the banner's own text. */}
+                  <span className="md:hidden">iTelematics</span>
+                  <span className="hidden md:inline">iTelematics Software Private Limited</span>
                 </SmartLink>
               </p>
             </div>
