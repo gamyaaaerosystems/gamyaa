@@ -1,0 +1,29 @@
+# GAMYAA
+
+> GAMYAA builds and supports engineering technologies across aerospace, defence, space, aircraft health monitoring, manufacturing intelligence and deep tech. Its aerospace business, Gamyaa AeroSystems (GAMYAA Aero Systems Private Limited, Bangalore, India), builds Engineering Assurance Intelligence and digital twins for defence, aerospace and space programmes.
+
+Every capability on the site carries a maturity status (Research, Research & Architecture, In Development, Planned). Items marked research or planned are not released products.
+
+## Gamyaa AeroSystems
+
+- [Gamyaa AeroSystems](https://gamyaa.in/aerosystems): Engineering Assurance Intelligence for defence, aerospace and space: AEAIP™, with DAQIP™ for manufacturing and AirCert AI™ for certification assurance.
+- [Digital Twin](https://gamyaa.in/aerosystems/digital-twin): Physics-based, mathematical-model and data-driven digital twins for aircraft, defence platforms, satellites and launch vehicles, each traceable to the requirements, configuration and test evidence behind its predictions. Status: Research.
+- [AEAIP™](https://gamyaa.in/aerosystems/aeaip): Aerospace Engineering Assurance Intelligence Platform connecting requirements, configuration, evidence, verification and readiness, starting with satellites and spacecraft. Status: Research & Architecture.
+- [DAQIP™](https://gamyaa.in/aerosystems/daqip): Defence Aerospace Quality Intelligence Platform for drawings, First Article Inspection (AS9102), inspection, supplier quality and manufacturing evidence. Status: In Development.
+- [AirCert AI™](https://gamyaa.in/aerosystems/aircert-ai): Certification assurance for certification basis, compliance planning, verification and traceable certification evidence. Status: Planned.
+- [Research](https://gamyaa.in/aerosystems/research): Engineering assurance research areas, each with its current maturity.
+- [Solutions](https://gamyaa.in/aerosystems/solutions): First Article Inspection, inspection, manufacturing and supplier quality, airworthiness, certification evidence and engineering assurance.
+- [Services](https://gamyaa.in/aerosystems/services): Engineering assurance advisory, FAI / AS9102 digitalisation, certification and evidence engineering, and engineering cybersecurity.
+- [About](https://gamyaa.in/aerosystems/about): Company, leadership and partners.
+- [Contact](https://gamyaa.in/aerosystems/contact): Bangalore, India.
+
+## Digital twin demos (3D visualisations, not digital twins)
+
+- [Satellite Explorer 3D](https://aerospace.gamyaa.in/space/satellite-engineering/interactive-3d): Interactive satellite model.
+- [Rocket Engine 3D](https://aerospace.gamyaa.in/space/rocket-engine-digital-twin): Interactive propulsion model.
+- [UFlight™ 3D](https://aerospace.gamyaa.in/aerospace/uflight-3d): eVTOL aircraft visualisation.
+
+## Optional
+
+- [Gamyaa Ventures](https://gamyaa.in/ventures): Engineering-led ventures in aerospace, defence, space and advanced manufacturing.
+- [Sitemap](https://gamyaa.in/sitemap.xml)

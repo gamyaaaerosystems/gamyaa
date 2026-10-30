@@ -142,6 +142,7 @@ export function aeroOrganizationLd() {
       "Defence manufacturing quality",
       "Airworthiness certification engineering",
       "Engineering traceability",
+      "Digital twins for aerospace, defence and space",
     ],
     founder: [
       { "@type": "Person", name: "Purushothama Padmanabha" },
@@ -272,7 +273,25 @@ function designerLd() {
 }
 
 /** Plain WebPage for overview pages that are neither articles nor product listings. */
-export function webPageLd(input: { name: string; description: string; href: string; dateModified?: string; about?: string[] }) {
+export function webPageLd(input: {
+  name: string;
+  description: string;
+  href: string;
+  dateModified?: string;
+  about?: string[];
+  /** The page's main visible image (absolute URL), for image search and AI answers. */
+  image?: { url: string; width: number; height: number; caption: string };
+}) {
+  const image = input.image
+    ? {
+        "@type": "ImageObject",
+        url: input.image.url,
+        contentUrl: input.image.url,
+        width: input.image.width,
+        height: input.image.height,
+        caption: input.image.caption,
+      }
+    : undefined;
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -284,6 +303,8 @@ export function webPageLd(input: { name: string; description: string; href: stri
     contributor: designerLd(),
     dateModified: input.dateModified,
     about: input.about?.map((name) => ({ "@type": "Thing", name })),
+    primaryImageOfPage: image,
+    image,
     inLanguage: "en-IN",
   };
 }

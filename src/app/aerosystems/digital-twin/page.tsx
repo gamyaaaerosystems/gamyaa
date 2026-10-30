@@ -1,30 +1,62 @@
 import Image from "next/image";
-import { CtaBand, internalContact, PageHero } from "@/components/sections/shared";
+import { CtaBand, FaqSection, internalContact, PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import {
   ArrowLink,
   BulletList,
   ButtonLink,
   Container,
+  JsonLd,
   Notice,
   Section,
   SectionHeader,
   SmartLink,
   StatusBadge,
 } from "@/components/ui/primitives";
-import { pageMetadata } from "@/lib/seo";
-import { aero, EXTERNAL } from "@/lib/site";
+import { faqLd, pageMetadata, webPageLd } from "@/lib/seo";
+import { aero, EXTERNAL, PRIMARY_ORIGIN } from "@/lib/site";
 import banner from "./digital-twin-design.webp";
 
+const TITLE = "Digital Twin for Aerospace, Defence & Space | Gamyaa AeroSystems";
+// Kept under ~160 characters so search results show it in full.
+const DESCRIPTION =
+  "Physics-based, mathematical and data-driven digital twins for aircraft, defence platforms, satellites and launch vehicles, traceable to real configuration.";
+const BANNER_ALT =
+  "Digital Twin Design, physics based: a satellite drawn with engineering dimensions above the Earth, with the GAMYAA Aero Systems mark. Space Systems & Digital Twin Research for Aerospace, Defence and Space.";
+
+// The preview image comes from opengraph-image.jpg in this folder (the banner, letterboxed to 1200×630).
 export const metadata = pageMetadata({
-  title: "Digital Twin for Aerospace, Defence & Space | Gamyaa AeroSystems",
-  description:
-    "Physics-based, mathematical-model and data-driven digital twins for aerospace, defence and space systems, each traceable to the requirements, configuration and evidence behind its predictions.",
+  title: TITLE,
+  description: DESCRIPTION,
   href: aero("/digital-twin"),
   hasOwnOgImage: true,
 });
 
 const CONTACT_HREF = internalContact("digital-twin");
+
+/** Visible on the page and repeated as FAQPage data, so search engines and AI assistants can quote it. */
+const FAQ = [
+  {
+    q: "What is a digital twin in aerospace, defence and space?",
+    a: "A digital twin is a virtual model of a specific aircraft, defence platform, spacecraft or subsystem that is kept in step with its real configuration and data. Engineers use it to predict behaviour, test changes and plan maintenance before acting on the hardware.",
+  },
+  {
+    q: "What is the difference between physics-based, mathematical-model and data-driven digital twins?",
+    a: "Physics-based twins solve first-principles models of structures, heat, fluids and orbital or flight dynamics. Mathematical-model twins use reduced-order or analytical models fast enough for control design and real-time simulation. Data-driven twins learn from test, telemetry and maintenance data. Most programmes combine all three.",
+  },
+  {
+    q: "Is a 3D model a digital twin?",
+    a: "No. A 3D model shows geometry. A digital twin also models how the system behaves and stays linked to its real configuration and data. The interactive 3D demos on this page are visualisations, not digital twins.",
+  },
+  {
+    q: "How does Gamyaa AeroSystems approach digital twins?",
+    a: "Every model is linked to the requirements it informs, the configuration it represents and the test or flight data that validates it, so each prediction can be traced and is flagged for review when the design changes. This work is at research stage.",
+  },
+  {
+    q: "How can I discuss a digital twin for my programme?",
+    a: "Contact Gamyaa AeroSystems in Bangalore, India, with the platform, the question the twin must answer and the data you have today.",
+  },
+];
 
 /** The three kinds of twin, from first principles to learned behaviour. */
 const TWINS: Array<{ code: string; title: string; body: string; uses: string[] }> = [
@@ -87,6 +119,29 @@ const DOMAINS: Array<{ title: string; body: string }> = [
 export default function DigitalTwinPage() {
   return (
     <>
+      <JsonLd
+        data={webPageLd({
+          name: TITLE,
+          description: DESCRIPTION,
+          href: aero("/digital-twin"),
+          about: [
+            "Digital twin",
+            "Physics-based digital twin",
+            "Data-driven digital twin",
+            "Reduced-order model",
+            "Aerospace engineering",
+            "Defence systems engineering",
+            "Spacecraft engineering",
+          ],
+          image: {
+            url: `${PRIMARY_ORIGIN}${banner.src}`,
+            width: banner.width,
+            height: banner.height,
+            caption: BANNER_ALT,
+          },
+        })}
+      />
+      <JsonLd data={faqLd(FAQ)} />
       <PageHero
         breadcrumbs={
           <Breadcrumbs
@@ -121,7 +176,7 @@ export default function DigitalTwinPage() {
             <div className="relative overflow-hidden rounded-[1px] border border-line">
               <Image
                 src={banner}
-                alt="Digital Twin Design, physics based: a satellite drawn with engineering dimensions above the Earth, with the GAMYAA Aero Systems mark. Space Systems & Digital Twin Research for Aerospace, Defence and Space."
+                alt={BANNER_ALT}
                 sizes="(min-width: 1280px) 1216px, 100vw"
                 loading="eager"
                 fetchPriority="high"
@@ -252,6 +307,8 @@ export default function DigitalTwinPage() {
           </div>
         </Container>
       </Section>
+
+      <FaqSection title="Digital twin questions" items={FAQ} />
 
       <CtaBand
         title="Planning a digital twin for your programme?"

@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { LEARN_PAGES } from "@/content/aeaip";
 import { SOLUTIONS } from "@/content/solutions";
-import { absoluteUrl, aero, parent } from "@/lib/site";
+import { absoluteUrl, aero, parent, PRIMARY_ORIGIN } from "@/lib/site";
+import digitalTwinBanner from "./aerosystems/digital-twin/digital-twin-design.webp";
 
 // Update when content changes materially. Fixed values keep the sitemap static and
 // make lastmod truthful per page rather than "now" on every build.
@@ -10,6 +11,11 @@ const AEAIP_RELEASE = "2026-10-24";
 const DIGITAL_TWIN_RELEASE = "2026-10-30";
 
 type Entry = [href: string, priority: number, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"], lastModified: string];
+
+/** Main images per page (image sitemap), so the visuals can appear in image search. */
+const IMAGES: Record<string, string[]> = {
+  [aero("/digital-twin")]: [`${PRIMARY_ORIGIN}${digitalTwinBanner.src}`],
+};
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: Entry[] = [
@@ -35,7 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ),
     [aero("/services"), 0.6, "monthly", AEAIP_RELEASE],
     [aero("/research"), 0.6, "monthly", AEAIP_RELEASE],
-    [aero("/digital-twin"), 0.7, "monthly", DIGITAL_TWIN_RELEASE],
+    [aero("/digital-twin"), 0.8, "monthly", DIGITAL_TWIN_RELEASE],
     [aero("/about"), 0.6, "monthly", AEAIP_RELEASE],
     [aero("/careers"), 0.5, "monthly", V1],
     [aero("/internships"), 0.5, "monthly", V1],
@@ -50,5 +56,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified,
     changeFrequency,
     priority,
+    images: IMAGES[href],
   }));
 }
