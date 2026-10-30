@@ -100,6 +100,12 @@ export const EXTERNAL = {
   evEngineer: "https://ev.engineer",
   uflight: "https://www.uflight.in/",
   uflightCybersecurity: "https://cybersecurity.uflight.in/",
+  /** Interactive 3D demos linked from the Digital Twin page (3D models, not digital twins). */
+  satelliteEngineering: "https://aerospace.gamyaa.in/space/satellite-engineering",
+  satelliteExplorer3d: "https://aerospace.gamyaa.in/space/satellite-engineering/interactive-3d",
+  rocketEngine3dAdvanced: "https://aerospace.gamyaa.in/space/rocket-engine-digital-twin-advanced",
+  rocketEngine3d: "https://aerospace.gamyaa.in/space/rocket-engine-digital-twin",
+  uflight3d: "https://aerospace.gamyaa.in/aerospace/uflight-3d",
   /** Official GAMYAA login entry point. Authentication happens there, never on this site. */
   login: "https://login.gamyaa.in/",
 } as const;

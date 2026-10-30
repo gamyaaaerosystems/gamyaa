@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { CtaBand, internalContact, PageHero } from "@/components/sections/shared";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { ArrowLink, BulletList, ButtonLink, Container, Section, SectionHeader, StatusBadge } from "@/components/ui/primitives";
+import { ArrowLink, BulletList, ButtonLink, Container, Notice, Section, SectionHeader, StatusBadge } from "@/components/ui/primitives";
 import { pageMetadata } from "@/lib/seo";
-import { aero } from "@/lib/site";
+import { aero, EXTERNAL } from "@/lib/site";
 import banner from "./digital-twin-design.webp";
 
 export const metadata = pageMetadata({
@@ -48,6 +48,15 @@ const TWINS: Array<{ code: string; title: string; body: string; uses: string[] }
       "Fleet reliability and maintenance planning",
     ],
   },
+];
+
+/** Interactive 3D demos. They are visualisations only and must never be labelled as digital twins. */
+const DEMOS: Array<{ label: string; caption: string; href: string }> = [
+  { label: "Satellite Engineering", caption: "Spacecraft systems architecture", href: EXTERNAL.satelliteEngineering },
+  { label: "Satellite Explorer 3D", caption: "Interactive satellite model", href: EXTERNAL.satelliteExplorer3d },
+  { label: "Rocket Engine 3D", caption: "Interactive propulsion model", href: EXTERNAL.rocketEngine3d },
+  { label: "Rocket Engine 3D (Advanced)", caption: "Propulsion and pressure visualisation", href: EXTERNAL.rocketEngine3dAdvanced },
+  { label: "UFlight™ 3D", caption: "eVTOL aircraft visualisation", href: EXTERNAL.uflight3d },
 ];
 
 const DOMAINS: Array<{ title: string; body: string }> = [
@@ -96,7 +105,7 @@ export default function DigitalTwinPage() {
         </div>
       </PageHero>
 
-      <Section section="digital_twin_banner" className="pt-0 md:pt-0">
+      <Section labelledBy="demos-title" section="digital_twin_demos" className="pt-0 md:pt-0">
         <Container>
           <figure className="twin-frame ticks rounded-sm p-1.5 sm:p-2">
             <div className="overflow-hidden rounded-[1px] border border-line">
@@ -110,6 +119,41 @@ export default function DigitalTwinPage() {
               />
             </div>
           </figure>
+
+          <div className="mt-12 grid gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <div className="flex flex-wrap items-center gap-3">
+                <h2 id="demos-title" className="heading text-2xl text-ink sm:text-[1.75rem]">
+                  Interactive 3D demos
+                </h2>
+                <StatusBadge status="concept-demo" />
+              </div>
+              <Notice className="mt-5">
+                <strong className="font-medium text-ink">Note: for demonstration only.</strong> These are interactive
+                3D models, not digital twins. They are not driven by physics models, test data or live telemetry.
+                Contact us for your digital twin requirements.
+              </Notice>
+              <div className="mt-6 flex flex-col gap-3 xs:flex-row xs:flex-wrap">
+                <ButtonLink href={EXTERNAL.satelliteExplorer3d} label="Open Satellite Explorer 3D">
+                  Open Satellite Explorer 3D
+                </ButtonLink>
+                <ButtonLink href={CONTACT_HREF} variant="secondary" label="Contact us for a digital twin">
+                  Contact us for a digital twin
+                </ButtonLink>
+              </div>
+            </div>
+            <ul className="border-b border-line lg:col-span-7">
+              {DEMOS.map((d) => (
+                <li
+                  key={d.href}
+                  className="grid gap-x-6 border-t border-line py-2 sm:grid-cols-[1fr_auto] sm:items-center"
+                >
+                  <ArrowLink href={d.href}>{d.label}</ArrowLink>
+                  <span className="pb-2 text-sm text-muted sm:pb-0">{d.caption}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Container>
       </Section>
 
