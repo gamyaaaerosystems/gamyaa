@@ -11,12 +11,12 @@ export type NavGroup = { title: string; items: NavItem[] };
 export const AERO_NAV: NavItem[] = [
   { label: "AEAIP™", href: aero("/aeaip") },
   { label: "Products", href: aero("/products"), match: [aero("/daqip"), aero("/aircert-ai")] },
+  { label: "Digital Twin", href: aero("/digital-twin") },
   { label: "Solutions", href: aero("/solutions") },
   { label: "Services", href: aero("/services") },
   { label: "Research", href: aero("/research") },
   { label: "Partners & Ecosystem", href: aero("/about#partners") },
   { label: "Company", href: aero("/about") },
-  { label: "Digital Twin", href: aero("/digital-twin") },
   { label: "Contact", href: aero("/contact") },
 ];
 
