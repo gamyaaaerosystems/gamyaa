@@ -57,7 +57,8 @@ export type AnalyticsEventName =
   | "review_gate_select"
   | "contact_intent_select"
   | "division_card_click"
-  | "login_click";
+  | "login_click"
+  | "keynote_open";
 
 export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>([
   "nav_click",
@@ -106,6 +107,7 @@ export const ANALYTICS_EVENTS: ReadonlySet<string> = new Set<AnalyticsEventName>
   "contact_intent_select",
   "division_card_click",
   "login_click",
+  "keynote_open",
 ]);
 
 /** Parameters that may ever be sent. Anything else is dropped. */

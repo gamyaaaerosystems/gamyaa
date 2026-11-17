@@ -1,3 +1,4 @@
+import { KeynoteLink } from "@/components/keynote/keynote-link";
 import { MaturityChips } from "@/components/sections/aero";
 import { CtaBand, internalContact } from "@/components/sections/shared";
 import { AssuranceFlow } from "@/components/system/assurance-flow";
@@ -60,6 +61,14 @@ export default function AeroSystemsPage() {
               >
                 Discuss an Engineering Assurance Problem
               </ButtonLink>
+              <KeynoteLink
+                href={aero("/keynote")}
+                className="btn btn-primary"
+                ariaLabel="Keynote: open the full-screen presentation"
+                ga={{ source_location: "aero_hero" }}
+              >
+                Keynote
+              </KeynoteLink>
             </div>
           </div>
           <div className="anim-fade-up lg:col-span-5" style={{ animationDelay: "160ms" }}>

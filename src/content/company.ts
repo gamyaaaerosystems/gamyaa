@@ -7,6 +7,8 @@ export type Leader = {
   summary: string;
   /** The person's own LinkedIn profile URL. The link is hidden when absent; never reuse another person's URL. */
   linkedin?: string;
+  /** The person's own portfolio / profile page. The link is hidden when absent. */
+  portfolio?: string;
   /** Shown after the role and linked, e.g. "Co-Founder, EV.ENGINEER™". Not part of the job title. */
   credential?: { label: string; href: string };
 };
@@ -27,9 +29,10 @@ export const LEADERSHIP: Leader[] = [
   {
     name: "Sudarshana Karkala",
     role: "Co-Founder",
-    credential: { label: "EV.ENGINEER™", href: EXTERNAL.evEngineer },
-    summary: "Leads engineering and product architecture across AEAIP™, DAQIP™ and AirCert AI™.",
+    credential: { label: "EV.ENGINEER™", href: EXTERNAL.gamyaaSpace },
+    summary: "Leads engineering and product architecture across AEAIP™, DAQIP™, AirCert AI™ and Digital Twin.",
     linkedin: "https://linkedin.com/in/sudarshanakarkala",
+    portfolio: EXTERNAL.designerProfile,
   },
 ];
 

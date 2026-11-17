@@ -113,7 +113,9 @@
   }
 }
 
-:root[data-theme="dark"] {
+/* The keynote (/aerosystems/keynote) always presents in the dark theme; its own styles are in src/components/keynote/keynote.css. */
+:root[data-theme="dark"],
+.gx-keynote {
   color-scheme: dark;
   --bg: #05080f;
   --surface: #0b111d;

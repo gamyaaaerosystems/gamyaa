@@ -14,8 +14,8 @@ import type { ReadinessLevel } from "@/content/aeaip-demo";
  * the accessible equivalent. Keyboard: arrow keys rotate, Home resets.
  */
 
-type V3 = [number, number, number];
-type Face = { pts: V3[]; n: V3; sub: SubsystemKey; tone?: "cell" | "dark"; lines?: Array<[V3, V3]>; twoSided?: boolean };
+export type V3 = [number, number, number];
+export type Face = { pts: V3[]; n: V3; sub: SubsystemKey; tone?: "cell" | "dark"; lines?: Array<[V3, V3]>; twoSided?: boolean };
 
 /* ------------------------------------------------------------ Geometry */
 
@@ -120,8 +120,8 @@ function buildModel(): Face[] {
   return f;
 }
 
-/** The model is static, so it is built once per page load. */
-const MODEL = buildModel();
+/** The model is static, so it is built once per page load. Also rendered by the keynote. */
+export const MODEL = buildModel();
 
 /** Where each subsystem's marker sits on the model. */
 const ANCHORS: Record<SubsystemKey, V3> = {
@@ -155,12 +155,12 @@ const DEFAULT_YAW = 0.6;
 const DEFAULT_PITCH = 0.42;
 const LIGHT: V3 = normalize([-0.45, 0.75, 0.55]);
 
-function normalize(v: V3): V3 {
+export function normalize(v: V3): V3 {
   const l = Math.hypot(v[0], v[1], v[2]) || 1;
   return [v[0] / l, v[1] / l, v[2] / l];
 }
 
-function rotate(p: V3, yaw: number, pitch: number): V3 {
+export function rotate(p: V3, yaw: number, pitch: number): V3 {
   const [x, y, z] = p;
   const cy = Math.cos(yaw);
   const sy = Math.sin(yaw);
@@ -173,7 +173,7 @@ function rotate(p: V3, yaw: number, pitch: number): V3 {
 }
 
 const F = 9; // perspective focal length (model units)
-function project(p: V3): [number, number] {
+export function project(p: V3): [number, number] {
   const s = F / (F - p[1]);
   return [p[0] * s, -p[2] * s];
 }

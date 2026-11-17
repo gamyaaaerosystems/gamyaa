@@ -38,6 +38,7 @@ Copy `.env.example` to `.env.local` to change configuration (see below).
 | AirCert AI™ content | `src/content/aircert.ts` |
 | Solutions (8 pages) | `src/content/solutions.ts` |
 | Services, Ventures focus areas | `src/content/services.ts`, `src/content/ventures.ts` |
+| Keynote (`/aerosystems/keynote`): slide wording, founders, build steps | `src/content/keynote.ts` (the worked example and readiness state are derived from `src/content/aeaip-demo.ts`); layouts and motion in `src/components/keynote/` |
 | Leadership, partners, careers domains, contact interests | `src/content/company.ts` (Manjunatha G's LinkedIn is a placeholder until his own URL is added) |
 | Evolution timeline | `src/content/timeline.ts` |
 | Navigation | `src/content/navigation.ts` |

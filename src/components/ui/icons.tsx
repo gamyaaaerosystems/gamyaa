@@ -36,6 +36,14 @@ export const ArrowDown = (p: IconProps) => (
   </svg>
 );
 
+/** Briefcase: a person's portfolio. */
+export const PortfolioIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <rect x="3.5" y="7.5" width="17" height="12" rx="1.5" />
+    <path d="M9 7.5v-2h6v2M3.5 12.5h17" />
+  </svg>
+);
+
 export const MenuIcon = (p: IconProps) => (
   <svg {...base(p)}>
     <path d="M4 8h16M4 16h16" />

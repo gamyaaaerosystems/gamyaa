@@ -4,7 +4,7 @@ import type { CtaLocation, DemoProduct, ProblemTopic } from "@/lib/analytics";
 import { aero } from "@/lib/site";
 import { LEADERSHIP, PARTNERS } from "@/content/company";
 import { ArrowLink, ButtonLink, Container, Section, SectionHeader, SmartLink } from "@/components/ui/primitives";
-import { LinkedInIcon } from "@/components/ui/icons";
+import { LinkedInIcon, PortfolioIcon } from "@/components/ui/icons";
 
 /* --------------------------------------------------------- Leadership */
 
@@ -38,17 +38,33 @@ export function LeadershipSection({ id }: { id?: string }) {
                 </p>
                 <p className="mt-3 max-w-xl text-[0.9375rem] leading-relaxed text-ink-2">{p.summary}</p>
               </div>
-              {p.linkedin ? (
-                <SmartLink
-                  href={p.linkedin}
-                  label="linkedin"
-                  ga={{ event: "leadership_link_click", params: { person_name: p.name } }}
-                  className="inline-flex min-h-11 items-center gap-2 self-start text-sm text-ink-2 hover:text-ink"
-                  ariaLabel={`${p.name} on LinkedIn (opens in a new tab)`}
-                >
-                  <LinkedInIcon size={15} />
-                  LinkedIn
-                </SmartLink>
+              {p.linkedin || p.portfolio ? (
+                <div className="flex flex-wrap gap-x-6 self-start sm:flex-col sm:items-start sm:gap-0">
+                  {p.linkedin ? (
+                    <SmartLink
+                      href={p.linkedin}
+                      label="linkedin"
+                      ga={{ event: "leadership_link_click", params: { person_name: p.name } }}
+                      className="inline-flex min-h-11 items-center gap-2 text-sm text-ink-2 hover:text-ink"
+                      ariaLabel={`${p.name} on LinkedIn (opens in a new tab)`}
+                    >
+                      <LinkedInIcon size={15} />
+                      LinkedIn
+                    </SmartLink>
+                  ) : null}
+                  {p.portfolio ? (
+                    <SmartLink
+                      href={p.portfolio}
+                      label="portfolio"
+                      ga={{ event: "leadership_link_click", params: { person_name: p.name } }}
+                      className="inline-flex min-h-11 items-center gap-2 text-sm text-ink-2 hover:text-ink"
+                      ariaLabel={`${p.name}'s portfolio (opens in a new tab)`}
+                    >
+                      <PortfolioIcon size={15} />
+                      Portfolio
+                    </SmartLink>
+                  ) : null}
+                </div>
               ) : null}
             </li>
           ))}

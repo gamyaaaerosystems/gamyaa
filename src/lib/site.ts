@@ -100,6 +100,8 @@ export const EXTERNAL = {
   evEngineer: "https://ev.engineer",
   uflight: "https://www.uflight.in/",
   uflightCybersecurity: "https://cybersecurity.uflight.in/",
+  /** GAMYAA space engineering hub; the EV.ENGINEER™ credential on the Leadership section links here. */
+  gamyaaSpace: "https://aerospace.gamyaa.in/space",
   /** Interactive 3D demos linked from the Digital Twin page (3D models, not digital twins). */
   satelliteEngineering: "https://aerospace.gamyaa.in/space/satellite-engineering",
   satelliteExplorer3d: "https://aerospace.gamyaa.in/space/satellite-engineering/interactive-3d",
