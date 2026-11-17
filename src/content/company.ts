@@ -9,30 +9,39 @@ export type Leader = {
   linkedin?: string;
   /** The person's own portfolio / profile page. The link is hidden when absent. */
   portfolio?: string;
-  /** Shown after the role and linked, e.g. "Co-Founder, EV.ENGINEER™". Not part of the job title. */
+  /** Short experience lines (items separated by " · "). Owner-supplied only; never inferred. */
+  experience?: readonly string[];
+  /** Former employers and affiliations, e.g. "Ex-IBM" (items separated by " · "). Owner-supplied only. */
+  affiliations?: string;
+  /** Link for the matching item in `affiliations` on the About page, e.g. EV.ENGINEER™. Not part of the job title. */
   credential?: { label: string; href: string };
 };
 
+/** Order and details as approved by the founders (November 2026). Also used by the keynote's closing slide, src/content/keynote.ts. */
 export const LEADERSHIP: Leader[] = [
   {
     name: "Purushothama Padmanabha",
-    role: "Founder, CEO",
+    role: "Founder & CEO",
+    experience: ["18+ Years in Software Engineering, Business Strategy", "Systems Management · Clustered Systems · Virtualisation"],
+    affiliations: "Ex-IBM",
     summary: "Leads company strategy, customer relationships and the direction of the GAMYAA platforms.",
     linkedin: "https://www.linkedin.com/in/purushothama-padmanabha-1a75552/",
+  },
+  {
+    name: "Sudarshana Karkala",
+    role: "Co-Founder & CTO",
+    credential: { label: "EV.ENGINEER™", href: EXTERNAL.gamyaaSpace },
+    experience: ["Solar Energy · Battery Systems · Satellite Systems", "Digital Twins · Cybersecurity"],
+    affiliations: "Ex-Enphase Energy · Ex-McAfee · EV.ENGINEER™",
+    summary: "Leads engineering and product architecture across AEAIP™, DAQIP™, AirCert AI™ and Digital Twin.",
+    linkedin: "https://linkedin.com/in/sudarshanakarkala",
+    portfolio: EXTERNAL.designerProfile,
   },
   {
     name: "Manjunatha G",
     role: "Co-Founder, Sales & Marketing",
     summary: "Leads market development, customer engagement and sales.",
     // No LinkedIn link until Manjunatha G's own profile URL is supplied.
-  },
-  {
-    name: "Sudarshana Karkala",
-    role: "Co-Founder",
-    credential: { label: "EV.ENGINEER™", href: EXTERNAL.gamyaaSpace },
-    summary: "Leads engineering and product architecture across AEAIP™, DAQIP™, AirCert AI™ and Digital Twin.",
-    linkedin: "https://linkedin.com/in/sudarshanakarkala",
-    portfolio: EXTERNAL.designerProfile,
   },
 ];
 

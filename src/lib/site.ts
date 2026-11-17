@@ -78,7 +78,7 @@ const CURRENT_EMAIL = "gamyaa.aerosystems@gmail.com";
 
 export const CONTACT = {
   person: "Purushothama Padmanabha",
-  role: "Founder, CEO",
+  role: "Founder & CEO",
   organisation: "Gamyaa AeroSystems",
   location: "Bangalore, India",
   email: (CORPORATE_EMAILS.find((e) => e.active)?.address ?? CURRENT_EMAIL) as string,

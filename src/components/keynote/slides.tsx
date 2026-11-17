@@ -60,25 +60,50 @@ function Points({
   items,
   lit = items.length,
   start = 0,
+  emphasis,
   className,
 }: {
   items: readonly string[];
   /** Points from this index on are dimmed until their build step arrives. */
   lit?: number;
   start?: number;
+  /** Per point, the closing word to highlight in the accent colour once lit. */
+  emphasis?: readonly string[];
   className?: string;
 }) {
   return (
     <ol className={cn("kn-points", className)}>
-      {items.map((p, i) => (
-        <li key={p} className="kn-in kn-point" data-lit={i < lit} style={d(start + i * 110)}>
-          <span className="kn-point-no" aria-hidden>
-            {pad2(i + 1)}
-          </span>
-          <span>{p}</span>
-        </li>
-      ))}
+      {items.map((p, i) => {
+        const em = emphasis?.[i];
+        const split = em && p.endsWith(em) ? p.length - em.length : -1;
+        return (
+          <li key={p} className="kn-in kn-point" data-lit={i < lit} style={d(start + i * 110)}>
+            <span className="kn-point-no" aria-hidden>
+              {pad2(i + 1)}
+            </span>
+            {split >= 0 ? (
+              <span>
+                {p.slice(0, split)}
+                <span className="kn-em">{em}</span>
+              </span>
+            ) : (
+              <span>{p}</span>
+            )}
+          </li>
+        );
+      })}
     </ol>
+  );
+}
+
+/** "A · B · C" that wraps only between items, never leaving a dot at a line edge. */
+function SepList({ items, className }: { items: readonly string[]; className?: string }) {
+  return (
+    <ul className={cn("kn-sep-list", className)}>
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
   );
 }
 
@@ -397,7 +422,8 @@ function Constellation({ build }: { build: number }) {
         </span>
       ))}
       <figcaption className="kn-finding" data-show={stale}>
-        {KN_PROBLEM.finding}
+        {KN_PROBLEM.finding.lead}
+        <span className="kn-finding-em">{KN_PROBLEM.finding.emphasis}</span>
       </figcaption>
     </figure>
   );
@@ -410,7 +436,7 @@ function Problem({ build }: { build: number }) {
         {KN_PROBLEM.title}
       </h2>
       <div className="kn-problem-side">
-        <Points items={KN_PROBLEM.points} lit={build + 1} start={260} />
+        <Points items={KN_PROBLEM.points} lit={build + 1} start={260} className="kn-points-strong" />
         <p className="kn-tag kn-in" style={d(700)}>
           Illustrative · fictitious data
         </p>
@@ -533,7 +559,13 @@ function Aeaip({ build }: { build: number }) {
           <StatusBadge status={KN_AEAIP.status} className="kn-badge" />
         </p>
       </div>
-      <Points items={KN_AEAIP.points} lit={build + 1} start={380} className="kn-aeaip-points" />
+      <Points
+        items={KN_AEAIP.points}
+        emphasis={KN_AEAIP.emphasis}
+        lit={build + 1}
+        start={380}
+        className="kn-aeaip-points"
+      />
       <Chain build={build} />
       <div className="kn-aeaip-foot kn-in" style={d(1300)}>
         <p className="kn-governance">
@@ -779,11 +811,15 @@ function Thanks({ contactHref }: { contactHref: string }) {
       <p className="kn-in kn-second" style={d(440)}>
         {t.secondary}
       </p>
-      <ul className="kn-founders" aria-label="Founders">
+      <ul className="kn-founders" aria-label="Founders" style={vars({ "--n": t.founders.length })}>
         {t.founders.map((f, i) => (
           <li key={f.name} className="kn-in" style={d(680 + i * 120)}>
             <p className="kn-founder-name">{f.name}</p>
             <p className="kn-founder-role">{f.role}</p>
+            {f.experience?.map((line) => (
+              <SepList key={line} items={line.split(" · ")} className="kn-founder-exp" />
+            ))}
+            {f.affiliations ? <SepList items={f.affiliations.split(" · ")} className="kn-founder-ex" /> : null}
           </li>
         ))}
       </ul>

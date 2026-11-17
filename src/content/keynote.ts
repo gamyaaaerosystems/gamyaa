@@ -1,4 +1,5 @@
 import { AEAIP } from "./aeaip";
+import { LEADERSHIP } from "./company";
 import { DEMO_PROGRAMME, ISSUES, issueEffect, VALIDITY_STAGES } from "./aeaip-demo";
 import { PRODUCT_STATUS, type Status } from "./status";
 
@@ -65,8 +66,8 @@ export const KN_OPENING = {
 export const KN_PROBLEM = {
   title: "Can We Prove It?",
   points: ["Fragmented Engineering Evidence", "Changing Hardware & Software", "Uncertain Readiness"],
-  /** The one critical problem the slide resolves to. */
-  finding: "The evidence was produced on a configuration that no longer exists.",
+  /** The one critical problem the slide resolves to; `emphasis` is set in amber. */
+  finding: { lead: "The evidence was produced on a configuration that ", emphasis: "no longer exists." },
 } as const;
 
 export const KN_AEAIP = {
@@ -74,6 +75,8 @@ export const KN_AEAIP = {
   subtitle: AEAIP.expanded,
   status: PRODUCT_STATUS.aeaip,
   points: ["Know What Is Verified", "Know What Is Missing", "Know When the System Is Ready"],
+  /** The word in each point highlighted in the accent colour once its build step is reached. */
+  emphasis: ["Verified", "Missing", "Ready"],
   chain: AEAIP.chain,
   governance: ["AI assists", "Engineers verify", "Authorized authorities approve"],
 } as const;
@@ -109,14 +112,18 @@ export const KN_DEMO = {
   note: "Concept demonstration · fictitious data · opens in a new tab",
 } as const;
 
+const KEYNOTE_FOUNDERS = ["Purushothama Padmanabha", "Sudarshana Karkala"];
+
 export const KN_THANKS = {
   title: "Thank You.",
   secondary: "Let's Build Engineering Confidence.",
-  founders: [
-    { name: "Purushothama Padmanabha", role: "Founder & CEO" },
-    { name: "Manjunatha G", role: "Co-Founder, Sales & Marketing" },
-    { name: "Sudarshana Karkala", role: "Co-Founder, Engineering & Product Architecture" },
-  ],
+  /**
+   * Founders shown on the closing slide (owner's selection, 17 November 2026). Titles and
+   * experience come from the About page data (src/content/company.ts), in its order.
+   */
+  founders: LEADERSHIP.filter((p) => KEYNOTE_FOUNDERS.includes(p.name)).map(
+    ({ name, role, experience, affiliations }) => ({ name, role, experience, affiliations }),
+  ),
   site: "aerosystems.gamyaa.in",
   cta: "Discuss an Engineering Assurance Problem",
 } as const;

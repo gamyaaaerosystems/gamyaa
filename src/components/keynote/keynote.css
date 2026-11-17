@@ -28,11 +28,13 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     --kn-hero: clamp(2.75rem, calc(var(--u) * 5.9), 7.25rem);
     --kn-h: clamp(2.25rem, calc(var(--u) * 4.3), 5rem);
     --kn-second: clamp(1.5rem, calc(var(--u) * 2.9), 3.5rem);
-    --kn-lg: clamp(1.25rem, calc(var(--u) * 1.85), 2.375rem);
-    --kn-sub: clamp(1.0625rem, calc(var(--u) * 1.5), 1.875rem);
-    --kn-body: clamp(0.9375rem, calc(var(--u) * 1.15), 1.4375rem);
-    --kn-meta: clamp(0.75rem, calc(var(--u) * 0.9), 1.125rem);
-    --kn-micro: clamp(0.6875rem, calc(var(--u) * 0.76), 0.9375rem);
+    /* Sized for large screens and projectors: key points +15%, supporting text +10–15%. */
+    --kn-lg: clamp(1.125rem, calc(var(--u) * 2.05), 2.625rem);
+    --kn-point: clamp(1.0625rem, calc(var(--u) * 1.72), 2.125rem);
+    --kn-sub: clamp(1rem, calc(var(--u) * 1.65), 2.0625rem);
+    --kn-body: clamp(0.875rem, calc(var(--u) * 1.32), 1.625rem);
+    --kn-meta: clamp(0.6875rem, calc(var(--u) * 1.02), 1.25rem);
+    --kn-micro: clamp(0.625rem, calc(var(--u) * 0.87), 1.0625rem);
     position: fixed;
     inset: 0;
     z-index: 60;
@@ -54,11 +56,12 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
       --kn-hero: clamp(2.5rem, 11vw, 5.5rem);
       --kn-h: clamp(2.125rem, 9.4vw, 4.5rem);
       --kn-second: clamp(1.375rem, 5.8vw, 2.5rem);
-      --kn-lg: clamp(1.125rem, 4.6vw, 2rem);
-      --kn-sub: clamp(1rem, 4.1vw, 1.625rem);
-      --kn-body: clamp(0.875rem, 3.6vw, 1.25rem);
-      --kn-meta: clamp(0.6875rem, 2.9vw, 1rem);
-      --kn-micro: clamp(0.625rem, 2.6vw, 0.875rem);
+      --kn-lg: clamp(1.1875rem, 4.9vw, 2.125rem);
+      --kn-point: clamp(1.0625rem, 4.6vw, 1.875rem);
+      --kn-sub: clamp(1.0625rem, 4.4vw, 1.75rem);
+      --kn-body: clamp(0.9375rem, 3.9vw, 1.375rem);
+      --kn-meta: clamp(0.75rem, 3.15vw, 1.0625rem);
+      --kn-micro: clamp(0.6875rem, 2.75vw, 0.9375rem);
     }
   }
   /* Phones held sideways and other short screens. */
@@ -67,11 +70,12 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
       --kn-hero: clamp(1.875rem, calc(var(--u) * 5.9), 7.25rem);
       --kn-h: clamp(1.625rem, calc(var(--u) * 4.3), 5rem);
       --kn-second: clamp(1.125rem, calc(var(--u) * 2.9), 3.5rem);
-      --kn-lg: clamp(0.9375rem, calc(var(--u) * 1.85), 2.375rem);
-      --kn-sub: clamp(0.8125rem, calc(var(--u) * 1.5), 1.875rem);
-      --kn-body: clamp(0.6875rem, calc(var(--u) * 1.15), 1.4375rem);
-      --kn-meta: clamp(0.5625rem, calc(var(--u) * 0.9), 1.125rem);
-      --kn-micro: clamp(0.5rem, calc(var(--u) * 0.76), 0.9375rem);
+      --kn-lg: clamp(0.9375rem, calc(var(--u) * 2.05), 2.625rem);
+      --kn-point: clamp(0.875rem, calc(var(--u) * 1.72), 2.125rem);
+      --kn-sub: clamp(0.8125rem, calc(var(--u) * 1.65), 2.0625rem);
+      --kn-body: clamp(0.75rem, calc(var(--u) * 1.32), 1.625rem);
+      --kn-meta: clamp(0.625rem, calc(var(--u) * 1.02), 1.25rem);
+      --kn-micro: clamp(0.5625rem, calc(var(--u) * 0.87), 1.0625rem);
     }
   }
   .gx-keynote[data-idle] {
@@ -191,18 +195,18 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     line-height: 1.4;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--subtle);
+    color: var(--muted);
   }
   .kn-points {
     display: grid;
   }
   .kn-point {
     display: grid;
-    grid-template-columns: calc(var(--kn-meta) * 3) minmax(0, 1fr);
+    grid-template-columns: calc(var(--kn-meta) * 2.8) minmax(0, 1fr);
     align-items: baseline;
     padding-block: calc(var(--u) * 1.2);
     border-top: 1px solid var(--line-strong);
-    font-size: var(--kn-sub);
+    font-size: var(--kn-point);
     line-height: 1.2;
     letter-spacing: -0.015em;
     color: var(--ink);
@@ -220,11 +224,24 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     color: var(--accent-2);
     transition: color 0.6s var(--kn-ease);
   }
+  /* Not yet reached: clearly secondary, still readable from the back of the room. */
   .kn-point[data-lit="false"] {
-    color: color-mix(in srgb, var(--ink) 30%, transparent);
+    color: color-mix(in srgb, var(--ink) 52%, transparent);
   }
   .kn-point[data-lit="false"] .kn-point-no {
     color: var(--subtle);
+  }
+  .kn-points-strong .kn-point {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  /* The key word of a point, in the accent colour once its step is reached. */
+  .kn-em {
+    font-weight: 500;
+    transition: color 0.6s var(--kn-ease);
+  }
+  .kn-point[data-lit="true"] .kn-em {
+    color: var(--accent-2);
   }
 
   /* Header lockup, in em: font-size 10px reproduces the site header exactly. */
@@ -474,10 +491,10 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   }
   .kn-scene-label {
     font-family: var(--font-mono);
-    font-size: 15px;
+    font-size: 16.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    fill: var(--subtle);
+    fill: var(--muted);
   }
   @media (orientation: portrait) {
     .kn-opening {
@@ -516,12 +533,17 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     gap: calc(var(--u) * 2);
   }
   .kn-constellation {
+    /* Card text is sized from the diagram's own width, so cards keep their proportions
+       (and never truncate or collide) at every screen size. */
+    --kn-card-micro: max(0.5rem, 1.7cqi);
+    --kn-card-body: max(0.6875rem, 2.6cqi);
     position: relative;
     align-self: center;
     width: 100%;
     max-height: 100%;
     aspect-ratio: 16 / 10;
     margin: 0;
+    container-type: inline-size;
   }
   .kn-links {
     position: absolute;
@@ -541,14 +563,14 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   .kn-link-critical {
     fill: none;
     stroke: var(--kn-amber);
-    stroke-width: 1.4;
-    stroke-dasharray: 6 5;
+    stroke-width: 2;
+    stroke-dasharray: 7 4;
     vector-effect: non-scaling-stroke;
     opacity: 0;
     transition: opacity 0.7s var(--kn-ease) 0.25s;
   }
   .kn-constellation[data-build="2"] .kn-link-critical {
-    opacity: 0.9;
+    opacity: 1;
   }
   .kn-constellation[data-build="2"] .kn-link-quiet {
     opacity: 0;
@@ -561,7 +583,7 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   }
   .kn-card {
     position: relative;
-    padding: calc(var(--u) * 1.05) calc(var(--u) * 1.3);
+    padding: 2cqi 2.45cqi;
     border: 1px solid var(--line-strong);
     border-radius: 2px;
     background: var(--surface);
@@ -575,15 +597,15 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   }
   .kn-card-type {
     font-family: var(--font-mono);
-    font-size: var(--kn-micro);
+    font-size: var(--kn-card-micro);
     line-height: 1.3;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--subtle);
+    color: var(--muted);
   }
   .kn-card-value {
     margin-top: 0.5em;
-    font-size: var(--kn-body);
+    font-size: var(--kn-card-body);
     font-weight: 500;
     line-height: 1.25;
     letter-spacing: -0.01em;
@@ -592,9 +614,9 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   }
   .kn-card-detail {
     margin-top: 0.3em;
-    font-size: var(--kn-micro);
+    font-size: var(--kn-card-micro);
     line-height: 1.35;
-    color: var(--muted);
+    color: var(--ink-2);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -608,7 +630,9 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   }
   .kn-card[data-tone="risk"] {
     border-color: var(--kn-amber);
-    box-shadow: 0 0 calc(var(--u) * 3) calc(var(--u) * -0.6) color-mix(in srgb, var(--kn-amber) 32%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--kn-amber) 45%, transparent),
+      0 0 calc(var(--u) * 3.6) calc(var(--u) * -0.4) color-mix(in srgb, var(--kn-amber) 42%, transparent);
   }
   .kn-card[data-tone="risk"].ticks::before,
   .kn-card[data-tone="risk"].ticks::after {
@@ -627,13 +651,14 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     top: var(--y);
     display: grid;
     place-items: center;
-    width: calc(var(--kn-body) * 1.7);
-    height: calc(var(--kn-body) * 1.7);
-    border: 1px solid var(--kn-amber);
+    width: calc(var(--kn-card-body) * 1.95);
+    height: calc(var(--kn-card-body) * 1.95);
+    border: 1.5px solid var(--kn-amber);
     border-radius: 50%;
-    background: var(--bg);
+    background: color-mix(in srgb, var(--kn-amber) 14%, var(--bg));
     color: var(--kn-amber);
-    font-size: var(--kn-body);
+    font-size: calc(var(--kn-card-body) * 1.15);
+    font-weight: 500;
     line-height: 1;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.6);
@@ -651,9 +676,11 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     bottom: 0;
     width: 46%;
     padding-left: calc(var(--u) * 1.3);
-    border-left: 2px solid var(--kn-amber);
+    border-left: 3px solid var(--kn-amber);
     font-size: var(--kn-body);
-    line-height: 1.35;
+    font-weight: 500;
+    line-height: 1.32;
+    letter-spacing: -0.01em;
     color: var(--ink);
     opacity: 0;
     transform: translate3d(0, 8px, 0);
@@ -664,6 +691,9 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   .kn-finding[data-show="true"] {
     opacity: 1;
     transform: none;
+  }
+  .kn-finding-em {
+    color: var(--kn-amber);
   }
   @media (orientation: portrait) {
     .kn-problem {
@@ -683,6 +713,10 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
       left: var(--px);
       top: var(--py);
       width: 56%;
+    }
+    .kn-constellation {
+      --kn-card-micro: max(0.625rem, 2.9cqi);
+      --kn-card-body: max(0.875rem, 4.2cqi);
     }
     .kn-card {
       padding: 0.55rem 0.7rem;
@@ -1035,8 +1069,8 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   .kn-twin-tag {
     margin-top: 0.55em;
     font-family: var(--font-mono);
-    font-size: var(--kn-micro);
-    letter-spacing: 0.12em;
+    font-size: var(--kn-meta);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-2);
   }
@@ -1074,10 +1108,10 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   }
   .kn-chart-label {
     font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.08em;
+    font-size: 10px;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    fill: var(--subtle);
+    fill: var(--muted);
   }
   .kn-chart-muted {
     fill: var(--muted);
@@ -1113,9 +1147,9 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   .kn-twin-k {
     font-family: var(--font-mono);
     font-size: var(--kn-micro);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--subtle);
+    color: var(--muted);
   }
   .kn-twin-v {
     font-size: var(--kn-micro);
@@ -1159,13 +1193,13 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   }
   .kn-hub-role {
     margin-top: 0.6em;
-    max-width: 8.5em;
+    max-width: 9em;
     font-family: var(--font-mono);
-    font-size: var(--kn-micro);
+    font-size: var(--kn-meta);
     line-height: 1.35;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--ink-2);
   }
   .kn-apps {
     grid-column: 3;
@@ -1201,11 +1235,13 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     font-weight: 500;
     letter-spacing: -0.025em;
     line-height: 1.1;
-    color: var(--ink-2);
+    color: var(--ink);
   }
   .kn-app-tag {
-    font-size: var(--kn-meta);
-    color: var(--muted);
+    font-size: var(--kn-body);
+    line-height: 1.35;
+    color: var(--ink-2);
+    text-wrap: balance;
   }
   @media (orientation: portrait) {
     .kn-arch {
@@ -1319,21 +1355,23 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
   }
   .kn-thanks-lockup {
     font-size: clamp(11px, calc(var(--u) * 1.5), 28px);
-    margin-bottom: calc(var(--u) * 3.6);
+    margin-bottom: calc(var(--u) * 2.4);
   }
   .kn-thanks .kn-second {
     margin-top: calc(var(--u) * 1.5);
   }
+  /* One column per founder (--n), each a third of the row wide, centred as a group. */
   .kn-founders {
+    --gap: calc(var(--u) * 3.6);
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: calc(var(--u) * 3);
-    width: 100%;
-    margin-top: calc(var(--u) * 4.6);
+    grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
+    gap: var(--gap);
+    width: min(100%, calc((100% - 2 * var(--gap)) / 3 * var(--n, 3) + (var(--n, 3) - 1) * var(--gap)));
+    margin-top: calc(var(--u) * 3);
     text-align: left;
   }
-  .kn-founders li {
-    padding-top: calc(var(--u) * 1.4);
+  .kn-founders > li {
+    padding-top: calc(var(--u) * 1.3);
     border-top: 1px solid var(--line-strong);
   }
   .kn-founder-name {
@@ -1344,11 +1382,48 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     color: var(--ink);
   }
   .kn-founder-role {
-    margin-top: 0.45em;
+    margin-top: 0.4em;
     font-size: var(--kn-body);
-    line-height: 1.4;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--ink-2);
+    text-wrap: balance;
+  }
+  .kn-founder-exp {
+    font-size: var(--kn-meta);
+    line-height: 1.45;
     color: var(--muted);
     text-wrap: balance;
+  }
+  .kn-founder-role + .kn-founder-exp {
+    margin-top: 0.85em;
+  }
+  /* Every item carries a leading dot; the dot of the first item on each line falls in
+     the clipped strip left of the column, so wrapped lines never start or end with "·". */
+  .kn-sep-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -1.1em;
+    clip-path: inset(-0.3em -0.3em -0.3em 1.1em);
+  }
+  .kn-sep-list > li {
+    position: relative;
+    min-width: 0;
+    padding-left: 1.1em;
+  }
+  .kn-sep-list > li::before {
+    content: "·";
+    content: "·" / "";
+    position: absolute;
+    left: 0.42em;
+    color: var(--subtle);
+  }
+  /* Former employers: the one restrained accent in each column. */
+  .kn-founder-ex {
+    margin-top: 0.5em;
+    font-size: var(--kn-meta);
+    line-height: 1.45;
+    color: var(--accent-2);
   }
   .kn-thanks-foot {
     display: flex;
@@ -1357,13 +1432,13 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     justify-content: space-between;
     gap: 1rem;
     width: 100%;
-    margin-top: calc(var(--u) * 4.2);
+    margin-top: calc(var(--u) * 2.6);
   }
   .kn-site {
     font-family: var(--font-mono);
     font-size: var(--kn-meta);
     letter-spacing: 0.14em;
-    color: var(--subtle);
+    color: var(--muted);
   }
   @media (orientation: portrait) {
     .kn-thanks {
@@ -1372,6 +1447,7 @@ body:has([data-keynote]) > :is(header, footer, a.sr-only-focusable) {
     .kn-founders {
       grid-template-columns: minmax(0, 1fr);
       gap: 1rem;
+      width: 100%;
     }
     .kn-thanks-foot {
       flex-direction: column-reverse;

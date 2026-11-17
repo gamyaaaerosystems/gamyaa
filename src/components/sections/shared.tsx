@@ -8,6 +8,45 @@ import { LinkedInIcon, PortfolioIcon } from "@/components/ui/icons";
 
 /* --------------------------------------------------------- Leadership */
 
+/**
+ * "A · B · C" that wraps only between items. Each item carries a leading dot; the dot of
+ * the first item on every line sits in the clipped strip left of the text, so a wrapped
+ * line never starts or ends with "·".
+ */
+function DotList({
+  items,
+  className,
+  link,
+}: {
+  items: string[];
+  className?: string;
+  /** Turns the item whose text equals `label` into a link. */
+  link?: { label: string; href: string; ga: string };
+}) {
+  return (
+    <ul className={cn("-ml-[1.1em] flex flex-wrap [clip-path:inset(-0.3em_-0.3em_-0.3em_1.1em)]", className)}>
+      {items.map((item) => (
+        <li
+          key={item}
+          className="relative pl-[1.1em] before:absolute before:left-[0.42em] before:text-subtle before:content-['·']"
+        >
+          {link && item === link.label ? (
+            <SmartLink
+              href={link.href}
+              label={link.ga}
+              className="underline decoration-line-strong underline-offset-4 hover:text-ink"
+            >
+              {item}
+            </SmartLink>
+          ) : (
+            item
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /** Pass `id="leadership"` only on the About page (footer links to /about#leadership). */
 export function LeadershipSection({ id }: { id?: string }) {
   return (
@@ -21,21 +60,21 @@ export function LeadershipSection({ id }: { id?: string }) {
             <li key={p.name} className="grid gap-x-8 gap-y-2 border-t border-line py-6 sm:grid-cols-[1fr_auto] sm:items-start">
               <div>
                 <h3 className="text-xl font-medium tracking-tight text-ink">{p.name}</h3>
-                <p className="mt-1 text-sm text-muted">
-                  {p.role}
-                  {p.credential ? (
-                    <>
-                      ,{" "}
-                      <SmartLink
-                        href={p.credential.href}
-                        label="ev_engineer"
-                        className="text-ink-2 underline decoration-line-strong underline-offset-4 hover:text-ink"
-                      >
-                        {p.credential.label}
-                      </SmartLink>
-                    </>
-                  ) : null}
-                </p>
+                <p className="mt-1 text-sm text-muted">{p.role}</p>
+                {p.experience?.length || p.affiliations ? (
+                  <div className="mt-3 space-y-0.5 text-sm leading-relaxed">
+                    {p.experience?.map((line) => (
+                      <DotList key={line} items={line.split(" · ")} className="text-ink-2" />
+                    ))}
+                    {p.affiliations ? (
+                      <DotList
+                        items={p.affiliations.split(" · ")}
+                        className="text-accent"
+                        link={p.credential ? { ...p.credential, ga: "ev_engineer" } : undefined}
+                      />
+                    ) : null}
+                  </div>
+                ) : null}
                 <p className="mt-3 max-w-xl text-[0.9375rem] leading-relaxed text-ink-2">{p.summary}</p>
               </div>
               {p.linkedin || p.portfolio ? (
