@@ -28,7 +28,7 @@ Tick each item before public launch. The owner column says who acts.
 
 - [ ] **Privacy reviewed** (GA4, cookies, local storage, contact data, DPDP Act 2023). *Owner:* counsel. *How:* `/privacy`.
 - [ ] **Terms reviewed.** *Owner:* counsel. *How:* `/terms`, then remove the "Legal review required" notices.
-- [ ] **Company naming legally accurate.** *Owner:* founders. *How:* set `BRAND.aeroIncorporated = true` only after incorporation.
+- [x] **Company naming legally accurate.** *Owner:* founders. Incorporated 18 November 2026, CIN U62013KA2026PTC231471; the incorporation date and CIN live in `AERO_COMPANY` (`src/lib/site.ts`) and must match the MCA master data.
 - [ ] **Product claims, disclaimers and trademarks (™) reviewed.** *Owner:* counsel.
 - [ ] **Consent banner decision** for the target geographies. *Owner:* counsel. *How:* the GA block is ready (`REQUIRE_CONSENT_BEFORE_LOADING`).
 

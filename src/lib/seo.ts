@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { absoluteUrl, aero, aeroLegalName, BRAND, CONTACT, DESIGNER, parent, PRIMARY_ORIGIN } from "./site";
+import { absoluteUrl, aero, AERO_COMPANY, aeroLegalName, BRAND, CONTACT, DESIGNER, parent, PRIMARY_ORIGIN } from "./site";
 
 type PageMetaInput = {
   /** Full, unique <title>. */
@@ -111,6 +111,15 @@ export function aeroOrganizationLd() {
     "@id": AERO_ORG_ID,
     name: BRAND.aero,
     legalName: BRAND.aeroIncorporated ? aeroLegalName : undefined,
+    foundingDate: BRAND.aeroIncorporated ? AERO_COMPANY.incorporatedOn : undefined,
+    identifier: BRAND.aeroIncorporated
+      ? {
+          "@type": "PropertyValue",
+          propertyID: "CIN",
+          name: "Corporate Identity Number (Ministry of Corporate Affairs, India)",
+          value: AERO_COMPANY.cin,
+        }
+      : undefined,
     url: absoluteUrl(aero()),
     logo: LOGO,
     description: ENGINEERING_ASSURANCE_DEFINITION,

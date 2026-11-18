@@ -26,7 +26,7 @@ export const TIMELINE: Milestone[] = [
     stage: "2026",
     title: "DAQIP™ development, AirCert AI™ concept, AEAIP™ research & architecture",
     kind: "current",
-    summary: "Quality and certification work converge into one Engineering Assurance Intelligence architecture, with satellites and spacecraft as its first focus.",
+    summary: "Quality and certification work converge into one Engineering Assurance Intelligence architecture, with satellites and spacecraft as its first focus. Incorporated as GAMYAA Aero Systems Private Limited on 18 November 2026.",
   },
   {
     stage: "Next",

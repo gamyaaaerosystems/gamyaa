@@ -53,8 +53,8 @@ export const BRAND = {
   aero: "Gamyaa AeroSystems",
   ventures: "Gamyaa Ventures",
   /**
-   * Incorporation of GAMYAA Aero Systems Private Limited is confirmed (October 2026).
-   * Controls legal name in footer and structured data.
+   * GAMYAA Aero Systems Private Limited was incorporated on 18 November 2026 (see
+   * AERO_COMPANY). Controls legal name in footer and structured data.
    */
   aeroIncorporated: true,
   aeroLegalNameAfterIncorporation: "GAMYAA Aero Systems Private Limited",
@@ -64,6 +64,20 @@ export const BRAND = {
 export const aeroLegalName = BRAND.aeroIncorporated
   ? BRAND.aeroLegalNameAfterIncorporation
   : BRAND.aero;
+
+/**
+ * Incorporation details of GAMYAA Aero Systems Private Limited, from the Ministry of
+ * Corporate Affairs (MCA) master data. The site publishes only these two facts (no
+ * address, capital or other MCA fields). Change only from the MCA record.
+ */
+export const AERO_COMPANY = {
+  legalName: BRAND.aeroLegalNameAfterIncorporation,
+  /** Corporate Identity Number. */
+  cin: "U62013KA2026PTC231471",
+  /** ISO date for structured data; `incorporatedOnDisplay` for the page. */
+  incorporatedOn: "2026-11-18",
+  incorporatedOnDisplay: "18 November 2026",
+} as const;
 
 /**
  * Corporate-domain mailboxes, prepared for launch. Set `active: true` on one once it

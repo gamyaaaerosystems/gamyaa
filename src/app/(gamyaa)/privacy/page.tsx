@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Container, Notice } from "@/components/ui/primitives";
 import { PageHero } from "@/components/sections/shared";
 import { pageMetadata } from "@/lib/seo";
-import { CONTACT, parent } from "@/lib/site";
+import { AERO_COMPANY, CONTACT, parent } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "Privacy Notice | GAMYAA",
@@ -35,12 +35,12 @@ export default function PrivacyPage() {
             public launch.
           </Notice>
           <div className="prose-body mt-10">
-            <p className="font-mono text-xs uppercase tracking-[0.1em] text-subtle">Last updated: October 2026</p>
+            <p className="font-mono text-xs uppercase tracking-[0.1em] text-subtle">Last updated: November 2026</p>
 
             <h2>Who we are</h2>
             <p>
-              This website is operated by GAMYAA and GAMYAA Aero Systems Private Limited, Bangalore, India. For privacy questions,
-              email <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+              This website is operated by GAMYAA and {AERO_COMPANY.legalName} (CIN {AERO_COMPANY.cin}), Bangalore,
+              India. For privacy questions, email <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
             </p>
 
             <h2>Analytics (Google Analytics 4)</h2>

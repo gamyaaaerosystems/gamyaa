@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { LogoMark, LogoWord } from "@/components/brand/logo";
 import { ArrowUpRight } from "@/components/ui/icons";
 import { SmartLink } from "@/components/ui/primitives";
-import { aero, aeroLegalName, BRAND, CONTACT, DESIGNER, EXTERNAL, parent, PARENT_HOME } from "@/lib/site";
+import { aero, AERO_COMPANY, aeroLegalName, BRAND, CONTACT, DESIGNER, EXTERNAL, parent, PARENT_HOME } from "@/lib/site";
 
 function Col({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -208,9 +208,16 @@ export function AeroFooter() {
           className="container-x flex flex-col gap-2 py-6 text-xs text-subtle sm:flex-row sm:items-center sm:justify-between"
           style={{ paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
         >
-          <p>
-            © {BRAND.copyrightYear} {aeroLegalName}. All rights reserved.
-          </p>
+          <div className="space-y-1">
+            <p>
+              © {BRAND.copyrightYear} {aeroLegalName}. All rights reserved.
+            </p>
+            {BRAND.aeroIncorporated ? (
+              <p>
+                CIN: <span className="font-mono tracking-[0.04em]">{AERO_COMPANY.cin}</span>
+              </p>
+            ) : null}
+          </div>
           <PoweredBy />
         </div>
       </div>

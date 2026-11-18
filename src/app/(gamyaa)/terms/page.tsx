@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Container, Notice } from "@/components/ui/primitives";
 import { PageHero } from "@/components/sections/shared";
 import { pageMetadata } from "@/lib/seo";
-import { CONTACT, parent } from "@/lib/site";
+import { AERO_COMPANY, CONTACT, parent } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "Terms of Use | GAMYAA",
@@ -32,12 +32,13 @@ export default function TermsPage() {
             placeholder. It has not been reviewed by counsel and must not be relied on as final terms.
           </Notice>
           <div className="prose-body mt-10">
-            <p className="font-mono text-xs uppercase tracking-[0.1em] text-subtle">Placeholder · October 2026</p>
+            <p className="font-mono text-xs uppercase tracking-[0.1em] text-subtle">Placeholder · November 2026</p>
 
             <h2>1. About this website</h2>
             <p>
               gamyaa.in provides general information about GAMYAA, Gamyaa AeroSystems and Gamyaa Ventures. Gamyaa
-              AeroSystems is operated by GAMYAA Aero Systems Private Limited.
+              AeroSystems is operated by {AERO_COMPANY.legalName}, incorporated on {AERO_COMPANY.incorporatedOnDisplay}{" "}
+              (CIN {AERO_COMPANY.cin}).
             </p>
 
             <h2>2. Information only</h2>

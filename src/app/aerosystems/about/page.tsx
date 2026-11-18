@@ -1,3 +1,4 @@
+import { CompanyDetails } from "@/components/contact/company-details";
 import { ContactDetails } from "@/components/contact/contact-details";
 import { Timeline } from "@/components/diagrams/timeline";
 import { CtaBand, internalContact, LeadershipSection, PageHero, PartnersSection } from "@/components/sections/shared";
@@ -6,7 +7,7 @@ import { ArrowLink, Container, JsonLd, Section, SectionHeader, StatusBadge } fro
 import { LEADERSHIP } from "@/content/company";
 import { PRODUCT_STATUS } from "@/content/status";
 import { pageMetadata, personLd } from "@/lib/seo";
-import { aero, EXTERNAL, PARENT_HOME } from "@/lib/site";
+import { aero, AERO_COMPANY, EXTERNAL, PARENT_HOME } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "About Gamyaa AeroSystems | Engineering Assurance Intelligence for Defence, Aerospace & Space",
@@ -196,9 +197,10 @@ export default function AboutPage() {
               <a href={PARENT_HOME} className="text-accent underline">
                 GAMYAA
               </a>{" "}
-              and is based in Bangalore, India. It is incorporated as GAMYAA Aero Systems Private Limited.
+              and is based in Bangalore, India. It is incorporated as {AERO_COMPANY.legalName}.
             </p>
-            <div className="mt-6 flex flex-col gap-1">
+            <CompanyDetails className="mt-6 max-w-xl" />
+            <div className="mt-8 flex flex-col gap-1">
               <ArrowLink href={aero("/careers")}>Careers</ArrowLink>
               <ArrowLink href={EXTERNAL.aerospaceCybersecurity} ga={{ event: "aerospace_cybersecurity_click" }} label="Explore Aerospace Cybersecurity">
                 Aerospace Cybersecurity
